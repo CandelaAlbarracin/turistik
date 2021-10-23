@@ -37,6 +37,7 @@ app.use('/restaurantes',require('./routes/restaurants'))
 app.use('/tours',require('./routes/tours'))
 app.use('/sobrenosotros',require('./routes/aboutus'))
 app.use('/explorajujuy',require('./routes/explorejujuy'))
+app.use('/alojamientos/detalles',require('./routes/detailsAccommodations'))
 
 //Publico
 app.use(express.static(path.join(__dirname,'public')))
