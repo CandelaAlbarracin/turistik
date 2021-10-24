@@ -1,0 +1,253 @@
+    <link rel="stylesheet" href="/css/stylesIndex.css">
+</head>
+<body>
+  {{>navigation}}
+  <div class="container">
+      <h1 class="text-center fst-italic mt-2">Descubre Jujuy, descubre lo nuestro</h1>
+  <div class="searchs">
+    <form action="/resultados" method="post">
+      <div class="row g-2">
+        <div class="col-md m-2">
+          <div class="form-floating">
+            <select id="Sitio" class="form-select" name="Sitio" aria-label="Que estas buscando">
+              <option selected>Todos los Emprendimientos</option>
+              <option>Alojamientos</option>
+              <option>Restaurantes</option>
+              <option>Tours</option>
+            </select>
+            <label for="Sitio">¿Qué estas buscando?</label>
+          </div>
+        </div>
+        <div class="col-md m-2">
+          <div class="form-floating">
+            <input class="form-control" list="datalistOptions" id="exampleDataList"
+              aria-label="Que localidad quieres visitar" />
+            <datalist id="datalistOptions" name="Localidad">
+              <option value="Abdón Castro Tolay">Cochinoca</option>
+              <option value="Abralaite">Cochinoca</option>
+              <option value="Abra Pampa">Cochinoca</option>
+              <option value="Agua de Castilla">Cochinoca</option>
+              <option value="Aguas Calientes">El Carmen</option>
+              <option value="Aparzo">Humahuaca</option>
+              <option value="Arrayanal">San Pedro</option>
+              <option value="Arroyo Colorado">San Pedro</option>
+              <option value="Bananal">Ledesma</option>
+              <option value="Bárcena">Tumbaya</option>
+              <option value="Barrios">Yavi</option>
+              <option value="Bermejito">Ledesma</option>
+              <option value="Caimancito">Ledesma</option>
+              <option value="Calilegua">Ledesma</option>
+              <option value="Cangrejillos">Yavi</option>
+              <option value="Carahunco">Palpalá</option>
+              <option value="Casabindo">Cochinoca</option>
+              <option value="Casa Colorada">Rinconada</option>
+              <option value="Caspalá">Valle Grande</option>
+              <option value="Catua">Susques</option>
+              <option value="Centro Forestal">Palpalá</option>
+              <option value="Chalicán">Ledesma</option>
+              <option value="Cianzo">Humahuaca</option>
+              <option value="Ciénaga de Paicone">Santa Catalina</option>
+              <option value="Cienegillas">Santa Catalina</option>
+              <option value="Cochinoca">Cochinoca</option>
+              <option value="Colonia San José">Tilcara</option>
+              <option value="Coranzulí">Susques</option>
+              <option value="Coyaguaima">Rinconada</option>
+              <option value="Cusi Cusi">Santa Catalina</option>
+              <option value="Don Emilio">San Pedro</option>
+              <option value="El Acheral">San Pedro</option>
+              <option value="El Aguilar">San Pedro</option>
+              <option value="El Angosto">Santa Catalina</option>
+              <option value="El Carmen">El Carmen</option>
+              <option value="El Ceibal">San Antonio</option>
+              <option value="El Cóndor">Yavi</option>
+              <option value="El Fuerte">Santa Bárbara</option>
+              <option value="El Moreno">Tumbaya</option>
+              <option value="El Piquete">Santa Bárbara</option>
+              <option value="El Puesto">San Pedro</option>
+              <option value="El Quemado">San Pedro</option>
+              <option value="El Talar">Santa Bárbara</option>
+              <option value="El Toro">Susques</option>
+              <option value="Fraile Pintado">Ledesma</option>
+              <option value="Guerrero">Doctor Manuel Belgrano</option>
+              <option value="Hipólito Yrigoyen">Humahuaca</option>
+              <option value="Huáncar">Susques</option>
+              <option value="Humahuaca">Humahuaca</option>
+              <option value="Jama">Susques</option>
+              <option value="Juella">Tilcara</option>
+              <option value="La Almona">Doctor Manuel Belgrano</option>
+              <option value="La Ciénaga">Santa Catalina</option>
+              <option value="La Esperanza">San Pedro</option>
+              <option value="Lagunillas de Farallón">Rinconada</option>
+              <option value="La Intermedia">Yavi</option>
+              <option value="La Manga">San Pedro</option>
+              <option value="La Mendieta">San Pedro</option>
+              <option value="La Quiaca">Yavi</option>
+              <option value="La Redonda">Cochinoca</option>
+              <option value="León">Doctor Manuel Belgrano</option>
+              <option value="Libertad">Ledesma</option>
+              <option value="Libertador General San Martín">Ledesma</option>
+              <option value="Liviara">Rinconada</option>
+              <option value="Llulluchayoc">Yavi</option>
+              <option value="Loma Blanca">Rinconada</option>
+              <option value="Los Alisos">San Antonio</option>
+              <option value="Los Lapachos">El Carmen</option>
+              <option value="Lozano">Doctor Manuel Belgrano</option>
+              <option value="Maimará">Tilcara</option>
+              <option value="Manantiales">El Carmen</option>
+              <option value="Mina Providencia">Susques</option>
+              <option value="Miraflores">San Pedro</option>
+              <option value="Misarrumi">Santa Catalina</option>
+              <option value="Monterrico">El Carmen</option>
+              <option value="Nuestra Señora del Rosario">San Antonio</option>
+              <option value="Nuevo Pirquitas">Rinconada</option>
+              <option value="Ocloyas">Doctor Manuel Belgrano</option>
+              <option value="Olacapato">Susques</option>
+              <option value="Olaroz Chico">Susques</option>
+              <option value="Oratorio">Santa Catalina</option>
+              <option value="Orosmayo">Rinconada</option>
+              <option value="Paicone">Santa Catalina</option>
+              <option value="Palca de Aparzo">Humahuaca</option>
+              <option value="Palca de Varas">Humahuaca</option>
+              <option value="Palma Sola">Santa Bárbara</option>
+              <option value="Palos Blancos">San Pedro</option>
+              <option value="Palpalá">Palpalá</option>
+              <option value="Pampa Blanca">El Carmen</option>
+              <option value="Pampichuela">Valle Grande</option>
+              <option value="Parapetí">San Pedro</option>
+              <option value="Pastos Chicos">Susques</option>
+              <option value="Paulina">Ledesma</option>
+              <option value="Perico">El Carmen</option>
+              <option value="Piedritas">San Pedro</option>
+              <option value="Puente Lavayén">Santa Bárbara</option>
+              <option value="Puerta de Colorados">Tumbaya</option>
+              <option value="Puesto del Marquéz">Cochinoca</option>
+              <option value="Puesto Sey">Susques</option>
+              <option value="Puesto Viejo">El Carmen</option>
+              <option value="Pumahuasi">Yavi</option>
+              <option value="Purmamarca">Tumbaya</option>
+              <option value="Quebraleña">Cochinoca</option>
+              <option value="Quera">Cochinoca</option>
+              <option value="Rinconada">Rinconada</option>
+              <option value="Rinconadillas">Cochinoca</option>
+              <option value="Rodeito">San Pedro</option>
+              <option value="Rodero">Humahuaca</option>
+              <option value="Rosario de Río Grande">San Pedro</option>
+              <option value="San Antonio">San Antonio</option>
+              <option value="San  Antonio">San Pedro</option>
+              <option value="San Fancisco">Valle Grande</option>
+              <option value="San Francisco de Alfarcito">Cochinoca</option>
+              <option value="San Isidro">El Carmen</option>
+              <option value="San Juancito">El Carmen</option>
+              <option value="San Juan de Oros">Santa Catalina</option>
+              <option value="San Juan de Quillaqués">Susques</option>
+              <option value="San Lucas">San Pedro</option>
+              <option value="San Pedro">San Pedro</option>
+              <option value="San Salvador de Jujuy">Doctor Manuel Belgrano</option>
+              <option value="Santa Ana">Valle Grande</option>
+              <option value="Santa Ana de la Puna">Cochinoca</option>
+              <option value="Santa Catalina">Santa Catalina</option>
+              <option value="Santa Clara">Santa Bárbara</option>
+              <option value="Santuario de Tres Pozos">Cochinoca</option>
+              <option value="Sauzal">San Pedro</option>
+              <option value="Susques">Susques</option>
+              <option value="Tambillos">Cochinoca</option>
+              <option value="Tesorero">Doctor Manuel Belgrano</option>
+              <option value="Tilcara">Tilcara</option>
+              <option value="Tres Cruces">Humahuaca</option>
+              <option value="Tumbaya">Tumbaya</option>
+              <option value="Tusaquillas">Cochinoca</option>
+              <option value="Uquía">Humahuaca</option>
+              <option value="Valle Colorado">Valle Grande</option>
+              <option value="Valle Grande">Valle Grande</option>
+              <option value="Vinalito">Santa Bárbara</option>
+              <option value="Volcán">Tumbaya</option>
+              <option value="Yala">Doctor Manuel Belgrano</option>
+              <option value="Yavi">Yavi</option>
+              <option value="Yavi Chico">Yavi</option>
+              <option value="Yoscaba">Santa Catalina</option>
+              <option value="Yuto">Ledesma</option>
+            </datalist>
+
+            <label for="exampleDataList">¿Qué localidad quieres visitar?</label>
+          </div>
+        </div>
+        
+      </div>
+      <div class="d-grid gap-2 m-2">
+        <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Buscar</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <figure class="snip1361">
+      <img
+        src="https://res.cloudinary.com/turistick/image/upload/v1634279149/Regiones-Jujuy/0e4deae33373de2f5fc3b446fb6bd248_qlpwjf.jpg"
+        alt="Puna" />
+      <figcaption>
+        <h3 class="text-center">Puna</h3>
+        <p>
+          Cielos infinitos de aire puro y extensas planicies de altura a más
+          de 3600 msnm. Conocé más
+        </p>
+      </figcaption>
+      <a href="/explorajujuy#RegionPuna"></a>
+    </figure>
+    <figure class="snip1361">
+      <img
+        src="https://res.cloudinary.com/turistick/image/upload/v1634279718/Regiones-Jujuy/la-quebrada-de-humahuaca-a-watercolor-landscape_518_201907300956080_lywrrs.jpg"
+        alt="Quebrada" />
+      <figcaption>
+        <h3 class="text-center">Quebrada</h3>
+        <p>
+          Es la combinación perfecta entre paisajes espectaculares y riqueza
+          arqueológica. Conocé más
+        </p>
+      </figcaption>
+      <a href="/explorajujuy#RegionQuebrada"></a>
+    </figure>
+  </div>
+  <div class="d-flex justify-content-center">
+    <figure class="snip1361">
+      <img src="https://res.cloudinary.com/turistick/image/upload/v1634280063/Regiones-Jujuy/0000402375_dagadc.jpg"
+        alt="Yungas" />
+      <figcaption>
+        <h3 class="text-center">Yungas</h3>
+        <p>
+          Extensas hectáreas totalmente verdes con una flora y fauna
+          sorprendentes. Conocé más
+        </p>
+      </figcaption>
+      <a href="/explorajujuy#RegionYungas"></a>
+    </figure>
+    <figure class="snip1361">
+      <img src="https://res.cloudinary.com/turistick/image/upload/v1634280502/Regiones-Jujuy/photo0jpg_x9ipac.jpg"
+        alt="Valles" />
+      <figcaption>
+        <h3 class="text-center">Valles</h3>
+        <p>
+          Variedad de paisajes que enamoran a quienes sienten el aire
+          primaveral de esta región. Conocé Más
+        </p>
+      </figcaption>
+      <a href="/explorajujuy#RegionValles"></a>
+    </figure>
+  </div>
+  <div class="position-relative">
+    <div class="card w-75 position-absolute top-0 start-50 translate-middle-x mt-2">
+      <div class="card-body">
+        <h5 class="card-title text-center">Jujuy</h5>
+        <h6 class="card-subtitle mb-2 text-muted text-center">Energía Viva</h6>
+        <p class="card-text text-center">Jujuy es una provincia ubicada al noroeste de Argentina. Limita al oeste con Chile, al norte con Bolivia mientras que al este y sur con la provincia de Salta. Se encuentra en un lugar geográfico privilegiado en donde se destaca por sus paisajes y climas. Aquí encontrarás una gran variedad de comidas típicas, personas dispuestas a ayudarte en lo que necesites y hasta un patrimonio de la Humanidad como lo es la Quebrada de Humahuaca. Esperamos que su vistita a la provincia sea placentera y colme sus expectativas.</p>
+        <p class="card-text text-center fw-light fst-italic">Atrévete a hacer turismo de una manera diferente, apoyando a nuestros emprendedores. Te aseguramos que te vas a sorprender y encontrar con personas maravillosas, así que adelante...</p>
+        
+        <div class="d-grid gap-2">
+          <a href="/explorajujuy" class="btn btn-info">Explora Jujuy</a>
+          <a href="#" class="btn btn-info">Soy Emprendedor</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  </div>
