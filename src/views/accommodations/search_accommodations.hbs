@@ -2,52 +2,49 @@
 </head>
 <body> 
     {{>navigation}}   
-
-    <div class="container my-sm-5 p-0 bg-sec-light">
+    <h2 class="text-center fst-italic mt-3">Descubre a nuestros anfitriones</h2>
+    <div class="container my-sm-3 p-0 bg-sec-light">
         <div id="content">
             <div class="searchs">
                 <form action="/resultados" method="post">
+                        <div class="row g-2">
+                            <div class="col-md m-2">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control form-control-lg" name="fechainicio" id="fechainicio" onchange="validarInicial()">
+                                    <label for="fechainicio">Fecha Inicial Reserva</label>
+                                    <p id='fi-invalida' class="text-danger fw-bold text-center" hidden><i class="fas fa-times"></i> Fecha NO válida</p>
+                                    <p id='fi-menor' class="text-danger fw-bold text-center" hidden><i class="fas fa-times"></i> La fecha seleccionada es menor a la fecha actual</p>
+                                </div>
+                            </div>
+                            <div class="col mr-10">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control form-control-lg" name="fechafinal" id="fechafinal" onchange="validarFinal()">
+                                    <label for="fechafinal">Fecha Final Reserva</label>
+                                    <p id='ff-invalida' class="text-danger fw-bold" hidden><i class="fas fa-times"></i> Fecha NO válida</p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row g-2">
                             <div class="col-md m-2">
                                 <div class="form-floating">
                                     <input class="form-control" list="datalistOptions" id="exampleDataList"
                                     aria-label="Que localidad quieres visitar" />
                                     <datalist id="datalistOptions" name="Localidad">
-                                    <option value="Yala">Doctor Manuel Belgrano</option>
-                                    <option value="Yavi">Yavi</option>
-                                    <option value="Yavi Chico">Yavi</option>
-                                    <option value="Yoscaba">Santa Catalina</option>
-                                    <option value="Yuto">Ledesma</option>
+                                        {{>localidades}}
                                     </datalist>
-                                    <label for="exampleDataList">¿A donde quieres hospedarte?</label>
+                                    <label for="exampleDataList"><i class="fas fa-bed"></i>¿A donde quieres hospedarte?</label>
                                 </div>
                             </div>
                             <div class="col-md m-2">
                                 <div class="form-floating">
-                                    <input class="form-control" list="datalistOptions" id="exampleDataList"
-                                    aria-label="Que localidad quieres visitar" />
-                                    <datalist id="datalistOptions" name="Localidad">
-                                    <option value="Yala">Doctor Manuel Belgrano</option>
-                                    <option value="Yavi">Yavi</option>
-                                    <option value="Yavi Chico">Yavi</option>
-                                    <option value="Yoscaba">Santa Catalina</option>
-                                    <option value="Yuto">Ledesma</option>
-                                    </datalist>
-                                    <label for="exampleDataList">¿Tipo de alojamiento?</label>
+                                    <input class="form-control form-control-lg" id="alojamiento" type="text" name="tipoalojamiento" placeholder="Tipo de Alojamiento" aria-label="Tipo de Alojamiento">
+                                    <label for="alojamiento"><i class="fas fa-home"></i> Tipo de Alojamiento</label>
                                 </div>
                             </div>
                             <div class="col-md m-2">
                                 <div class="form-floating">
-                                    <input class="form-control" list="datalistOptions" id="exampleDataList"
-                                    aria-label="Que localidad quieres visitar" />
-                                    <datalist id="datalistOptions" name="Localidad">
-                                    <option value="Yala">Doctor Manuel Belgrano</option>
-                                    <option value="Yavi">Yavi</option>
-                                    <option value="Yavi Chico">Yavi</option>
-                                    <option value="Yoscaba">Santa Catalina</option>
-                                    <option value="Yuto">Ledesma</option>
-                                    </datalist>
-                                    <label for="exampleDataList">¿Huespedes?</label>
+                                    <input class="form-control form-control-lg" id="huespedes" type="number" min="1" max="99" placeholder="Huéspedes" name="capacidadhuespedes" aria-label="Huéspedes" onKeyUp="if(this.value>99){this.value='99';}else if(this.value<1){this.value='1';}">
+                                    <label for="huespedes"><i class="fas fa-users"></i> Huéspedes</label>
                                 </div>
                             </div>
                         </div>
@@ -206,6 +203,7 @@
             </div>
         </div>
     </div>
+    <script src="../js/buscar.js"></script>
     <script>
         const linkactivo=document.getElementById("Alojamientos")
         linkactivo.classList.add('active')

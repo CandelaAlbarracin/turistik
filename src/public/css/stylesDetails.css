@@ -80,7 +80,7 @@ hr {
     font-size: 12px
 }
 
-.btn-long {
+/* .btn-long {
     padding-left: 35px;
     padding-right: 35px
 }
@@ -140,7 +140,7 @@ hr {
 
 .buttons .wishlist i {
     color: #ff7676
-}
+} */
 
 .comment-ratings i {
     color: #f6d151
@@ -241,7 +241,7 @@ label.radio input:checked+span::before {
     border-radius: 50%;
     display: inline-block;
   }
-.btn {
+/* .btn {
     width: 150px;
     border-radius: 0
 }
@@ -253,7 +253,7 @@ label.radio input:checked+span::before {
 
 .btn.enquiry:hover {
     background-color: #fc771fef
-}
+} */
 
 .name {
     font-size: 1.2rem;
