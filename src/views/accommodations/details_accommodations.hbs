@@ -63,7 +63,46 @@
                             <h4 class="font-weight-bold">$3,444</h4>
                         </div>
                         <div class="d-grid gap-2 d-md-block">
-                            <a class="btn btn-danger text-uppercase mx-2" id="Denuncias" href="#" role="button">DENUNCIAS</a>
+                            {{!-- <a class="btn btn-danger text-uppercase mx-2" id="Denuncias" href="#" role="button">DENUNCIAS</a> --}}
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#denuncia">
+                                <i class="fas fa-flag"></i> Denunciar
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="denuncia" tabindex="-1" aria-labelledby="denunciaLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Denunciar al emprendimiento ....</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/alojamientos/denunciar" method="post">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="motivoDenuncia" name="motivo" aria-label="Floating label select example" required>
+                                                <option selected disabled value>Selecciona</option>
+                                                <option>Insalubridad</option>
+                                                <option>Lugar Inexistente</option>
+                                                <option>Incumplimiento de la reserva</option>
+                                                <option>Otro</option>
+                                            </select>
+                                            <label for="motivoDenuncia">Motivo por el cual realiza la denuncia</label>
+                                        </div>
+                                        <div class="form-floating mt-2">
+                                            <textarea class="form-control" placeholder="Leave a comment here" id="denunciadescripcion" name="descripcion" style="height: 200px"></textarea>
+                                            <label for="denunciadescripcion">¿Podría explicarnos un poco más sobre el incoveniente?</label>
+                                            <input type="hidden" name="id_emprendimiento" value="3">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Enviar</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                </div>
+                            </div>
+                            </div>
                             <a class="btn btn-primary text-uppercase mx-2" id="Reservas" href="#" role="button">RESERVAR</a>
                         </div>
                         <hr>
