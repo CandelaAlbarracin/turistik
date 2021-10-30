@@ -46,6 +46,15 @@ router.post('/resultados',async(req,res)=>{
         }else{
             const denunciacat=await pool.query('SELECT d.nroDenuncia,em.nombreemprendimiento,em.categoria,d.motivo,d.descripcion FROM emprendimientos em join denuncias d ON em.idemprendimiento=d.id_emprendimiento AND em.categoria in (?)',[categoriaarray])
             const totalcat=await pool.query('SELECT count(*) as cantidadcat FROM emprendimientos em join denuncias d ON em.idemprendimiento=d.id_emprendimiento AND em.categoria in (?)',[categoriaarray]) 
+            denunciacat.map(function(denunciacat){
+                if (denunciacat.categoria=='A'){
+                    denunciacat.categoria='Alojamiento'
+                }else if (denunciacat.categoria=='R'){
+                    denunciacat.categoria='Restaurante'
+                }else{
+                    denunciacat.categoria='Tour'
+                }
+            })
             res.render('./denuncias/denuncias',[{denuncias:denunciacat},totalcat[0].cantidadcat,nombreemprendimiento,cat]) 
         }
     }
