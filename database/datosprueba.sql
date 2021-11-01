@@ -37,3 +37,4 @@ INSERT INTO denuncias (motivo,descripcion,id_emprendimiento) VALUES ('Insalubrid
 
 INSERT INTO alojamientos(id_emprendimiento,precionoche,capacidadhabitaciones,capacidadestacionamientos,tipoalojamiento,piscina) VALUES (1,2500,2,1,'Casa',0),(2,3200,3,1,'Departamento',1);
 
+INSERT INTO imagenes(idimagen,link,tipo,id_emprendimiento) VALUES (1,'https://res.cloudinary.com/dc2e2mtjd/image/upload/v1635714692/alojamiento_2_e7u7hv.jpg','P',1),(2,'https://res.cloudinary.com/dc2e2mtjd/image/upload/v1635714692/alojamiento_1_gvsfmb.jpg','P',2);

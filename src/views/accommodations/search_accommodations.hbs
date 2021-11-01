@@ -60,27 +60,28 @@
                         <div class="box border-bottom">
                             <div class="box-label text-uppercase d-flex align-items-center">Precio <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#inner-box" aria-expanded="false" aria-controls="inner-box"> <span class="fas fa-plus"></span> </button> </div>
                             <div id="inner-box" class="collapse show">
-                                <div class="my-1"> <label class="tick">Menos que 2000 <input type="checkbox" checked="checked"> <span class="check"></span> </label> </div>
-                                <div class="my-1"> <label class="tick">2000 - 3000 <input type="checkbox"> <span class="check"></span> </label> </div>
-                                <div class="my-1"> <label class="tick">3000 - 4500 <input type="checkbox"> <span class="check"></span> </label> </div>
-                                <div class="my-1"> <label class="tick">4500 - 6000 <input type="checkbox"> <span class="check"></span> </label> </div>
-                                <div class="my-1"> <label class="tick">6000 - 8000 <input type="checkbox"> <span class="check"></span> </label> </div>
-                                <div class="my-1"> <label class="tick">8000 -10,000 <input type="checkbox" checked> <span class="check"></span> </label> </div>
-                                <div class="my-1"> <label class="tick">Mas que 10,000<input type="checkbox"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">Menos que 2000 <input type="radio" name="precio" checked="checked"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">2000 - 3000 <input type="radio" name="precio"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">3000 - 4500 <input type="radio" name="precio"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">4500 - 6000 <input type="radio" name="precio"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">6000 - 8000 <input type="radio" name="precio"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">8000 -10,000 <input type="radio" name="precio" > <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">Mas que 10,000<input type="radio" name="precio"> <span class="check"></span> </label> </div>
                             </div>
                         </div>
                         <div class="box border-bottom">
                             <div class="box-label text-uppercase d-flex align-items-center">Piscina <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#property" aria-expanded="false" aria-controls="property"> <span class="fas fa-plus"></span> </button> </div>
                             <div id="property" class="collapse">
-                                <div class="my-1"> <label class="tick">Si <input type="checkbox" checked="checked"> <span class="check"></span> </label> </div>
-                                <div class="my-1"> <label class="tick">No <input type="checkbox"> <span class="check"></span> </label> </div>
+
+                                <div class="my-1"> <label class="tick">Si <input type="radio" name="piscina" checked="checked"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">No <input type="radio" name="piscina"> <span class="check"></span> </label> </div>
                             </div>
                         </div>
                         <div class="box border-bottom">
                             <div class="box-label text-uppercase d-flex align-items-center">Estacionamiento <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#amenities" aria-expanded="false" aria-controls="amenities"> <span class="fas fa-plus"></span> </button> </div>
                             <div id="amenities" class="collapse show">
-                                <div class="my-1"> <label class="tick">Si <input type="checkbox" checked="checked"> <span class="check"></span> </label> </div>
-                                <div class="my-1"> <label class="tick">No<input type="checkbox"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">Si <input type="radio" name="estacionamiento" checked="checked"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">No<input type="radio" name="estacionamiento"> <span class="check"></span> </label> </div>
                             </div>
                         </div>
                     </div>
@@ -89,116 +90,33 @@
 
 
                 <div class="bg-white p-2 border" id="hotels">
-                    <div class="hotel py-2 px-2 pb-4 border-bottom">
-                        <div class="row">
-                            <div class="col-lg-3"> <img src="https://images.unsplash.com/photo-1580835845971-a393b73bf370?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80" alt="" class="hotel-img"> </div>
-                            <div class="col-lg-9">
-                                <div class="d-md-flex align-items-md-center">
-                                    <div class="name">Hospedaje 1<span class="city"> Ubicacion 1</span> </div>
-                                    <div class="ms-auto code text-uppercase">PRECIO 50$</div>
-                                </div>
-                                <div class="rating"> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star"></span> <!-- Book now Enquiry -->
-                                </div>
-                                <div class="d-flex flex-column tags pt-1">
-                                    <div><span class="fas fa-comment-dollar"></span> Fee Canellation</div>
-                                    <div><span class="fas fa-receipt"></span> Express check-in</div>
-                                    <div><span class="fas fa-concierge-bell"></span> Concierge</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end mt-1">
-                            <a class="btn btn-primary text-uppercase mx-2" id="Detalles" href="/alojamientos/detalles" role="button">VER</a>
-                            <div class="btn enquiry text-uppercase" href="#">RESERVAR</div>
-                        </div>
-                    </div>
-                    <div class="hotel py-2 px-2 pb-4 border-bottom">
-                        <div class="row">
-                            <div class="col-lg-3"> <img src="https://images.unsplash.com/photo-1596618502142-d2a9d0c1fc2e?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NTd8fHJlc29ydHN8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="" class="hotel-img"> </div>
-                            <div class="col-lg-9">
-                                <div class="d-md-flex align-items-md-center">
-                                    <div class="name">Hospedaje 2<span class="city"> Ubicacion 2</span> </div>
-                                    <div class="ms-auto code text-uppercase">PRECIO 50$</div>
-                                </div>
-                                <div class="rating"> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star"></span> <!-- Book now Enquiry -->
-                                </div>
-                                <div class="d-flex flex-column tags pt-1">
-                                    <div><span class="fas fa-comment-dollar"></span> Fee Canellation</div>
-                                    <div><span class="fas fa-receipt"></span> Express check-in</div>
-                                    <div><span class="fas fa-concierge-bell"></span> Concierge</div>
+                    {{#each infoAlojamientos}}
+                        <div class="hotel py-2 px-2 pb-4 border-bottom">
+                            <div class="row">
+                                <div class="col-lg-3"> <img src="{{link}}" alt="" class="hotel-img"> </div>
+                                <div class="col-lg-9">
+                                    <div class="d-md-flex align-items-md-center">
+                                        <div class="name">{{nombreemprendimiento}}<span class="city"> {{ubicacion}}</span> </div>
+                                        <div class="ms-auto code text-uppercase">{{precionoche}}$</div>
+                                    </div>
+                                    <div class="rating"> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star"></span> <!-- Book now Enquiry -->
+                                    </div>
+                                    <div class="d-flex flex-column tags pt-1">
+                                        <div><span class="fas fa-car"></span> Parking disponibles {{capacidadestacionamientos}}</div>
+                                        {{#if piscina}}
+                                            <div><span class="fas fa-swimming-pool"></span> Piscina disponible</div>
+                                        {{/if}}
+                                        <div><span class="fas fa-door-open"></span> Habitaciones disponibles {{capacidadhabitaciones}}</div>
+                                        <div><span class="fas fa-home"></span> {{tipoalojamiento}}</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="d-flex justify-content-end mt-1">
-                            <a class="btn btn-primary text-uppercase mx-2" id="Detalles" href="/alojamientos/detalles" role="button">VER</a>
-                            <div class="btn enquiry text-uppercase" href="#">RESERVAR</div>
-                        </div>
-                    </div>
-                    <div class="hotel py-2 px-2 pb-4">
-                        <div class="row">
-                            <div class="col-lg-3"> <img src="https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NzV8fHJlc29ydHN8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="" class="hotel-img"> </div>
-                            <div class="col-lg-9">
-                                <div class="d-md-flex align-items-md-center">
-                                    <div class="name">Hospedaje 3<span class="city"> Ubicacion 4</span> </div>
-                                    <div class="ms-auto code text-uppercase">PRECIO 50$</div>
-                                </div>
-                                <div class="rating"> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star"></span> <!-- Book now Enquiry -->
-                                </div>
-                                <div class="d-flex flex-column tags pt-1">
-                                    <div><span class="fas fa-comment-dollar"></span> Fee Canellation</div>
-                                    <div><span class="fas fa-receipt"></span> Express check-in</div>
-                                    <div><span class="fas fa-concierge-bell"></span> Concierge</div>
-                                </div>
+                            <div class="d-flex justify-content-end mt-1">
+                                <a class="btn btn-primary text-uppercase mx-2" id="Detalles" href="/alojamientos/detalles/{{idalojamiento}}" role="button" method="GET">VER</a>
+                                <div class="btn enquiry text-uppercase" href="#">RESERVAR</div>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-end mt-1">
-                            <a class="btn btn-primary text-uppercase mx-2" id="Detalles" href="/alojamientos/detalles" role="button">VER</a>
-                            <div class="btn enquiry text-uppercase" href="#">RESERVAR</div>
-                        </div>
-                    </div>
-                    <div class="hotel py-2 px-2 pb-4 border-bottom">
-                        <div class="row">
-                            <div class="col-lg-3"> <img src="https://images.unsplash.com/photo-1580835845971-a393b73bf370?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80" alt="" class="hotel-img"> </div>
-                            <div class="col-lg-9">
-                                <div class="d-md-flex align-items-md-center">
-                                    <div class="name">Hospedaje 1<span class="city"> Ubicacion 1</span> </div>
-                                    <div class="ms-auto code text-uppercase">PRECIO 50$</div>
-                                </div>
-                                <div class="rating"> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star"></span> <!-- Book now Enquiry -->
-                                </div>
-                                <div class="d-flex flex-column tags pt-1">
-                                    <div><span class="fas fa-comment-dollar"></span> Fee Canellation</div>
-                                    <div><span class="fas fa-receipt"></span> Express check-in</div>
-                                    <div><span class="fas fa-concierge-bell"></span> Concierge</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end mt-1">
-                            <a class="btn btn-primary text-uppercase mx-2" id="Detalles" href="/alojamientos/detalles" role="button">VER</a>
-                            <div class="btn enquiry text-uppercase" href="#">RESERVAR</div>
-                        </div>
-                    </div>
-                    <div class="hotel py-2 px-2 pb-4 border-bottom">
-                        <div class="row">
-                            <div class="col-lg-3"> <img src="https://images.unsplash.com/photo-1580835845971-a393b73bf370?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80" alt="" class="hotel-img"> </div>
-                            <div class="col-lg-9">
-                                <div class="d-md-flex align-items-md-center">
-                                    <div class="name">Hospedaje 1<span class="city"> Ubicacion 1</span> </div>
-                                    <div class="ms-auto code text-uppercase">PRECIO 50$</div>
-                                </div>
-                                <div class="rating"> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star"></span> <!-- Book now Enquiry -->
-                                </div>
-                                <div class="d-flex flex-column tags pt-1">
-                                    <div><span class="fas fa-comment-dollar"></span> Fee Canellation</div>
-                                    <div><span class="fas fa-receipt"></span> Express check-in</div>
-                                    <div><span class="fas fa-concierge-bell"></span> Concierge</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end mt-1">
-                            <a class="btn btn-primary text-uppercase mx-2" id="Detalles" href="/alojamientos/detalles" role="button">VER</a>
-                            <div class="btn enquiry text-uppercase" href="#">RESERVAR</div>
-                        </div>
-                    </div>
+                    {{/each}}
                 </div>
             </div>
         </div>

@@ -2,12 +2,20 @@ const express=require('express')
 const router=express.Router()
 const pool=require('../database')
 
-router.get('/',(req,res)=>{
-    res.render('./accommodations/search_accommodations')
+router.get('/', async (req,res)=>{
+    const infoAlojamientos = await pool.query('SELECT alojamientos.idalojamiento, imagenes.link, emprendimientos.ubicacion, emprendimientos.nombreemprendimiento, alojamientos.precionoche, alojamientos.capacidadhabitaciones, alojamientos.capacidadestacionamientos, alojamientos.tipoalojamiento, alojamientos.piscina from emprendimientos inner join alojamientos on emprendimientos.idemprendimiento=alojamientos.id_emprendimiento INNER JOIN imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento and tipo="P"');
+    //console.log(infoAlojamientos);
+    res.render('./accommodations/search_accommodations', {infoAlojamientos});
+
 })
 
-router.get('/detalles',(req,res)=>{
-    res.render('./accommodations/details_accommodations')
+router.get('/detalles/:id', async (req,res)=>{
+    const { id } = req.params;
+    const infoDetalles = await pool.query('SELECT emprendimientos.descripcion, alojamientos.idalojamiento ,imagenes.link, emprendimientos.ubicacion, emprendimientos.nombreemprendimiento, alojamientos.precionoche, alojamientos.capacidadhabitaciones, alojamientos.capacidadestacionamientos, alojamientos.tipoalojamiento, alojamientos.piscina from emprendimientos inner join alojamientos on emprendimientos.idemprendimiento=alojamientos.id_emprendimiento INNER JOIN imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento where alojamientos.idalojamiento=?',[id]);
+    const solo = infoDetalles[0];
+    const infoOtros = await pool.query('SELECT alojamientos.idalojamiento, alojamientos.precionoche, imagenes.link FROM alojamientos INNER JOIN emprendimientos on alojamientos.idalojamiento=emprendimientos.idemprendimiento inner join imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento where idalojamiento<>? order by rand() limit 4', [solo.idalojamiento])
+    console.log(infoOtros);
+    res.render('./accommodations/details_accommodations', {solo, infoOtros});
 })
 module.exports=router
 
