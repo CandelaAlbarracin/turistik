@@ -1,7 +1,7 @@
 async function reserva(){
     if (await tarjeta()){
         console.log('reserva')
-        $('#reserva').modal('show')
+        $('#reservacion').modal('show')
         
     }
 }

@@ -1,4 +1,4 @@
-    <link rel="stylesheet" href="../../css/stylesDetails.css">
+    <link rel="stylesheet" href="/css/stylesDetails.css">
 </head>
 <body> 
     {{>navigation}}   
@@ -69,7 +69,7 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Denunciar al emprendimiento ....</h5>
+                                    <h5 class="modal-title" id="denunciaLabel">Denunciar al emprendimiento {{solo.nombreemprendimiento}}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
@@ -87,7 +87,7 @@
                                         <div class="form-floating mt-2">
                                             <textarea class="form-control" placeholder="Leave a comment here" id="denunciadescripcion" name="descripcion" style="height: 200px"></textarea>
                                             <label for="denunciadescripcion">¿Podría explicarnos un poco más sobre el incoveniente?</label>
-                                            <input type="hidden" name="id_emprendimiento" value="1">
+                                            <input type="hidden" name="id_emprendimiento" value={{emprendimiento.id_emprendimiento}}>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -153,18 +153,18 @@
                                     </div>
                                 </div>
                         </div>
-                        <div class="modal fade" id="reserva" tabindex="-1" aria-labelledby="reservaLabel" aria-hidden="true">
+                        <div class="modal fade" id="reservacion" tabindex="-1" aria-labelledby="reservaLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="reservaLabel"><i class="fas fa-concierge-bell"></i> Reservar en</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div> 
-                                <form action="/alojamientos/reservas" id="reserva" method="post">
+                                <form action="/alojamientos/reservas" method="post">
                                     <div class="modal-body">
-                                        <p class="fw-bold fs-3 text-center">Nombre Alojamiento</p>
+                                        <p class="fw-bold fs-3 text-center">{{solo.nombreemprendimiento}}</p>
                                         <div class="row g-2 ml-10 mr-10">
-                                            <input type="hidden" name="id_emprendimiento" value="1">
+                                            <input type="hidden" name="id_emprendimiento" value={{emprendimiento.id_emprendimiento}}>
                                             <input type="hidden" name="id_usuario" value="2">
                                             <div class="col ml-10">
                                                 <div class="form-floating mb-3">
@@ -196,7 +196,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                        <button type="submit" class="btn btn-success" id="reserva">Reservar</button>
+                                        <button type="submit" class="btn btn-success">Reservar</button>
                                     </div>
                                 </form>
                                 </div>
@@ -250,6 +250,6 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/3.0.0/jquery.payment.min.js"></script>
-    <script src="../js/tarjeta.js"></script>
-    <script src="../js/fecha.js"></script>
-    <script src="../js/reserva.js"></script>
+    <script src="/js/tarjeta.js"></script>
+    <script src="/js/fecha.js"></script>
+    <script src="/js/reserva.js"></script>
