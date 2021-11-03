@@ -46,7 +46,6 @@ router.post('/denunciar',async (req,res)=>{
 
 router.post('/reservas',async(req,res)=>{
     const {id_emprendimiento,id_usuario,fechainicio,fechafin,horario,comentario}=req.body
-    console.log(req.body)
     const idalojamiento=await pool.query('SELECT aloj.idalojamiento FROM alojamientos aloj JOIN emprendimientos em ON aloj.id_emprendimiento=em.idemprendimiento WHERE em.idemprendimiento=?;',[id_emprendimiento])
     const nuevaReserva={
         id_alojamiento:idalojamiento[0].idalojamiento,

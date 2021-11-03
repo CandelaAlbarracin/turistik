@@ -50,18 +50,21 @@ function validarInicial(){
     const fechanueva=new Date(fecha).setDate(new Date(fecha).getDate()+1)
     resultado = validarFecha(fecha);
     actual=new Date(new Date().setHours(0,0,0))
+    fechafinal.setAttribute('min',fecha)
+    fechainicio.setAttribute('min',actual.getFullYear()+'-'+(actual.getMonth()+1)+'-'+actual.getDate())
     if (resultado) {
         fechainicialinvalida.setAttribute('hidden','')
         if (new Date(fechanueva)<actual){
             fechainicialmenor.removeAttribute('hidden')
+            return false
         }else{
             fechainicialmenor.setAttribute('hidden','')
+            return true
         }
     } else {
         fechainicialinvalida.removeAttribute('hidden')
+        return false
     }
-    fechafinal.setAttribute('min',fecha)
-    fechainicio.setAttribute('min',actual.getFullYear()+'-'+(actual.getMonth()+1)+'-'+actual.getDate())
 }
 
 function validarFinal(){
@@ -71,8 +74,11 @@ function validarFinal(){
         fechafinalinvalida.setAttribute('hidden','')
         if (new Date(fecha)<new Date(fechainicio.value)){
            fechafinal.value=fechainicio.value
+           return false
         }
+        return true
     } else {
         fechafinalinvalida.removeAttribute('hidden')
+        return false
     }
 }
