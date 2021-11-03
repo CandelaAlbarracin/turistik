@@ -160,12 +160,15 @@
                                     <h5 class="modal-title" id="reservaLabel"><i class="fas fa-concierge-bell"></i> Reservar en</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div> 
-                                <form action="/alojamientos/reservas" method="post">
+                                <form action="/alojamientos/reservas" method="post" name="reservacion">
                                     <div class="modal-body">
                                         <p class="fw-bold fs-3 text-center">{{solo.nombreemprendimiento}}</p>
                                         <div class="row g-2 ml-10 mr-10">
                                             <input type="hidden" name="id_emprendimiento" value={{emprendimiento.id_emprendimiento}}>
                                             <input type="hidden" name="id_usuario" value="2">
+                                            <div id="reservado" hidden>
+                                                <p class="fw-bold text-danger text-center">Fechas Reservadas, por favor intente con otras fechas</p>
+                                            </div>
                                             <div class="col ml-10">
                                                 <div class="form-floating mb-3">
                                                     <input type="date" class="form-control form-control-lg" name="fechainicio" id="fechainicio" onchange="validarInicial()" required>
@@ -180,6 +183,12 @@
                                                     <label for="fechafinal">Fecha Final Reserva</label>
                                                     <p id='ff-invalida' class="text-danger fw-bold" hidden><i class="fas fa-times"></i> Fecha NO válida</p>
                                                 </div>
+                                            </div>
+                                            <div id="fechasreservadas" hidden>
+                                                {{#each r}}
+                                                    <p class="fechasiniciales">{{fechainicio}}</p>
+                                                    <p class="fechasfinales">{{fechafin}}</p>
+                                                {{/each}}
                                             </div>
                                         </div>
                                         <div class="form-floating">
@@ -196,7 +205,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                        <button type="submit" class="btn btn-success">Reservar</button>
+                                        <button type="button" class="btn btn-success" onclick="validarReserva()">Reservar</button>
                                     </div>
                                 </form>
                                 </div>

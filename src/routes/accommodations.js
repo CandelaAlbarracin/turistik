@@ -17,7 +17,17 @@ router.get('/detalles/:id', async (req,res)=>{
     // console.log(infoOtros);
     const idemp=await pool.query('SELECT id_emprendimiento from alojamientos where idalojamiento=?',[id])
     const emprendimiento=idemp[0]
-    res.render('./accommodations/details_accommodations', {solo, infoOtros,emprendimiento});
+    const actual=new Date()
+    const fechaactual=`${actual.getFullYear()}-${actual.getMonth()+1}-${actual.getDate()}`
+    const reservas=await pool.query('SELECT fechainicio,fechafin FROM reservas WHERE id_alojamiento=? AND fechainicio>=?',[id,fechaactual])
+    const r=reservas
+    for (let i=0;i<r.length;i++){
+        fechainicio= new Date(r[i].fechainicio)
+        r[i].fechainicio=`${fechainicio.getFullYear()}-${fechainicio.getMonth()+1}-${fechainicio.getDate()}`
+        fechafin=new Date (r[i].fechafin)
+        r[i].fechafin=`${fechafin.getFullYear()}-${fechafin.getMonth()+1}-${fechafin.getDate()}`
+    }
+    res.render('./accommodations/details_accommodations', {solo, infoOtros,emprendimiento,r});
 })
 module.exports=router
 
@@ -36,6 +46,7 @@ router.post('/denunciar',async (req,res)=>{
 
 router.post('/reservas',async(req,res)=>{
     const {id_emprendimiento,id_usuario,fechainicio,fechafin,horario,comentario}=req.body
+    console.log(req.body)
     const idalojamiento=await pool.query('SELECT aloj.idalojamiento FROM alojamientos aloj JOIN emprendimientos em ON aloj.id_emprendimiento=em.idemprendimiento WHERE em.idemprendimiento=?;',[id_emprendimiento])
     const nuevaReserva={
         id_alojamiento:idalojamiento[0].idalojamiento,

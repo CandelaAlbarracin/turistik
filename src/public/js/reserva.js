@@ -1,3 +1,57 @@
+async function validarReserva(){
+    const reservado=document.getElementById('reservado')
+    const r= validarFechaReserva()
+    if (r){
+        await document.reservacion.submit()
+
+    }else{
+        reservado.removeAttribute('hidden')
+    }
+}
+
+function validarFechaReserva(){
+    const fechasiniciales=document.getElementsByClassName('fechasiniciales')
+    const fechasfinales=document.getElementsByClassName('fechasfinales')
+    const fechainicioselect=document.getElementById('fechainicio').value
+    const fechafinselect=document.getElementById('fechafinal').value
+    let reserva=[]
+    let reservas=[]
+    let valido
+    for (let i=0;i<fechasiniciales.length;i++){
+        inicio=fechasiniciales[i].textContent
+        fin=fechasfinales[i].textContent
+        reserva=fechasIntermedias(inicio,fin)
+        reserva.forEach(element=>{
+            reservas.push(element)
+        })
+    }
+    posiblereserva=fechasIntermedias(fechainicioselect,fechafinselect)
+    posiblereserva.forEach(element => {
+        rta=reservas.includes(element)
+        if (rta){
+            valido= false
+        }else{
+            valido= true
+        }
+    });
+    return valido
+    
+}
+function fechasIntermedias(fechaInicio,fechaFin){
+    const inicio=new Date(fechaInicio)
+    const fin=new Date(fechaFin)
+    let fechas=[]
+    let diff=fin-inicio
+    let diferenciaDias = Math.floor(diff / (1000 * 60 * 60 * 24))
+    for (let i=0;i<=diferenciaDias;i++){
+        c=incrementarDias(inicio,1)
+        fechas.push(`${c.getFullYear()}-${c.getMonth()+1}-${c.getDate()}`)
+    }
+    return fechas
+}
+function incrementarDias(fecha,dias){
+  return new Date(fecha.setDate(fecha.getDate() + dias));
+}
 async function reserva(){
     if (await tarjeta()){
         console.log('reserva')
