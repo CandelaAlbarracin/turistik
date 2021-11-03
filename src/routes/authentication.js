@@ -8,7 +8,8 @@ router.get("/signup",(req,res) => {
 
 //ruta para recibir los datos del formulario
 router.post("/signup",(req,res) => {
-
+    console.log(req.body);
+    res.send("Datos recibidos");
 });
 
 module.exports=router
