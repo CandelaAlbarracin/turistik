@@ -1,7 +1,7 @@
 async function validarReserva(){
     const reservado=document.getElementById('reservado')
     const r= validarFechaReserva()
-    if (r){
+    if (r && validarInicial() && validarFinal()){
         await document.reservacion.submit()
 
     }else{
