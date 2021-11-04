@@ -35,14 +35,12 @@ router.post('/buscar',async (req,res)=>{
     // const infoAlojamientos=await pool.query(consulta,[rta])
     let infoAlojamientos
     if (rta.length){
-        console.log('aqui')
         infoAlojamientos=await pool.query(consulta,[rta])
     }else{
-        console.log('espero')
         infoAlojamientos=''
     }
     const buscar=true
-    const aloj=''
+    let aloj=''
     if (tipoalojamiento!='Todos'){
         aloj=tipoalojamiento
     }
