@@ -3,6 +3,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const pool = require("../database")
 const helpers = require("../lib/helpers");
 
+//registro para usuario turista
 passport.use("local.signup", new LocalStrategy({
    usernameField: "email",
    passwordField: "contrasena",
@@ -16,16 +17,18 @@ passport.use("local.signup", new LocalStrategy({
         nombre,
         apellido,
         email,
-        contrasena
+        contrasena,
+        //tipo
     };
     newUser.contrasena = await helpers.encryptPassword(contrasena);
     const result = await pool.query("INSERT INTO usuarios SET ?",[newUser]);
-    newUser.id = result.insertId;
+    console.log(result);
+    newUser.idusuario = result.insertId;
     return done(null,newUser);
 }));
 
 passport.serializeUser((user,done) => {
-    done(null,user.id);
+    done(null,user.idusuario);
 });
 
 passport.deserializeUser(async(id,done) => {
@@ -33,3 +36,7 @@ passport.deserializeUser(async(id,done) => {
     done(null,rows[0]);
 });
 
+
+//registro para usuario emprendedor
+
+//registro para usuario administrador
