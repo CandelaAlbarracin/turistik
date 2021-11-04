@@ -81,6 +81,11 @@
                     {{#if capacidadhuespedes}}
                     para {{capacidadhuespedes}} personas
                     {{/if}}</p>
+                {{#unless infoAlojamientos}}
+                    <div>
+                        <p class="text-center fw-bold fst-italic">Lo sentimos, no hemos encontrado resultados que se adapten a su búsqueda. Inténtelo nuevamente</p>
+                    </div>
+                {{/unless}}
             </div>
             {{/if}}
             {{#if infoAlojamientos}}    
@@ -91,27 +96,27 @@
                         <div class="box border-bottom">
                             <div class="box-label text-uppercase d-flex align-items-center">Precio <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#inner-box" aria-expanded="false" aria-controls="inner-box"> <span class="fas fa-plus"></span> </button> </div>
                             <div id="inner-box" class="collapse show">
-                                <div class="my-1"> <label class="tick">Menos que 2000 <input type="radio" name="precio" checked="checked"> <span class="check"></span> </label> </div>
-                                <div class="my-1"> <label class="tick">2000 - 3000 <input type="radio" name="precio"> <span class="check"></span> </label> </div>
-                                <div class="my-1"> <label class="tick">3000 - 4500 <input type="radio" name="precio"> <span class="check"></span> </label> </div>
-                                <div class="my-1"> <label class="tick">4500 - 6000 <input type="radio" name="precio"> <span class="check"></span> </label> </div>
-                                <div class="my-1"> <label class="tick">6000 - 8000 <input type="radio" name="precio"> <span class="check"></span> </label> </div>
-                                <div class="my-1"> <label class="tick">8000 -10,000 <input type="radio" name="precio" > <span class="check"></span> </label> </div>
-                                <div class="my-1"> <label class="tick">Mas que 10,000<input type="radio" name="precio"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">Menos que 2000 <input type="checkbox" name="precio" checked="checked"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">2000 - 3000 <input type="checkbox" name="precio"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">3000 - 4500 <input type="checkbox" name="precio"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">4500 - 6000 <input type="checkbox" name="precio"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">6000 - 8000 <input type="checkbox" name="precio"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">8000 -10,000 <input type="checkbox" name="precio" > <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">Mas que 10,000<input type="checkbox" name="precio"> <span class="check"></span> </label> </div>
                             </div>
                         </div>
                         <div class="box border-bottom">
                             <div class="box-label text-uppercase d-flex align-items-center">Piscina <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#property" aria-expanded="false" aria-controls="property"> <span class="fas fa-plus"></span> </button> </div>
                             <div id="property" class="collapse">
 
-                                <div class="my-1"> <label class="tick">Si <input type="radio" name="piscina" checked="checked"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">Si <input type="radio" name="piscina"> <span class="check"></span> </label> </div>
                                 <div class="my-1"> <label class="tick">No <input type="radio" name="piscina"> <span class="check"></span> </label> </div>
                             </div>
                         </div>
                         <div class="box border-bottom">
                             <div class="box-label text-uppercase d-flex align-items-center">Estacionamiento <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#amenities" aria-expanded="false" aria-controls="amenities"> <span class="fas fa-plus"></span> </button> </div>
-                            <div id="amenities" class="collapse show">
-                                <div class="my-1"> <label class="tick">Si <input type="radio" name="estacionamiento" checked="checked"> <span class="check"></span> </label> </div>
+                            <div id="amenities" class="collapse">
+                                <div class="my-1"> <label class="tick">Si <input type="radio" name="estacionamiento"> <span class="check"></span> </label> </div>
                                 <div class="my-1"> <label class="tick">No<input type="radio" name="estacionamiento"> <span class="check"></span> </label> </div>
                             </div>
                         </div>
