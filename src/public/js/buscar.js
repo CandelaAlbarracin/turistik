@@ -78,8 +78,8 @@ function validarFinal(){
 
 window.onload = function(){
     const fecha = new Date(); 
-    const mes = fecha.getMonth()+1;
-    const dia = fecha.getDate(); 
+    let mes = fecha.getMonth()+1;
+    let dia = fecha.getDate(); 
     const ano = fecha.getFullYear(); 
     if(dia<10)
       dia='0'+dia;
@@ -90,4 +90,10 @@ window.onload = function(){
     fechafinal.value=actual
     fechainicio.setAttribute('min',actual)
     fechafinal.setAttribute('min',actual)
+}
+
+function colocarLocalidad(){
+    const locvalor=document.getElementById('localidadlista').value
+    const locinput=document.getElementById('locinput')
+    locinput.value=locvalor
 }
