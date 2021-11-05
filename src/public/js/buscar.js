@@ -78,8 +78,8 @@ function validarFinal(){
 
 window.onload = function(){
     const fecha = new Date(); 
-    const mes = fecha.getMonth()+1;
-    const dia = fecha.getDate(); 
+    let mes = fecha.getMonth()+1;
+    let dia = fecha.getDate(); 
     const ano = fecha.getFullYear(); 
     if(dia<10)
       dia='0'+dia;
@@ -90,4 +90,136 @@ window.onload = function(){
     fechafinal.value=actual
     fechainicio.setAttribute('min',actual)
     fechafinal.setAttribute('min',actual)
+}
+
+function colocarLocalidad(){
+    const locvalor=document.getElementById('localidadlista').value
+    const locinput=document.getElementById('locinput')
+    locinput.value=locvalor
+}
+
+function refinarBusqueda(){
+    const alojamientos=document.getElementsByClassName('alojamiento')
+    const piscinaSi=document.getElementById('pSi').checked
+    const piscinaNo=document.getElementById('pNo').checked
+    const estacionamientoSi=document.getElementById('eSi').checked
+    const estacionamientoNo=document.getElementById('eNo').checked
+
+    const arrayprecio=precio()
+    const arraypiscina=piscina()
+    const arrayestacionamiento=estacionamiento()
+    let array=arrayprecio
+    if (piscinaSi || piscinaNo){
+        array=arrayprecio.filter(x=>arraypiscina.includes(x))
+    }
+    if (estacionamientoSi || estacionamientoNo){
+        array=array.filter(x=>arrayestacionamiento.includes(x))
+    }
+
+    for (let i=0;i<alojamientos.length;i++){
+        if (array.includes(alojamientos[i].id)){
+            document.getElementById(alojamientos[i].id).removeAttribute('hidden')
+        }else{
+            document.getElementById(alojamientos[i].id).setAttribute('hidden','')
+        } 
+    }
+}
+
+function precio(){
+    const p1=document.getElementById('p1').checked
+    const p2=document.getElementById('p2').checked
+    const p3=document.getElementById('p3').checked
+    const p4=document.getElementById('p4').checked
+    const p5=document.getElementById('p5').checked
+    const p6=document.getElementById('p6').checked
+    const p7=document.getElementById('p7').checked
+
+    const alojamientos=document.getElementsByClassName('alojamiento')
+    const preciosaloj=document.getElementsByClassName('precio')
+
+    const precios=[p1,p2,p3,p4,p5,p6,p7]
+    let valrangos=[0,2000,3000,4500,6000,8000,10000,9999999]
+    let rangos=[0,1,2,3,4,5,6]
+    rangos=rangos.filter(x=>precios[x])
+    let alojamientosenprecio=[]
+    for (let i=0;i<alojamientos.length;i++){
+        let precio=parseInt(preciosaloj[i].textContent.substr(1),10)
+        for (let idx=0; idx<rangos.length;idx++){
+            let indice=rangos[idx]
+            if (precio>=valrangos[indice] && precio<=valrangos[indice+1]){
+                alojamientosenprecio.push(alojamientos[i].id)
+                break
+            }
+        }
+    }
+    return alojamientosenprecio
+    // for(let i=0;i<alojamientos.length;i++){
+    //     if (!alojamientosenprecio.includes(alojamientos[i].id)){
+    //         //let idaloj=`precio-aloj${alojamientos[i].id}`
+    //         document.getElementById(alojamientos[i].id).setAttribute('hidden','')
+    //     }else{
+    //         document.getElementById(alojamientos[i].id).removeAttribute('hidden')
+    //     }
+    // }
+}
+
+function piscina(){
+    const piscinaSi=document.getElementById('pSi').checked
+    const piscinaNo=document.getElementById('pNo').checked
+
+    const alojamientos=document.getElementsByClassName('alojamiento')
+    let alojPiscina=[]
+    let alojNoPiscina=[]
+    for(let i=0;i<alojamientos.length;i++){
+        spanpiscina=alojamientos[i].getElementsByClassName('fa-swimming-pool')
+        if (spanpiscina.length>0){
+            alojPiscina.push(alojamientos[i].id)
+        }else{
+            alojNoPiscina.push(alojamientos[i].id)
+        }
+    }
+    let aloj=[]
+    if (piscinaSi){
+        aloj=alojPiscina
+    }else{
+        aloj=alojNoPiscina
+    }
+    return aloj
+    // for (let i=0;i<alojamientos.length;i++){
+    //     if (aloj.includes(alojamientos[i].id)){
+    //         document.getElementById(alojamientos[i].id).removeAttribute('hidden')
+    //     }else{
+    //         document.getElementById(alojamientos[i].id).setAttribute('hidden','')
+    //     } 
+    // }   
+}
+
+function estacionamiento(){
+    const estacionamientoSi=document.getElementById('eSi').checked
+
+    const alojamientos=document.getElementsByClassName('alojamiento')
+    let est=[]
+    let estNo=[]
+    for(let i=0;i<alojamientos.length;i++){
+        spancar=alojamientos[i].getElementsByClassName('estacionamiento')
+        if(parseInt(spancar[0].textContent.substr(20))>0){
+            est.push(alojamientos[i].id)
+        }else{
+            estNo.push(alojamientos[i].id)
+        }
+    }
+    let aloj=[]
+    if (estacionamientoSi){
+        aloj=est
+    }else{
+        aloj=estNo
+    }
+    return aloj
+    // for (let i=0;i<alojamientos.length;i++){
+    //     if (aloj.includes(alojamientos[i].id)){
+    //         document.getElementById(alojamientos[i].id).removeAttribute('hidden')
+    //     }else{
+    //         document.getElementById(alojamientos[i].id).setAttribute('hidden','')
+    //     }
+    // }
 }

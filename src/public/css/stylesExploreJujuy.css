@@ -30,15 +30,15 @@ h1,h2,h4,h5,h6 {
 }
 
 	#timeline {
-		width: 500px;
-		height: 600px;
+		width: 600px;
+		height: 620px;
 		overflow: hidden;
 		margin: 40px auto;
 		position: relative;
 		background: url('http://www.csslab.cl/ejemplos/timelinr/latest/images/dot.gif') 3px top repeat-y;
 	}
 		#dates {
-			width: 100px;
+			width: 120px;
 			height: 600px;
 			overflow: hidden;
 			float: left;
@@ -105,8 +105,8 @@ h1,h2,h4,h5,h6 {
 					/* text-shadow: #000 1px 1px 2px; */
 				}
 				#issues li p {
-					font-size: 14px;
-					margin: 10px 20px;
+					font-size: 13px;
+					margin: 10px 1px;
 					font-weight: normal;
 					line-height: 22px;
 					/* text-shadow: #000 1px 1px 2px; */
