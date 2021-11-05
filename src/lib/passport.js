@@ -18,7 +18,6 @@ passport.use("local.signup", new LocalStrategy({
         apellido,
         email,
         contrasena,
-        //tipo
     };
     newUser.contrasena = await helpers.encryptPassword(contrasena);
     const result = await pool.query("INSERT INTO usuarios SET ?",[newUser]);
