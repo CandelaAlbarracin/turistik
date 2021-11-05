@@ -57,10 +57,11 @@ function convertirArray(rowData){
 
 router.get('/detalles/:id', async (req,res)=>{
     const { id } = req.params;
-    const infoDetalles = await pool.query('SELECT emprendimientos.descripcion, alojamientos.idalojamiento ,imagenes.link, emprendimientos.ubicacion, emprendimientos.nombreemprendimiento, alojamientos.precionoche, alojamientos.capacidadhabitaciones, alojamientos.capacidadestacionamientos, alojamientos.tipoalojamiento, alojamientos.piscina,emprendimientos.id_localidad from emprendimientos inner join alojamientos on emprendimientos.idemprendimiento=alojamientos.id_emprendimiento INNER JOIN imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento where alojamientos.idalojamiento=?',[id]);
+    //const infoDetalles = await pool.query('SELECT emprendimientos.descripcion, alojamientos.idalojamiento ,imagenes.link, emprendimientos.ubicacion, emprendimientos.nombreemprendimiento, alojamientos.precionoche, alojamientos.capacidadhabitaciones, alojamientos.capacidadestacionamientos, alojamientos.tipoalojamiento, alojamientos.piscina,emprendimientos.id_localidad from emprendimientos inner join alojamientos on emprendimientos.idemprendimiento=alojamientos.id_emprendimiento INNER JOIN imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento where alojamientos.idalojamiento=?',[id]);
+    const infoDetalles = await pool.query('SELECT contacto.facebook, contacto.instagram, contacto.telefono, contacto.youtube, emprendimientos.descripcion, alojamientos.idalojamiento ,imagenes.link, emprendimientos.ubicacion, emprendimientos.nombreemprendimiento, alojamientos.precionoche, alojamientos.capacidadhabitaciones, alojamientos.capacidadestacionamientos, alojamientos.tipoalojamiento, alojamientos.piscina,emprendimientos.id_localidad from emprendimientos inner join alojamientos on emprendimientos.idemprendimiento=alojamientos.id_emprendimiento INNER JOIN imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento INNER JOIN contacto ON contacto.id_emprendimiento=emprendimientos.idemprendimiento where alojamientos.idalojamiento=?', [id]);
     const solo = infoDetalles[0];
-    const infoOtros = await pool.query('SELECT alojamientos.idalojamiento, alojamientos.precionoche, imagenes.link FROM alojamientos INNER JOIN emprendimientos on alojamientos.idalojamiento=emprendimientos.idemprendimiento inner join imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento where idalojamiento<>? order by rand() limit 4', [solo.idalojamiento])
-    // console.log(infoOtros);
+    const infoOtros = await pool.query('SELECT alojamientos.idalojamiento, alojamientos.precionoche, imagenes.link FROM alojamientos INNER JOIN emprendimientos on alojamientos.idalojamiento=emprendimientos.idemprendimiento inner join imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento where (idalojamiento<>? and imagenes.tipo="P") order by rand() limit 4', [solo.idalojamiento])
+    const imag = await pool.query('SELECT  imagenes.link from emprendimientos inner join alojamientos on emprendimientos.idemprendimiento=alojamientos.id_emprendimiento INNER JOIN imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento where alojamientos.idalojamiento=?', [solo.idalojamiento]);
     const idemp=await pool.query('SELECT id_emprendimiento from alojamientos where idalojamiento=?',[id])
     const emprendimiento=idemp[0]
     const actual=new Date()
@@ -76,7 +77,7 @@ router.get('/detalles/:id', async (req,res)=>{
     const localidad=await pool.query('SELECT nombrelocalidad FROM localidades WHERE idlocalidad=?',[solo.id_localidad])
     loc=localidad[0].nombrelocalidad.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     urlmap=(solo.ubicacion+`,%20${loc}`).replace(' ','%20')
-    res.render('./accommodations/details_accommodations', {solo, infoOtros,emprendimiento,r,urlmap});
+    res.render('./accommodations/details_accommodations', {solo, infoOtros,emprendimiento,r,urlmap, imag});
 })
 
 router.post('/denunciar',async (req,res)=>{
