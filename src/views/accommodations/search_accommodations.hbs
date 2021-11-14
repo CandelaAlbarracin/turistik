@@ -1,4 +1,8 @@
     <link rel="stylesheet" href="/css/stylesSearch.css">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
 </head>
 <body> 
     {{>navigation}}   
@@ -25,7 +29,7 @@
                                     <p id='fi-menor' class="text-danger fw-bold text-center" hidden><i class="fas fa-times"></i> La fecha seleccionada es menor a la fecha actual</p>
                                 </div>
                             </div>
-                            <div class="col mr-10">
+                            <div class="col mr-10 m-2">
                                 <div class="form-floating mb-3">
                                     <input type="date" class="form-control form-control-lg" name="fechafinal" id="fechafinal" onchange="validarFinal()" required>
                                     <label for="fechafinal">Fecha Final Reserva</label>
@@ -64,6 +68,46 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row m-2">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p><i class="fas fa-child"></i> Actividades</p>
+                                    <div class="text-center">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                            <label class="form-check-label" for="inlineCheckbox1">Cocinar comida típica</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                            <label class="form-check-label" for="inlineCheckbox2">Cuidado de animales</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option2">
+                                            <label class="form-check-label" for="inlineCheckbox3">Trabajar con cuero</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option2">
+                                            <label class="form-check-label" for="inlineCheckbox">Conocer acerca de un pueblo originario</label>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-1">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
+                                            <label class="form-check-label" for="inlineCheckbox4">Agricultura</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option2">
+                                            <label class="form-check-label" for="inlineCheckbox5">Trabajo con telas</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option2">
+                                            <label class="form-check-label" for="inlineCheckbox6">Artesanías con Barro</label>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
                         <div class="d-grid gap-2 m-2">
                             <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Buscar</button>
                         </div>
@@ -87,6 +131,66 @@
                     </div>
                 {{/unless}}
             </div>
+            {{else}}
+                <div>
+                    <p class="fst-italic fs-5">Algunos de nuestros alojamientos</p>
+                </div>
+                <div class="d-flex justify-content-start">
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="card" style="width: 18rem;">
+                                <img src="https://res.cloudinary.com/turistik/image/upload/v1635881501/Alojaminetos/Alojamiento%201/P_ik1zkl.jpg" class="card-img-top">
+                                <div class="card-body" style="height: 15rem;">
+                                    <h5 class="card-title">Alojamiento El Amancay</h5>
+                                    <p class="card-text h-50 d-inline-block" style="overflow: hidden;">El emprendimiento de Doña Guillerma es uno de los primeros alojamientos de Caspalá, el emprendimiento se desarrolla en su vivienda familiar, actualmente cuenta con dos habitaciones Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum corporis veniam quibusdam hic blanditiis est libero quia ipsa officia reprehenderit eveniet et harum consectetur provident, velit cupiditate aliquam unde ad!</p>
+                                    <div class="d-grid gap-2">
+                                       <a href="#" class="btn btn-primary">¡Quiero saber más!</a> 
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="card" style="width: 18rem;">
+                                <img src="https://res.cloudinary.com/turistik/image/upload/v1635881522/Alojaminetos/Alojamiento%202/P_2_fdsiyy.jpg" class="card-img-top" alt="...">
+                                <div class="card-body" style="height: 15rem;">
+                                    <h5 class="card-title">Alojamiento Pueblo Viejo</h5>
+                                    <p class="card-text h-50 d-inline-block" style="overflow: hidden;">El emprendimiento se desarrolla en la vivienda familiar, actualmente cuenta con cinco habitaciones, con baño compartido, el cual es de uso exclusivo para los turistas. En cuanto al equipamiento...</p>
+                                    <div class="d-grid gap-2">
+                                       <a href="#" class="btn btn-primary">¡Quiero saber más!</a> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="card" style="width: 18rem;">
+                                <img src="https://res.cloudinary.com/turistik/image/upload/v1635881441/Alojaminetos/Alojamiento%201/WhatsApp_Image_2021-10-29_at_3.56.12_PM_oqa4nv_2_acat0c.jpg" class="card-img-top">
+                                <div class="card-body" style="height: 15rem;">
+                                    <h5 class="card-title">Alojamiento El Amancay</h5>
+                                    <p class="card-text h-50 d-inline-block" style="overflow: hidden;">El emprendimiento de Doña Guillerma es uno de los primeros alojamientos de Caspalá, el emprendimiento se desarrolla en su vivienda familiar, actualmente cuenta con dos habitaciones Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum corporis veniam quibusdam hic blanditiis est libero quia ipsa officia reprehenderit eveniet et harum consectetur provident, velit cupiditate aliquam unde ad!</p>
+                                    <div class="d-grid gap-2">
+                                       <a href="#" class="btn btn-primary">¡Quiero saber más!</a> 
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="card" style="width: 18rem;">
+                                <img src="https://res.cloudinary.com/turistik/image/upload/v1635882058/Alojaminetos/Alojamiento%202/WhatsApp_Image_2021-10-29_at_3.50.35_PM_yopokl_1_me2jfn.jpg" class="card-img-top" alt="...">
+                                <div class="card-body" style="height: 15rem;">
+                                    <h5 class="card-title">Alojamiento Pueblo Viejo</h5>
+                                    <p class="card-text h-50 d-inline-block" style="overflow: hidden;">El emprendimiento se desarrolla en la vivienda familiar, actualmente cuenta con cinco habitaciones, con baño compartido, el cual es de uso exclusivo para los turistas. En cuanto al equipamiento...</p>
+                                    <div class="d-grid gap-2">
+                                       <a href="#" class="btn btn-primary">¡Quiero saber más!</a> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5"><div class="swiper-pagination"></div></div>
+                    
+                </div>
+                </div>
             {{/if}}
             {{#if infoAlojamientos}}    
             <div class="d-sm-flex">
@@ -106,7 +210,7 @@
                             </div>
                         </div>
                         <div class="box border-bottom">
-                            <div class="box-label text-uppercase d-flex align-items-center">Piscina <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#property" aria-expanded="false" aria-controls="property"> <span class="fas fa-plus"></span> </button> </div>
+                            <div class="box-label text-uppercase d-flex align-items-center">Horno de Barro <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#property" aria-expanded="false" aria-controls="property"> <span class="fas fa-plus"></span> </button> </div>
                             <div id="property" class="collapse">
 
                                 <div class="my-1"> <label class="tick">Si <input type="radio" name="piscina" id="pSi" onchange="refinarBusqueda()"> <span class="check"></span> </label> </div>
@@ -114,10 +218,18 @@
                             </div>
                         </div>
                         <div class="box border-bottom">
-                            <div class="box-label text-uppercase d-flex align-items-center">Estacionamiento <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#amenities" aria-expanded="false" aria-controls="amenities"> <span class="fas fa-plus"></span> </button> </div>
+                            <div class="box-label text-uppercase d-flex align-items-center">Animales Autóctonos <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#amenities" aria-expanded="false" aria-controls="amenities"> <span class="fas fa-plus"></span> </button> </div>
                             <div id="amenities" class="collapse">
                                 <div class="my-1"> <label class="tick">Si <input type="radio" name="estacionamiento" id="eSi" onchange="refinarBusqueda()"> <span class="check"></span> </label> </div>
                                 <div class="my-1"> <label class="tick">No<input type="radio" name="estacionamiento" id="eNo" onchange="refinarBusqueda()"> <span class="check"></span> </label> </div>
+                            </div>
+                        </div>
+                        <div class="box border-bottom">
+                            <div class="box-label text-uppercase d-flex align-items-center">Vista <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#view" aria-expanded="false" aria-controls="view"> <span class="fas fa-plus"></span> </button> </div>
+                            <div id="view" class="collapse">
+                                <div class="my-1"> <label class="tick">Cerros <input type="checkbox" name="vista" id="vCerro" onchange="refinarBusqueda()"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">Ríos<input type="checkbox" name="vista" id="vRios" onchange="refinarBusqueda()"> <span class="check"></span> </label> </div>
+                                <div class="my-1"> <label class="tick">Ciudad<input type="checkbox" name="vista" id="vCiudad" onchange="refinarBusqueda()"> <span class="check"></span> </label> </div>
                             </div>
                         </div>
                     </div>
@@ -161,4 +273,34 @@
     <script>
         const linkactivo=document.getElementById("Alojamientos")
         linkactivo.classList.add('active')
+    </script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        autoplay:{
+          delay:5000,
+          disableOnInteraction: false,
+        },
+        coverflowEffect: {
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
     </script>
