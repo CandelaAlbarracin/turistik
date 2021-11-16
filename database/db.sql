@@ -184,3 +184,14 @@ INSERT INTO `turistik`.`imagenesactividades` (`idactividades`, `link`, `tipo`, `
 INSERT INTO `turistik`.`actividadesofrecidas` (`idactividadesofrecidas`, `id_alojamiento`, `id_actividad`) VALUES ('1', '3', '1');
 INSERT INTO `turistik`.`actividadesofrecidas` (`idactividadesofrecidas`, `id_alojamiento`, `id_actividad`) VALUES ('2', '4', '1');
 INSERT INTO `turistik`.`actividadesofrecidas` (`idactividadesofrecidas`, `id_alojamiento`, `id_actividad`) VALUES ('3', '4', '2');
+
+alter table actividades add tipo varchar(1) after nombre;
+UPDATE `turistik`.`actividades` SET `tipo` = 'A' WHERE (`idactividades` = '1');
+UPDATE `turistik`.`actividades` SET `tipo` = 'A' WHERE (`idactividades` = '2');
+UPDATE `turistik`.`actividades` SET `tipo` = 'A' WHERE (`idactividades` = '3');
+UPDATE `turistik`.`actividades` SET `tipo` = 'A' WHERE (`idactividades` = '4');
+UPDATE `turistik`.`actividades` SET `tipo` = 'A' WHERE (`idactividades` = '5');
+UPDATE `turistik`.`actividades` SET `tipo` = 'A' WHERE (`idactividades` = '6');
+UPDATE `turistik`.`actividades` SET `tipo` = 'A' WHERE (`idactividades` = '7');
+
+alter table imagenesactividades add publicid varchar(60);

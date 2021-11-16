@@ -1,0 +1,43 @@
+</head>
+<body> 
+    {{>navigation}}
+    <div class="container">
+        <h2 class="text-center fst-italic mt-3">{{actividad.nombre}}</h2>
+        <div class="row">
+            <div class="col-6">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{{imgPrincipal.link}}" height="380px" class="d-block w-100">
+                        </div>
+                        {{#each imagenesSec}}
+                            <div class="carousel-item"> 
+                                <img src="{{link}}" height="380px" class="d-block w-100"> 
+                            </div>
+                        {{/each}}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previo</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title fs-4">¿En qué consiste {{actividad.nombre}}?</h5>
+                        <h6 class="card-subtitle mb-4 mt-2 text-muted">{{actividad.introduccion}}</h6>
+                        <p class="card-text">{{{actividad.descripcion}}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5">
+            <a class="btn btn-secondary" role="button" href="/actividades"><i class="fas fa-chevron-circle-left"></i> Volver</a>
+        </div>
+        
+    </div>

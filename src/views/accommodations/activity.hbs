@@ -36,7 +36,7 @@
                     <div class="card-body">
                         <h5 class="card-title fs-4">¿En qué consiste {{detalles.nombre}}?</h5>
                         <h6 class="card-subtitle mb-4 mt-2 text-muted">{{detalles.introduccion}}</h6>
-                        <p class="card-text">{{detalles.descripcion}}</p>
+                        <p class="card-text" id="descrip">{{{detalles.descripcion}}}</p>
                     </div>
                 </div>
             </div>
@@ -65,6 +65,9 @@
                 <div class="mt-5"><div class="swiper-pagination"></div></div>
                 
             </div>
+        </div>
+        <div class="mt-5">
+            <a class="btn btn-secondary" role="button" href="/alojamientos"><i class="fas fa-chevron-circle-left"></i> Volver</a>
         </div>
     </div>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
