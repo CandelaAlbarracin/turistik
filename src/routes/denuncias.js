@@ -3,12 +3,10 @@ const router=express.Router()
 const pool=require('../database')
 
 router.get('/',async(req,res)=>{
-    const denuncias=await pool.query('SELECT d.nroDenuncia,em.nombreemprendimiento,em.categoria,d.motivo,d.descripcion FROM emprendimientos em join denuncias d ON em.idemprendimiento=d.id_emprendimiento;')
+    const denuncias=await pool.query('SELECT d.nroDenuncia,em.nombreemprendimiento,em.categoria,d.motivo,d.descripcion FROM emprendimientos em join denuncias d ON em.idemprendimiento=d.id_emprendimiento order by d.nroDenuncia;')
     denuncias.map(function(denuncia){
         if (denuncia.categoria=='A'){
             denuncia.categoria='Alojamiento'
-        }else if (denuncia.categoria=='R'){
-            denuncia.categoria='Restaurante'
         }else{
             denuncia.categoria='Tour'
         }
@@ -18,46 +16,39 @@ router.get('/',async(req,res)=>{
 })
 
 router.post('/resultados',async(req,res)=>{
-    let {nombreemprendimiento,categoria}=req.body
+    let {nombreemprendimiento,motivo,categoria}=req.body
     const categoriaarray=JSON.parse('['+categoria+']')
-    const nombrecat={'A':'Alojamiento','R': 'Restaurante','T':'Tours'}
-    let cat
-    if (categoriaarray.length>1) {
-        cat='Todos'
-    }else{
-        cat=nombrecat[categoriaarray[0]]
-    }
+    let denunciasResultado,total
     if (nombreemprendimiento){
-        const denuncias=await pool.query('SELECT d.nroDenuncia,em.nombreemprendimiento,em.categoria,d.motivo,d.descripcion FROM emprendimientos em join denuncias d ON em.idemprendimiento=d.id_emprendimiento AND em.nombreemprendimiento regexp ? AND em.categoria in (?);',[nombreemprendimiento,categoriaarray])
-        const total=await pool.query('SELECT COUNT(*) as cantidad FROM emprendimientos em join denuncias d ON em.idemprendimiento=d.id_emprendimiento AND em.nombreemprendimiento regexp ? AND em.categoria in (?);',[nombreemprendimiento,categoriaarray])
-        denuncias.map(function(denuncia){
-            if (denuncia.categoria=='A'){
-                denuncia.categoria='Alojamiento'
-            }else if (denuncia.categoria=='R'){
-                denuncia.categoria='Restaurante'
-            }else{
-                denuncia.categoria='Tour'
-            }
-        })
-        res.render('./denuncias/denuncias',[{denuncias},total[0].cantidad,nombreemprendimiento,cat])
-    }else{
-        if (categoriaarray.length>1){
-            res.redirect('/denuncias')
+        if (motivo=="Todos"){
+            denunciasResultado=await pool.query('SELECT d.nroDenuncia,em.nombreemprendimiento,em.categoria,d.motivo,d.descripcion FROM emprendimientos em join denuncias d ON em.idemprendimiento=d.id_emprendimiento AND em.nombreemprendimiento regexp ? AND em.categoria in (?);',[nombreemprendimiento,categoriaarray])
         }else{
-            const denunciacat=await pool.query('SELECT d.nroDenuncia,em.nombreemprendimiento,em.categoria,d.motivo,d.descripcion FROM emprendimientos em join denuncias d ON em.idemprendimiento=d.id_emprendimiento AND em.categoria in (?)',[categoriaarray])
-            const totalcat=await pool.query('SELECT count(*) as cantidadcat FROM emprendimientos em join denuncias d ON em.idemprendimiento=d.id_emprendimiento AND em.categoria in (?)',[categoriaarray]) 
-            denunciacat.map(function(denunciacat){
-                if (denunciacat.categoria=='A'){
-                    denunciacat.categoria='Alojamiento'
-                }else if (denunciacat.categoria=='R'){
-                    denunciacat.categoria='Restaurante'
-                }else{
-                    denunciacat.categoria='Tour'
-                }
-            })
-            res.render('./denuncias/denuncias',[{denuncias:denunciacat},totalcat[0].cantidadcat,nombreemprendimiento,cat]) 
+            denunciasResultado=await pool.query('SELECT d.nroDenuncia,em.nombreemprendimiento,em.categoria,d.motivo,d.descripcion FROM emprendimientos em join denuncias d ON em.idemprendimiento=d.id_emprendimiento AND em.nombreemprendimiento regexp ? AND em.categoria in (?) AND d.motivo=?;',[nombreemprendimiento,categoriaarray,motivo])
+        }
+    }else{
+        if (motivo=='Todos'){
+            if (categoriaarray.length>1){
+                denunciasResultado=await pool.query('SELECT d.nroDenuncia,em.nombreemprendimiento,em.categoria,d.motivo,d.descripcion FROM emprendimientos em join denuncias d ON em.idemprendimiento=d.id_emprendimiento')
+            }else{
+                denunciasResultado=await pool.query('SELECT d.nroDenuncia,em.nombreemprendimiento,em.categoria,d.motivo,d.descripcion FROM emprendimientos em join denuncias d ON em.idemprendimiento=d.id_emprendimiento AND em.categoria in (?)',[categoriaarray])
+            }
+        }else{
+            if (categoriaarray.length>1){
+                denunciasResultado=await pool.query('SELECT d.nroDenuncia,em.nombreemprendimiento,em.categoria,d.motivo,d.descripcion FROM emprendimientos em join denuncias d ON em.idemprendimiento=d.id_emprendimiento AND d.motivo=?',[motivo])
+            }else{
+                denunciasResultado=await pool.query('SELECT d.nroDenuncia,em.nombreemprendimiento,em.categoria,d.motivo,d.descripcion FROM emprendimientos em join denuncias d ON em.idemprendimiento=d.id_emprendimiento AND em.categoria in (?)',[categoriaarray])
+            }
         }
     }
+    denunciasResultado.map(function(denuncia){
+        if (denuncia.categoria=='A'){
+            denuncia.categoria='Alojamiento'
+        }else{
+            denuncia.categoria='Tour'
+        }
+    })
+    total=denunciasResultado.length
+    res.json({denunciasResultado,total})
 })
 
 module.exports=router
