@@ -32,7 +32,12 @@ router.get('/detalles/:id',async(req,res)=>{
 
 router.get('/editar/:id',async(req,res)=>{
     const {id}=req.params
-    res.render('./activities/editar')
+    const detallesactividades=await pool.query('SELECT * FROM actividades WHERE idactividades=?;',[id])
+    const imagenPrincipal=await pool.query('SELECT link FROM imagenesactividades WHERE id_actividad=? AND tipo="P";',[id])
+    const imagenesSec=await pool.query('SELECT idactividades,link FROM imagenesactividades WHERE id_actividad=? AND tipo="S";',[id])
+    const detalles=detallesactividades[0]
+    const imgPrincipal=imagenPrincipal[0]
+    res.render('./activities/editar',{detalles,imgPrincipal,imagenesSec})
 })
 
 router.get('/agregar',(req,res)=>{
@@ -65,13 +70,60 @@ router.post('/agregar',async(req,res)=>{
     await pool.query('INSERT INTO imagenesactividades set ?',[newImgPrimary])
     if (imagensec){
         for (let i=0;i<imagensec.length;i++){
-            await cloudinary.v2.uploader.upload(imagensec[i].path)
+            let result2=await cloudinary.v2.uploader.upload(imagensec[i].path)
             await fs.unlink(imagensec[i].path)
             const newImgSec={
-                link:imagensec[i].url,
+                link:result2.url,
                 tipo:"S",
                 id_actividad:idact,
-                publicid:imagensec[i].public_id
+                publicid:result2.public_id
+            }
+            await pool.query('INSERT INTO imagenesactividades set ?',[newImgSec])
+        }
+    }
+    res.redirect('/actividades')
+})
+
+router.post('/editar',async(req,res)=>{
+    const {idactividades,nombre,introduccion,tipo,descripcion,Eliminar}=req.body
+    const eliminar=Eliminar.split(',')
+    const publicsid=await pool.query('select publicid from imagenesactividades where idactividades in (?)',[eliminar])
+    await pool.query('Delete from imagenesactividades where idactividades in (?)',[eliminar])//cambiar a eliminar
+    for (let i=0;i<publicsid.length;i++){
+        await cloudinary.v2.uploader.destroy(publicsid[i].publicid)
+    }
+    const act={
+        nombre,
+        tipo,
+        introduccion,
+        descripcion
+    }
+    await pool.query('UPDATE actividades set ? WHERE idactividades=?',[act,idactividades])
+    const {image,imagensec}=req.files
+    if(image){
+        const pathimagenPrimaria=image[0].path 
+        const result=await cloudinary.v2.uploader.upload(pathimagenPrimaria)
+        const newImgPrimary={
+            link:result.url,
+            tipo:"P",
+            id_actividad:idactividades,
+            publicid:result.public_id
+        }
+        await fs.unlink(pathimagenPrimaria)
+        const id=await pool.query('select idactividades from imagenesactividades where tipo="P" and id_actividad=?',[idactividades])
+        const idimg=id[0].idactividades
+        await pool.query('UPDATE imagenesactividades set ? WHERE idactividades=?',[newImgPrimary,idimg])
+    }
+    
+    if (imagensec){
+        for (let i=0;i<imagensec.length;i++){
+            let result2=await cloudinary.v2.uploader.upload(imagensec[i].path)
+            await fs.unlink(imagensec[i].path)
+            const newImgSec={
+                link:result2.url,
+                tipo:"S",
+                id_actividad:idact,
+                publicid:result2.public_id
             }
             await pool.query('INSERT INTO imagenesactividades set ?',[newImgSec])
         }

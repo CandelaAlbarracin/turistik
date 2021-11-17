@@ -7,7 +7,7 @@
 <body>
     {{>navigation}}
     <div class="container">
-        <h2 class="mt-3 text-center">Agregar Actividad</h2>
+        <h2 class="mt-3 text-center" id="nuevo">Agregar Actividad</h2>
         <form action="/actividades/agregar" method="post" class="mt-5" name="actividad" enctype="multipart/form-data">
         <div class="row">
             <div class="col-9">
@@ -67,8 +67,11 @@
                 </div> --}}
                 {{!-- <p>Subir más imágenes</p> --}}
                 
-                <input type="file" class="form-control" id="imagenSecundaria" name="imagensec" multiple>
-                
+                <input type="file" class="form-control" id="imagenSecundaria" name="imagensec" onchange="verImagenes()" multiple>
+                <div><p>Estas imagenes se subirán</p></div>
+                <div class="row row-cols-4 row-cols-md-4 g-6" id="ImgSubidas">
+
+                </div>
                 <p class="fw-bold mt-3">Descripción</p>
                 <div id="summernote"></div>
                 <input type="textarea" name="descripcion" id="descripcion" hidden>
