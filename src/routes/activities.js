@@ -131,4 +131,32 @@ router.post('/editar',async(req,res)=>{
     res.redirect('/actividades')
 })
 
+router.get('/eliminar/:id',async(req,res)=>{
+    const {id}=req.params
+    await pool.query('DELETE FROM actividades WHERE idactividades=?',[id])
+    await pool.query('DELETE FROM imagenesactividades WHERE id_actividad=?',[id])
+    await pool.query('DELETE FROM actividadesofrecidas WHERE id_actividad=?',[id])
+    res.redirect('/actividades')
+})
+
+router.post('/buscar',async(req,res)=>{
+    const {nombre,categoria}=req.body
+    const categoriaarray=JSON.parse('['+categoria+']')
+    const nombrecat={'A':'Alojamiento','T':'Tours'}
+    let cat
+    if (categoriaarray.length>1) {
+        cat='Todos'
+    }else{
+        cat=nombrecat[categoriaarray[0]]
+    }
+    let act
+    if (nombre){
+        act=await pool.query('select img.link,act.idactividades,act.nombre,act.tipo from imagenesactividades img join actividades act on img.id_actividad=act.idactividades and img.tipo="P" and act.nombre regexp ? and act.tipo in (?)',[nombre,categoriaarray])
+    }else{
+        act=await pool.query('select img.link,act.idactividades,act.nombre,act.tipo from imagenesactividades img join actividades act on img.id_actividad=act.idactividades and img.tipo="P" and act.tipo in (?)',[categoriaarray])
+    }
+
+    res.json({act})
+})
+
 module.exports=router
