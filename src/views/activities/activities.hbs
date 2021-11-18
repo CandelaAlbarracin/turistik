@@ -1,8 +1,8 @@
 </head>
 <body>
-    {{>navigation}}
+    {{>navigationAdm}}
     <div class="container">
-        <h2 class="text-center mt-2 mb-10">Actividades Registradas</h2>
+        <h2 class="text-center mt-2 mb-10 fst-italic">Actividades Registradas</h2>
         <div class="mt-5 mb-10">
             <p class="fs-4">Buscar por</p>
             <form action="" onsubmit="event.preventDefault()">
@@ -71,3 +71,8 @@
         
     </div>
     <script src="/js/buscarActividades.js"></script>
+    <script>
+        const linkactivo=document.getElementById("Actividades")
+        console.log(linkactivo)
+        linkactivo.classList.add('active')
+    </script>

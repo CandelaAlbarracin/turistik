@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-
+const {isLoggedInUsuario,isLoggedInAdm,isLoggedInEmp}=require('../lib/auth')
 const passport = require("passport");
 
 //ruta para renderizar el formulario de registro
@@ -31,7 +31,16 @@ router.post("/signin",(req,res,next) => {
 
 //ruta del perfil de usuario
 router.get("/profile", (req,res) => {
-    res.render("profile");
+    if(req.user.tipo=='U'){
+        res.render("profile");
+    }
+    if (req.user.tipo=='A') {
+        res.redirect("/actividades")
+    }
+    if (req.user.tipo=='E'){
+        res.render("profile")
+    //colocar vista a donde redireccionar
+    }      
 });
 
 //ruta de cerrar sesion

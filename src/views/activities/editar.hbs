@@ -5,7 +5,7 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 </head>
 <body onload="cargar('{{detalles.tipo}}','{{detalles.descripcion}}')">
-    {{>navigation}}
+    {{>navigationAdm}}
     <div class="container">
         <h2 class="mt-3 text-center">Editar Actividad</h2>
         <form action="/actividades/editar" method="post" class="mt-5" name="actividad" enctype="multipart/form-data">

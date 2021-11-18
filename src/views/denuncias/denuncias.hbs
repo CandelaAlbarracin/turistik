@@ -1,8 +1,8 @@
 </head>
 <body>
-    {{>navigation}}
+    {{>navigationAdm}}
     <div class="container">
-        <div><h2 class="fst-italic">Denuncias realizadas por los usuarios</h2></div>
+        <div><h2 class="text-center mt-2 mb-10 fst-italic">Denuncias realizadas por los usuarios</h2></div>
         <div class="mt-5 mb-5">
         <form action="" onsubmit="event.preventDefault()">
             <div><h3>Buscar por:</h3></div>
@@ -72,3 +72,8 @@
         </table>
     </div>
     <script src="/js/buscarDenuncias.js"></script>
+    <script>
+        const linkactivo=document.getElementById("Denuncias")
+        console.log(linkactivo)
+        linkactivo.classList.add('active')
+    </script>

@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-0">
+  <div class="container-fluid p-0">
+    <a class="navbar-brand" href="#">
+      <img id="logo" src="https://res.cloudinary.com/turistick/image/upload/v1634951604/Global/clipart249913_gg7bil.png"
+        alt="Logo-Turistik" width="25" height="25" />
+      <span class="navbar-brand mb-0 h1">TURISTIK</span>
+      <span class="v-line"></span>
+    </a>
+    <button class="navbar-toggler mr-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav justify-content-end">
+        <li class="nav-item">
+          <a class="nav-link" id="Actividades" aria-current="page" href="/actividades">Actividades</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="Denuncias" aria-current="page" href="/denuncias">Denuncias</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="SolicitudesAprobadas" aria-current="page" href="/">Solicitudes Aprobadas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="SolicitudesPendientes" aria-current="page" href="/">Solicitudes Pendientes</a>
+        </li>
+        <span class="border-end"></span>
+
+        {{#if user}}
+          {{!-- <li class="nav-item">
+            <a href="/logout" class="nav-link">Cerrar Sesión</a>
+          </li> --}}
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img
+              src="https://res.cloudinary.com/turistick/image/upload/v1634951634/Global/profile-user-1_noablt.png"
+              alt="Registrarse o Iniciar Sesión"/> {{user.nombre}} {{user.apellido}}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+            <li><p class="dropdown-item fw-bold text-center">Administrador</p></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-center" href="/logout">Cerrar Sesión</a></li>
+          </ul>
+        </li>
+        {{else}}
+          <li class="nav-item">
+          <a class="nav-link" href="/signin"><img
+              src="https://res.cloudinary.com/turistick/image/upload/v1634951634/Global/profile-user-1_noablt.png"
+              alt="Registrarse o Iniciar Sesión" /></a>
+          </li>
+        {{/if}}
+      </ul>
+    </div>
+  </div>
+</nav>

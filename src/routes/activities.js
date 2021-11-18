@@ -3,12 +3,13 @@ const router=express.Router()
 const pool=require('../database')
 const cloudinary=require('cloudinary')
 const fs=require('fs-extra')
+const {isLoggedInUsuario,isLoggedInAdm,isLoggedInEmp}=require('../lib/auth')
 cloudinary.config({
     cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
     api_key:process.env.CLOUDINARY_API_KEY,
     api_secret:process.env.CLOUDINARY_API_SECRET
 })
-router.get('/',async(req,res)=>{
+router.get('/',isLoggedInAdm,async(req,res)=>{
     const actividades=await pool.query('select img.link,act.idactividades,act.nombre,act.tipo from imagenesactividades img join actividades act on img.id_actividad=act.idactividades and img.tipo="P";')
     actividades.map(act=>{
         if (act.tipo=='A'){
