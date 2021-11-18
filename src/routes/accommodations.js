@@ -3,10 +3,21 @@ const router=express.Router()
 const pool=require('../database')
 
 router.get('/', async (req,res)=>{
-    const infoAlojamientos = await pool.query('SELECT alojamientos.idalojamiento, imagenes.link, emprendimientos.ubicacion, emprendimientos.nombreemprendimiento, alojamientos.precionoche, alojamientos.capacidadhabitaciones, alojamientos.capacidadestacionamientos, alojamientos.tipoalojamiento, alojamientos.piscina from emprendimientos inner join alojamientos on emprendimientos.idemprendimiento=alojamientos.id_emprendimiento INNER JOIN imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento and tipo="P"');
+    // const infoAlojamientos = await pool.query('SELECT alojamientos.idalojamiento, imagenes.link, emprendimientos.ubicacion, emprendimientos.nombreemprendimiento, alojamientos.precionoche, alojamientos.capacidadhabitaciones, alojamientos.capacidadestacionamientos, alojamientos.tipoalojamiento, alojamientos.piscina from emprendimientos inner join alojamientos on emprendimientos.idemprendimiento=alojamientos.id_emprendimiento INNER JOIN imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento and tipo="P"');
     //console.log(infoAlojamientos);
-    res.render('./accommodations/search_accommodations', {});
+    const actividades=await pool.query('SELECT img.link,act.idactividades,act.nombre,act.introduccion from actividades act JOIN imagenesactividades img ON act.idactividades=img.id_actividad where img.tipo="P" and act.tipo="A";')
+    res.render('./accommodations/newsearch_accommodations', {actividades});
+})
 
+router.get('/actividades/:id', async(req,res)=>{
+    const {id}=req.params
+    const detallesactividades=await pool.query('SELECT * FROM actividades WHERE idactividades=?;',[id])
+    const imagenPrincipal=await pool.query('SELECT link FROM imagenesactividades WHERE id_actividad=? AND tipo="P";',[id])
+    const imagenesSec=await pool.query('SELECT link FROM imagenesactividades WHERE id_actividad=? AND tipo="S";',[id])
+    const alojamientos=await pool.query('select img.link, aloj.idalojamiento,emp.nombreemprendimiento, emp.descripcion from emprendimientos emp join imagenes img on emp.idemprendimiento=img.id_emprendimiento and img.tipo="P" join alojamientos aloj on emp.idemprendimiento=aloj.id_emprendimiento join actividadesofrecidas actof on aloj.idalojamiento=actof.id_alojamiento and actof.id_actividad=?;',[id])
+    const detalles=detallesactividades[0]
+    const imgPrincipal=imagenPrincipal[0]
+    res.render('./accommodations/activity',{detalles,imgPrincipal,imagenesSec,alojamientos}) 
 })
 
 router.post('/buscar',async (req,res)=>{

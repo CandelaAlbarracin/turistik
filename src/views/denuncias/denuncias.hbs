@@ -4,7 +4,7 @@
     <div class="container">
         <div><h2 class="fst-italic">Denuncias realizadas por los usuarios</h2></div>
         <div class="mt-5 mb-5">
-        <form action="/denuncias/resultados" method="post">
+        <form action="" onsubmit="event.preventDefault()">
             <div><h3>Buscar por:</h3></div>
             <div class="row g-3">
                 <div class="col-md">
@@ -15,34 +15,39 @@
                 </div>
                 <div class="col-md">
                     <div class="form-floating">
+                    <select class="form-select" id="Motivo" name="motivo" aria-label="Floating label select example">
+                        <option value='Todos'selected>Todos</option>
+                        <option value='Insalubridad'>Insalubridad</option>
+                        <option value='Lugar Inexistente'>Lugar Inexistente</option>
+                        <option value='Malos Tratos'>Malos Tratos</option>
+                        <option value='Lugar Inexistente'>Lugar Inexistente</option>
+                    </select>
+                    <label for="Motivo">Motivo de la denuncia</label>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-floating">
                     <select class="form-select" id="Categoria" name="categoria" aria-label="Floating label select example">
-                        <option value='"A","R","T"'selected>Todas</option>
+                        <option value='"A","T"'selected>Todas</option>
                         <option value='"A"'>Alojamientos</option>
-                        <option value='"R"'>Restaurante</option>
                         <option value='"T"'>Tours</option>
                     </select>
                     <label for="Categoria">Categoría</label>
                     </div>
                 </div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button type="submit" class="btn btn-primary ">Buscar</button>
+                    <button type="button" class="btn btn-primary" onclick="buscarDen()">Buscar</button>
                 </div>
             
             </div>
         </form>
         </div>
         <div>
-            {{#if [3]}}
-                {{#if [2]}}
-                    <p class="fs-5 fst-italic">Resultados de {{[2]}} en la categoría {{[3]}}</p>
-                {{else}}
-                    <p class="fs-5 fst-italic">Resultados para la categoría {{[3]}}</p>
-                {{/if}}
-            {{/if}}
-            <h6 class="fw-ligth text-end">Cantidad de denuncias: {{[1]}}</h6>
+            <p class="fs-5 fst-italic" id="noencontrado"></p>
+            <h6 class="fw-ligth text-end" id="cantidadDenuncias">Cantidad de denuncias: {{[1]}}</h6>
         </div>
         <table class="table">
-            <thead>
+            <thead id='cabeceraTabla'>
                 <tr>
                 <th scope="col">Nro Denuncia</th>
                 <th scope="col">Emprendimiento Denunciado</th>
@@ -51,7 +56,7 @@
                 <th scope="col">Descripción</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id='cuerpoTabla'>
                 {{#each [0].denuncias}}
                     <tr>
                     <th scope="row" class="text-center">{{nroDenuncia}}</th>
@@ -66,4 +71,4 @@
             </tbody>
         </table>
     </div>
-    
+    <script src="/js/buscarDenuncias.js"></script>

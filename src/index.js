@@ -6,7 +6,12 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session");
 const passport = require("passport");
+const multer = require('multer')
 const {database} = require("./keys");
+
+if (process.env.NODE_ENV !=='production'){
+    require('dotenv').config()
+}
 
 
 //Inicializaciones
@@ -35,6 +40,25 @@ app.use(session({
 }));
 app.use(flash());
 app.use(morgan('dev'))
+const storage=multer.diskStorage({
+    destination:path.join(__dirname,'public/updates'),
+    filename:(req,file,cb)=>{
+        cb(null,new Date().getTime()+path.extname(file.originalname))
+    }
+})
+// app.use(multer({storage}).single('image'))
+// app.use(multer({storage}).single('imagensec'))
+app.use(multer({storage}).fields(
+    [
+      { 
+        name: 'image', 
+        maxCount: 1 
+      }, 
+      { 
+        name: 'imagensec'
+      }
+    ]
+  ))
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 app.use(passport.initialize());
@@ -57,6 +81,7 @@ app.use('/tours',require('./routes/tours'))
 app.use('/sobrenosotros',require('./routes/aboutus'))
 app.use('/explorajujuy',require('./routes/explorejujuy'))
 app.use('/denuncias',require('./routes/denuncias'))
+app.use('/actividades',require('./routes/activities'))
 //app.use('/alojamientos/detalles',require('./routes/detailsAccommodations'))
 
 //Publico
