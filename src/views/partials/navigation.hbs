@@ -31,11 +31,24 @@
           <a class="nav-link" id="SobreNosotros" href="/sobrenosotros">Sobre Nosotros</a>
         </li>
         <span class="border-end"></span>
-        <li class="nav-item">
-          <a class="nav-link" href="/signup"><img
+
+        {{#if user}}
+          <li class="nav-item">
+            <a href="/profile" class="nav-link">Perfil</a>
+          </li>
+          <li class="nav-item">
+            <a href="/logout" class="nav-link">Cerrar Sesión</a>
+          </li>
+        {{else}}
+          <li class="nav-item">
+          <a class="nav-link" href="/signin"><img
               src="https://res.cloudinary.com/turistick/image/upload/v1634951634/Global/profile-user-1_noablt.png"
               alt="Registrarse o Iniciar Sesión" /></a>
-        </li>
+          </li>
+        {{/if}}
+
+          
+     
       </ul>
     </div>
   </div>

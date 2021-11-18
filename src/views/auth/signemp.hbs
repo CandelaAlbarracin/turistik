@@ -1,0 +1,55 @@
+{{>navigation}} 
+<div class="container p-4">
+    <div class="columns">
+        <div class="col-md-6 mx-auto">
+            <div class="card text-center bg-dark">
+                <div class="card-header">
+                    <h3 class="text-white">Por favor, completa el Formulario</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/signemp" method="post" class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group mb-4">
+                                <input type="text" name="name" placeholder="Nombre" class="form-control" autofocus>
+                            </div>
+                            <div class="form-group mb-4">
+                                <input type="text" name="lastname" placeholder="Apellido" class="form-control">
+                            </div>
+                            <div class="form-group mb-4">
+                                <input type="number" name="dni" placeholder="Dni" class="form-control">
+                            </div>
+                            <div class="form-group mb-4">
+                                <input type="number" name="cuil" placeholder="Cuil" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group mb-4">
+                                <input type="email" name="email" placeholder="Correo" class="form-control" autofocus>
+                            </div>
+                            <div class="form-group mb-4">
+                                <input type="text" name="emp" placeholder="Emprendimiento" class="form-control"
+                                    autofocus>
+                            </div>
+                            <div class="form-group mb-4">
+                                <select name="cat" class="form-select" aria-label="Default select example">
+                                    <option selected>Categoria</option>
+                                    <option value="1">Alquiler</option>
+                                    <option value="2">Comida</option>
+                                    <option value="3">Artesanias</option>
+                                    <option value="4">Tours</option>
+                                    <option value="5">Otro</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-4">
+                                <input type="text" name="ubi" placeholder="Ubicación" class="form-control" autofocus>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3 d-grid gap-2 ">
+                            <button class="btn btn-success btn-block text-white">Solicitar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

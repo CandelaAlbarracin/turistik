@@ -31,7 +31,18 @@ router.post("/signin",(req,res,next) => {
 
 //ruta del perfil de usuario
 router.get("/profile", (req,res) => {
-    res.send("perfil de usuario");
+    res.render("profile");
+});
+
+//ruta de cerrar sesion
+router.get("/logout",(req,res) =>{
+    req.logOut();
+    res.redirect("/signin");
+});
+
+//ruta para renderizar el registro de emprendedor
+router.get("/signemp",(req,res) => {
+    res.render("auth/signemp");
 });
 
 module.exports=router;
