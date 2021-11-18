@@ -133,6 +133,10 @@ router.post('/editar',async(req,res)=>{
 
 router.get('/eliminar/:id',async(req,res)=>{
     const {id}=req.params
+    const publicsid=await pool.query('select publicid from imagenesactividades where idactividades = ?',[id])
+    for (let i=0;i<publicsid.length;i++){
+        await cloudinary.v2.uploader.destroy(publicsid[i].publicid)
+    }
     await pool.query('DELETE FROM actividades WHERE idactividades=?',[id])
     await pool.query('DELETE FROM imagenesactividades WHERE id_actividad=?',[id])
     await pool.query('DELETE FROM actividadesofrecidas WHERE id_actividad=?',[id])

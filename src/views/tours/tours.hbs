@@ -1,0 +1,44 @@
+    <link rel="stylesheet" href="css/styleSearchActivity.css">
+</head>
+<body>
+    {{>navigation}}
+    <h2 class="text-center fst-italic mt-3">Descubre a nuestros guías</h2>
+    <div class="wrapper">
+        <div class="container">
+            <div class="mt-3">
+                <h4>Selecciona los tours que te interesen</h4>
+            </div>
+        <div class="cols">
+            <div class="row-cols-1 row-cols-sm-2 row-cols-md-4"></div>
+                {{#each actividades}}
+                  <div class="col2" ontouchstart="this.classList.toggle('hover');">
+                      <div class="container2">
+                          <div class="front" style="background-image: url({{link}})">
+                              <div class="inner">
+                                  <p>{{nombre}}</p>
+                                    <span>Ver</span>
+                              </div>
+                          </div>
+                          <div class="back">
+                              <div class="inner">
+                                <p>{{introduccion}}</p>
+                                <a class="btn btn-primary" href="/alojamientos/actividades/{{idactividades}}" role="button">Conocer más</a>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="text-center fst-italic">
+                        <input type="checkbox" name="act{{idactividades}}" id="act{{idactividades}}">
+                         <label class="m-2" for="act{{idactividades}}"> ¡Quiero {{nombre}}!</label>
+                   </div>
+                  </div>
+                {{/each}}
+            </div>
+            <div class="d-grid gap-2 mb-5">
+                <button class="btn btn-primary" type="button"><i class="fas fa-search"></i> Buscar</button>
+            </div>
+       </div>
+    </div>
+    <script>
+        const linkactivo=document.getElementById("Tour")
+        linkactivo.classList.add('active')
+    </script>
