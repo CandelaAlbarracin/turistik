@@ -1,0 +1,13 @@
+</head>
+<body>
+    {{>navigation}}
+    {{#each alojamientos}}
+    <div>
+        <p>Hola {{nombreemprendimiento}}</p>
+        {{#if promCalificacion}}
+            <p>Tu calificación es: {{promCalificacion}}</p>
+        {{else}}
+            <p>No hay calificación</p>
+        {{/if}}
+    </div>
+    {{/each}}

@@ -119,4 +119,18 @@ router.post('/reservas',async(req,res)=>{
     //Añadir mensaje de reserva exitosa
     res.redirect(`detalles/${idalojamiento[0].idalojamiento}`)
 })
+
+router.post('/resultados',async(req,res)=>{
+    const {actividades}=req.body
+    const actarray=actividades.split(',')
+    const alojamientos=await pool.query('SELECT DISTINCTROW aloj.idalojamiento,aloj.precionoche,aloj.capacidadhabitaciones,aloj.tipoalojamiento,aloj.vista,aloj.hornobarro,aloj.animalesautoctonos,emp.idemprendimiento,emp.nombreemprendimiento, loc.nombrelocalidad FROM alojamientos aloj JOIN emprendimientos emp ON aloj.id_emprendimiento=emp.idemprendimiento JOIN localidades loc ON emp.id_localidad=loc.idlocalidad join actividadesofrecidas actof on actof.id_alojamiento=aloj.idalojamiento and actof.id_actividad in (?);',[actarray])
+    
+    for(let i=0;i<alojamientos.length;i++){
+        let calificacion=await pool.query('SELECT AVG(puntuacion) AS promedioCalificacion FROM sitio WHERE id_emprendimiento=?',[alojamientos[i].idemprendimiento])
+        alojamientos[i].promCalificacion=calificacion[0].promedioCalificacion
+    }
+    console.log(alojamientos)
+    //res.send('Procesar resultados')
+    res.render('./accommodations/view',{alojamientos})
+})
 module.exports=router

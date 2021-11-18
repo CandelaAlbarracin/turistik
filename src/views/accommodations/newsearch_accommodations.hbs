@@ -8,7 +8,7 @@
         <div class="d-flex justify-content-between mt-3">
             <h4>Selecciona las actividades que te gustaría realizar con tu anfitrión</h4>
             <div class="input-group mb-3" style="width: 15rem;">
-                <input type="text" class="form-control" placeholder="¿Qué actividad buscas?" aria-label="Recipient's username" aria-describedby="button-addon2" id="nombreAct" onkeydown="busquedaRapida()">
+                <input type="text" class="form-control" placeholder="¿Qué actividad buscas?" aria-label="¿Quá actividad buscas" aria-describedby="button-addon2" id="nombreAct" onkeyup="busquedaRapida()">
                 <button class="btn btn-primary" type="button" id="button-addon2"><i class="fab fa-searchengin"></i></button>
             </div>
         </div>
@@ -31,15 +31,19 @@
                           </div>
                       </div>
                       <div class="text-center fst-italic">
-                        <input type="checkbox" name="act{{idactividades}}" id="act{{idactividades}}">
+                        <input type="checkbox" name="act{{idactividades}}" id="act{{idactividades}}" class="check" onclick="cambioInput()">
                          <label class="m-2" for="act{{idactividades}}"> ¡Quiero {{nombre}}!</label>
                    </div>
                   </div>
                 {{/each}}
             </div>
-            <div class="d-grid gap-2 mb-5">
-                <button class="btn btn-primary" type="button"><i class="fas fa-search"></i> Buscar</button>
-            </div>
+
+            <form action="/alojamientos/resultados" method="post">
+                <input type="text" name="actividades" id="inputactividades" hidden>
+                <div class="d-grid gap-2 mb-5">
+                <button class="btn btn-primary" type="submit" id="botonSubmit" disabled><i class="fas fa-search"></i> Buscar</button>
+                </div>
+            </form>
        </div>
     </div>
     <script src="/js/busquedasrapidas.js"></script>
