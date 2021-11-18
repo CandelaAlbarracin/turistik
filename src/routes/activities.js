@@ -156,9 +156,9 @@ router.post('/buscar',async(req,res)=>{
     }
     let act
     if (nombre){
-        act=await pool.query('select img.link,act.idactividades,act.nombre,act.tipo from imagenesactividades img join actividades act on img.id_actividad=act.idactividades and img.tipo="P" and act.nombre regexp ? and act.tipo in (?)',[nombre,categoriaarray])
+        act=await pool.query('select img.link,act.idactividades,act.nombre,act.tipo,act.introduccion from imagenesactividades img join actividades act on img.id_actividad=act.idactividades and img.tipo="P" and act.nombre regexp ? and act.tipo in (?)',[nombre,categoriaarray])
     }else{
-        act=await pool.query('select img.link,act.idactividades,act.nombre,act.tipo from imagenesactividades img join actividades act on img.id_actividad=act.idactividades and img.tipo="P" and act.tipo in (?)',[categoriaarray])
+        act=await pool.query('select img.link,act.idactividades,act.nombre,act.tipo,act.introduccion from imagenesactividades img join actividades act on img.id_actividad=act.idactividades and img.tipo="P" and act.tipo in (?)',[categoriaarray])
     }
 
     res.json({act})
