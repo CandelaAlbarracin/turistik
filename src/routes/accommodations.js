@@ -88,15 +88,26 @@ router.get('/detalles/:id', async (req,res)=>{
     const actividades=await pool.query('select nombre from actividades where idactividades in (select id_actividad from actividadesofrecidas where id_alojamiento=?);',[id])
     const calificacion=await pool.query('select avg(puntuacion) as promedio from sitio where id_emprendimiento=?;',[emprendimiento.id_emprendimiento])
     const promedioCalificacion=calificacion[0].promedio
-    const reviews=await pool.query('select u.nombre,u.apellido, s.puntuacion,s.comentario from sitio s join usuarios u on s.id_usuario=u.idusuario where id_emprendimiento=? and u.idusuario<>?;',[emprendimiento.id_emprendimiento,req.user.idusuario])
-    const calificacionUsuario=await pool.query('select s.idcalificacion,s.puntuacion,s.comentario from sitio s join usuarios u on s.id_usuario=u.idusuario where id_emprendimiento=? and u.idusuario=?;',[emprendimiento.id_emprendimiento,req.user.idusuario])
-    const calificacionU=calificacionUsuario[0]
+    let reviews,calificacionU
+    if (req.user){
+        reviews=await pool.query('select u.nombre,u.apellido, s.puntuacion,s.comentario from sitio s join usuarios u on s.id_usuario=u.idusuario where id_emprendimiento=? and u.idusuario<>?;',[emprendimiento.id_emprendimiento,req.user.idusuario])
+        const calificacionUsuario=await pool.query('select s.idcalificacion,s.puntuacion,s.comentario from sitio s join usuarios u on s.id_usuario=u.idusuario where id_emprendimiento=? and u.idusuario=?;',[emprendimiento.id_emprendimiento,req.user.idusuario])
+        calificacionU=calificacionUsuario[0]
+    }else{
+        reviews=await pool.query('select u.nombre,u.apellido, s.puntuacion,s.comentario from sitio s join usuarios u on s.id_usuario=u.idusuario where id_emprendimiento=?;',[emprendimiento.id_emprendimiento])
+    }
+    
     const dueno= await pool.query('select distinct nombre,apellido from usuarios where idusuario in (select id_usuario from emprendedores where idemprendedor in (select id_emprendedor from emprendimientos where idemprendimiento in (select id_emprendimiento from alojamientos where idalojamiento=?)));',[id])
     const duenoindividual=dueno[0]
     const localidad=await pool.query('SELECT nombrelocalidad FROM localidades WHERE idlocalidad=?',[solo.id_localidad])
     loc=localidad[0].nombrelocalidad.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     urlmap=(solo.ubicacion+`,%20${loc}`).replace(' ','%20')
-    res.render('./accommodations/details_accommodations', {solo, infoOtros,emprendimiento,urlmap, imag,loc,duenoindividual,promedioCalificacion,reviews,calificacionU,actividades});
+    if (req.user){
+        res.render('./accommodations/details_accommodations', {solo, infoOtros,emprendimiento,urlmap, imag,loc,duenoindividual,promedioCalificacion,reviews,calificacionU,actividades});
+    }else{
+        res.render('./accommodations/details_accommodations', {solo, infoOtros,emprendimiento,urlmap, imag,loc,duenoindividual,promedioCalificacion,reviews,actividades});
+    }
+    
 })
 
 router.post('/denunciar',async (req,res)=>{
