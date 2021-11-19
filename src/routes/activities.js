@@ -134,7 +134,7 @@ router.post('/editar',async(req,res)=>{
 
 router.get('/eliminar/:id',async(req,res)=>{
     const {id}=req.params
-    const publicsid=await pool.query('select publicid from imagenesactividades where idactividades = ?',[id])
+    const publicsid=await pool.query('select publicid from imagenesactividades where id_actividad = ?',[id])
     for (let i=0;i<publicsid.length;i++){
         await cloudinary.v2.uploader.destroy(publicsid[i].publicid)
     }
