@@ -15,43 +15,88 @@
                             </ul>
                         </div>
                     </div>
+                   
                     <div class="card mt-2">
-                        <div class="comment-box ml-2">
-                            <h4>Califica este sitio</h4>
-                            <div class="rating"> <input type="radio" name="rating" value="5" id="5"><label for="5" style="color:#FFD700";>☆</label>
-                                <input type="radio" name="rating" value="4" id="4"><label for="4" style="color:#FFD700";>☆</label>
-                                <input type="radio" name="rating" value="3" id="3"><label for="3" style="color:#FFD700";>☆</label>
-                                <input type="radio" name="rating" value="2" id="2"><label for="2" style="color:#FFD700";>☆</label>
-                                <input type="radio" name="rating" value="1" id="1"><label for="1" style="color:#FFD700";>☆</label> 
-                            </div>
-                            <div class="comment-area">
-                                <textarea class="form-control" placeholder="Cual es tu opinion?" rows="4"></textarea> 
-                            </div>
-                            <div class="comment-btns mt-2">
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="btn btn-success" id="reserva">Enviar</button>
+                        <p class="text-center fs-4 fw-bold">Calificación Promedio dada por los usuarios</p>
+                        {{#if promedioCalificacion}}
+                            <p class="text-center fw-bold fs-4">{{promedioCalificacion}}⭐</p>
+                        {{else}}
+                            <p class="text-center">Este alojamientos aún no ha recibido calificaciones. ¡Sé el primero en dar una!</p>
+                        {{/if}}
+                        <hr>
+                        {{#if user}}
+                            {{#if calificacionU}}
+                                <div class="comment-box ml-2" id="calificacionUsuario">
+                                    <h4>Tu calificación a este sitio: {{calificacionU.puntuacion}}⭐</h4>
+                                    <p class="fs-5">
+                                        <span class="fw-bold"><i class="fas fa-comment-dots"></i> El comentario que dejaste: </span> 
+                                        <span class="fst-italic text-muted">{{calificacionU.comentario}}</span>
+                                    </p>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <a class="btn btn-danger me-md-2" role="button" href="/alojamientos/eliminarCalificacion/{{calificacionU.idcalificacion}}/{{solo.idalojamiento}}">Eliminar</a>
+                                        <button class="btn btn-warning" type="button" onclick="modificarCalificacion({{emprendimiento.id_emprendimiento}},{{calificacionU.puntuacion}},'{{calificacionU.comentario}}',{{calificacionU.idcalificacion}},{{solo.idalojamiento}})">Modificar</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                                <div class="comment-box ml-2" id="modificacion"></div>
+                            {{else}}
+                                <div class="comment-box ml-2" id="ventanaCalificacion">
+                                    <h4>Califica este sitio</h4>
+                                    <form action="/alojamientos/calificar" method="post" name="calificacionsitio" onsubmit="event.preventDefault()">
+                                    <input type="text" name="idemprendimiento" value="{{emprendimiento.id_emprendimiento}}" hidden>
+                                    <div class="rating"> 
+                                        <input type="radio" class="estrella" name="puntuacion" value="5" id="5"><label for="5">☆</label>
+                                        <input type="radio" class="estrella" name="puntuacion" value="4" id="4"><label for="4">☆</label>
+                                        <input type="radio" class="estrella" name="puntuacion" value="3" id="3"><label for="3">☆</label>
+                                        <input type="radio" class="estrella" name="puntuacion" value="2" id="2"><label for="2">☆</label>
+                                        <input type="radio" class="estrella" name="puntuacion" value="1" id="1"><label for="1">☆</label>
+                                    </div>
+                                    <div class="comment-area">
+                                        <textarea class="form-control" id="comentario" name='comentario' placeholder="¿Cuál es tu opinion?" rows="4"></textarea> 
+                                    </div>
+                                    <div class="comment-btns mt-2">
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <button type="reset" class="btn btn-secondary" onclick="borrarCalificacion()">Cancelar</button>
+                                            <button type="button" class="btn btn-success" id="reserva" onclick="enviarCalificacion({{emprendimiento.id_emprendimiento}})">Enviar</button>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            {{/if}}
+                        {{else}}
+                            <p class="text-center fst-italic">Iniciá Sesión o Registrate para calificar este sitio</p>
+                            <a role="button" class="btn btn-primary" href="/signin">Iniciar Sesión</a>
+                            <a role="button" class="btn btn-success mt-2" href="/signup">Registrarse</a>
+                        {{/if}}
+                        <hr>
+                        <ul class="list-group">
+                            {{#each reviews}}
+                            <li class="list-group-item">
+                                <p class="fw-bold"><i class="fas fa-user"></i> {{nombre}} {{apellido}}: {{puntuacion}}⭐</p>
+                                <p>
+                                    <span class="fw-bold"><i class="fas fa-comment-dots"></i> Comentario: </span> 
+                                    <span class="fst-italic text-muted">{{comentario}}</span>
+                                </p>
+                            </li>
+                            {{/each}}
+                        </ul>
                     </div>
+                    
                 </div>
                 <div class="col-md-7">
                     <div class="card">
+                        <p class="text-muted fst-italic"><span style="color: #ed302f;"><i class="fas fa-map-marker"></i></span> {{solo.ubicacion}}, {{loc}} </p> 
                         <div class="d-md-flex align-items-md-center">
-                            <div class="name">{{solo.nombreemprendimiento}}<span class="city"> {{solo.ubicacion}}</span> </div>     
+                            <div class="name"><p class="fs-3">{{solo.nombreemprendimiento}}</p> </div> 
                         </div>
                         <div class="about pb-3 pt-3">
-                            <h4 class="font-weight-bold">{{solo.precionoche}}$</h4>
+                            <h4 class="font-weight-bold">$ {{solo.precionoche}}</h4>
                         </div>
                         <div class="d-grid gap-2 d-md-block mb-2">
                             {{!-- <a class="btn btn-danger text-uppercase mx-2" id="Denuncias" href="#" role="button">DENUNCIAS</a> --}}
                             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#denuncia">
                                 <i class="fas fa-flag"></i> Denunciar
                             </button>
-                            <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#tarjeta" aria-expanded="false" aria-controls="tarjeta" onclick="document.getElementById('tarjeta').removeAttribute('hidden')">
-                                <i class="far fa-calendar-check"></i> Reservar
-                            </button>
+                            
                             <!-- Modal -->
                             <div class="modal fade" id="denuncia" tabindex="-1" aria-labelledby="denunciaLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -88,121 +133,11 @@
                             </div>
                             </div>
                         </div>
-                        <div class="card text-center" id="tarjeta" hidden>
-                                <div class="card-header fw-bold fs-3">
-                                    Soy Humano, ¡Quiero Reservar!
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#info" aria-expanded="false" aria-controls="info">
-                                        <i class="fas fa-question-circle"></i>
-                                    </button>
-                                </div>
-                                <div class="card-body">
-                                    <div class="collapse" id="info">
-                                        <div class="alert alert-primary">
-                                            <p><i class="fas fa-info-circle"></i> Para verificar que realmente estas interasado y eres humano te solicitamos que ingreses una tarjeta de crédito, pero tranquilo no te cobraremos nada. Pagarás todo cuando llegues.</p>
-                                        </div>
-                                    </div>
-                                    <p class="card-text">Selecciona la entidad emisora de tu tarjeta:</p>
-                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                        <div class="form-check form-check-inline">
-                                        <input type="radio" class="btn-check" name="btnradio" id="visa" autocomplete="off">
-                                        <label class="btn btn-outline-primary btn-lg" for="visa"><img src="https://cdn-icons-png.flaticon.com/512/349/349221.png" alt="Visa" width="40%"></label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                        <input type="radio" class="btn-check" name="btnradio" id="mastercard" autocomplete="off">
-                                        <label class="btn btn-outline-primary btn-lg" for="mastercard"><img src="https://res.cloudinary.com/turistick/image/upload/v1635403218/Global/FINAL-LOGO-123_vqktwc.jpg" alt="Mastercard" width="53%"></label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                        <input type="radio" class="btn-check" name="btnradio" id="amex" autocomplete="off">
-                                        <label class="btn btn-outline-primary btn-lg" for="amex"><img src="https://cdn-icons-png.flaticon.com/512/349/349228.png" alt="American Express" width="40%" height="15%"></label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mt-2"> 
-                                        <label for="numeric" class="form-label" >Nombre y Apellido del Titular</label> 
-                                        <input type="text" class="input-lg form-control" id="nombre" placeholder="Juan Pérez" required> 
-                                    </div>
-                                    <div class="form-group mt-2"> 
-                                        <label for="cc-number" class="form-label">Número de Tarjeta de Crédito</label> 
-                                        <input id="cc-number" type="tel" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="1234 1234 1234 1234" required> 
-                                    </div>
-                                    <div class="row mt-2 mb-4">
-                                        <div class="col-md-6">
-                                            <div class="form-group"> 
-                                                <label for="cc-exp" class="form-label">Fecha de Expiración</label> 
-                                                <input id="cc-exp" type="tel" class="input-lg form-control cc-exp" maxlength="7" autocomplete="cc-exp" placeholder="MM / AA" required> 
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group"> <label for="cc-cvc" class="form-label">Clave de Seguridad</label> <input id="cc-cvc" type="tel" class="input-lg form-control cc-cvc" autocomplete="off" placeholder="••••" required> </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="d-grid gap-2"> 
-                                        <button type="button" id="comprobar" class="btn btn-success" onclick="reserva()">Comprobar</button>
-                                    </div>
-                                </div>
-                        </div>
-                        <div class="modal fade" id="reservacion" tabindex="-1" aria-labelledby="reservaLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="reservaLabel"><i class="fas fa-concierge-bell"></i> Reservar en</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div> 
-                                <form action="/alojamientos/reservas" method="post" name="reservacion">
-                                    <div class="modal-body">
-                                        <p class="fw-bold fs-3 text-center">{{solo.nombreemprendimiento}}</p>
-                                        <div class="row g-2 ml-10 mr-10">
-                                            <input type="hidden" name="id_emprendimiento" value={{emprendimiento.id_emprendimiento}}>
-                                            <input type="hidden" name="id_usuario" value="2">
-                                            <div id="reservado" hidden>
-                                                <p class="fw-bold text-danger text-center">Fechas Reservadas, por favor intente con otras fechas</p>
-                                            </div>
-                                            <div class="col ml-10">
-                                                <div class="form-floating mb-3">
-                                                    <input type="date" class="form-control form-control-lg" name="fechainicio" id="fechainicio" onchange="validarInicial()" required>
-                                                    <label for="fechainicio">Fecha Inicial Reserva</label>
-                                                    <p id='fi-invalida' class="text-danger fw-bold text-center" hidden><i class="fas fa-times"></i> Fecha NO válida</p>
-                                                    <p id='fi-menor' class="text-danger fw-bold text-center" hidden><i class="fas fa-times"></i> La fecha seleccionada es menor a la fecha actual</p>
-                                                </div>
-                                            </div>
-                                            <div class="col mr-10">
-                                                <div class="form-floating mb-3">
-                                                    <input type="date" class="form-control form-control-lg" name="fechafin" id="fechafinal" onchange="validarFinal()" required>
-                                                    <label for="fechafinal">Fecha Final Reserva</label>
-                                                    <p id='ff-invalida' class="text-danger fw-bold" hidden><i class="fas fa-times"></i> Fecha NO válida</p>
-                                                </div>
-                                            </div>
-                                            <div id="fechasreservadas" hidden>
-                                                {{#each r}}
-                                                    <p class="fechasiniciales">{{fechainicio}}</p>
-                                                    <p class="fechasfinales">{{fechafin}}</p>
-                                                {{/each}}
-                                            </div>
-                                        </div>
-                                        <div class="form-floating">
-                                            <input type="time" class="form-control" placeholder="Hora Estimada de Llegada" name="horario" id="hora" value="09:00" required>
-                                            <label for="hora">Hora Estimada de Llegada</label>
-                                        </div>
-                                        <div class="form-floating mt-3">
-                                            <textarea class="form-control" placeholder="Leave a comment here" id="comentario" name="comentario" style="height: 250px" maxlength="500" onkeyup="contarCaracteres()"></textarea>
-                                            <label for="comentario">Comentario</label>
-                                        </div>
-                                        <div>
-                                            <p class="text-end fw-ligth" id='contador'>0/500</p>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                        <button type="button" class="btn btn-success" onclick="validarReserva()">Reservar</button>
-                                    </div>
-                                </form>
-                                </div>
-                            </div>
-                        </div>
+                        
                         {{!-- <hr> --}}
                         <div class="product-description">
                             <!--<div class="d-flex flex-row align-items-center"> <i class="fa fa-calendar-check-o"></i> <span class="ml-1">{{solo.tipoalojamiento}}</span> </div>-->
-                            <div class="mt-2"> <span class="font-weight-bold">Descripcion</span>
+                            <div class="mt-2"> <span class="fw-bold">Descripcion</span>
                                 <p>{{solo.descripcion}}</p>
                                 <div class="bullets">
                                     {{#if solo.piscina}}
@@ -211,12 +146,18 @@
                                     <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Capacidad para {{solo.capacidadestacionamientos}} estacionamientos</span> </div>
                                     <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Capacidad disponible de {{solo.capacidadhabitaciones}} habitaciones</span> </div>
                                 </div>
-                                <div class="mt-2"> <span class="font-weight-bold">Contactos y redes sociales</span>
+                                <div class="mt-2"> <span class="fw-bold">Actividades que ofrece</span>
+                                    {{#each actividades}}
+                                        <p><span style="color: cadetblue;"><i class="fas fa-check-circle"></i></span> {{nombre}}</p>
+                                    {{/each}}
+                                </div>
+                                <div class="mt-2"> <span class="fw-bold">Contactos y redes sociales</span>
                                 <br>
+                                <p class="fs-5 fw-bold"><i class="fas fa-phone"></i> {{duenoindividual.nombre}} {{duenoindividual.apellido}}: {{solo.telefono}}</p>
                                 <a class="btn btn-primary" style="background-color: #3b5998;" href="{{solo.facebook}}" role="button"><i class="fab fa-facebook-f"></i></a>
                                 <a class="btn btn-primary" style="background-color: #ac2bac;" href="{{solo.instagram}}" role="button"><i class="fab fa-instagram"></i></a>
                                 <a class="btn btn-primary" style="background-color: #ed302f;" href="{{solo.youtube}}" role="button"><i class="fab fa-youtube"></i></a>
-                                <a class="btn btn-primary" style="background-color: #25d366;" href="{{solo.telefono}}" role="button"><i class="fab fa-whatsapp"></i></a>
+                                {{!-- <a class="btn btn-primary" style="background-color: #25d366;" href="{{solo.telefono}}" role="button"><i class="fab fa-whatsapp"></i></a> --}}
                                 <br>
                             </div>
                         </div>
@@ -226,7 +167,7 @@
                         </div>
                     </div>
                     
-                    <div class="card mt-2"> <span>Otros hospedajes:</span>
+                    <div class="card mt-2"> <span class="fw-bold">Otros hospedajes:</span>
                         <div class="similar-products mt-2 d-flex flex-row">
                             {{#each infoOtros}}
                                 <a class="imagenes" href="/alojamientos/detalles/{{idalojamiento}}">
@@ -254,11 +195,8 @@
             });
         </script>    
     <script>
-        const linkactivo=document.getElementById("Detalles")
+        const linkactivo=document.getElementById("Alojamientos")
         linkactivo.classList.add('active')
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/3.0.0/jquery.payment.min.js"></script>
-    <script src="/js/tarjeta.js"></script>
-    <script src="/js/fecha.js"></script>
-    <script src="/js/reserva.js"></script>
+    <script src="/js/gestionCalificaciones.js"></script>
