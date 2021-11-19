@@ -195,3 +195,13 @@ UPDATE `turistik`.`actividades` SET `tipo` = 'A' WHERE (`idactividades` = '6');
 UPDATE `turistik`.`actividades` SET `tipo` = 'A' WHERE (`idactividades` = '7');
 
 alter table imagenesactividades add publicid varchar(60);
+
+create table sitiosguardados(
+	idguardado INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_emprendimiento INT,
+    id_usuario INT,
+    CONSTRAINT fk_emprendimiento FOREIGN KEY (id_emprendimiento) REFERENCES emprendimientos(idemprendimiento),
+    CONSTRAINT fk_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios(idusuario)
+);
+
+rename table sitio to calificaciones;

@@ -96,7 +96,18 @@
                             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#denuncia">
                                 <i class="fas fa-flag"></i> Denunciar
                             </button>
-                            
+                            {{#if user}}
+                                {{#if guardado}}
+                                    <button type="button" class="btn btn-success" onclick="cambiarBoton({{emprendimiento.id_emprendimiento}})" id="botonGuardar">
+                                        <i class="far fa-bookmark"></i> Guardado en mis sitios
+                                    </button>
+                                {{else}}
+                                    <button type="button" class="btn btn-outline-success" onclick="cambiarBoton({{emprendimiento.id_emprendimiento}})" id="botonGuardar">
+                                        <i class="far fa-bookmark"></i> Guardar en mis sitios
+                                    </button>
+                                {{/if}}
+                            {{/if}}
+                            <div id="errorGuardado"></div>
                             <!-- Modal -->
                             <div class="modal fade" id="denuncia" tabindex="-1" aria-labelledby="denunciaLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -200,3 +211,4 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="/js/gestionCalificaciones.js"></script>
+    <script src="/js/gestionSitios.js"></script>

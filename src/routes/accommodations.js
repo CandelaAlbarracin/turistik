@@ -86,15 +86,16 @@ router.get('/detalles/:id', async (req,res)=>{
     //     r[i].fechafin=`${fechafin.getFullYear()}-${fechafin.getMonth()+1}-${fechafin.getDate()}`
     // }
     const actividades=await pool.query('select nombre from actividades where idactividades in (select id_actividad from actividadesofrecidas where id_alojamiento=?);',[id])
-    const calificacion=await pool.query('select avg(puntuacion) as promedio from sitio where id_emprendimiento=?;',[emprendimiento.id_emprendimiento])
+    const guardado=await pool.query('select idguardado from sitiosguardados where id_emprendimiento=? and id_usuario=?',[emprendimiento.id_emprendimiento,req.user.idusuario])
+    const calificacion=await pool.query('select avg(puntuacion) as promedio from calificaciones where id_emprendimiento=?;',[emprendimiento.id_emprendimiento])
     const promedioCalificacion=calificacion[0].promedio
     let reviews,calificacionU
     if (req.user){
-        reviews=await pool.query('select u.nombre,u.apellido, s.puntuacion,s.comentario from sitio s join usuarios u on s.id_usuario=u.idusuario where id_emprendimiento=? and u.idusuario<>?;',[emprendimiento.id_emprendimiento,req.user.idusuario])
-        const calificacionUsuario=await pool.query('select s.idcalificacion,s.puntuacion,s.comentario from sitio s join usuarios u on s.id_usuario=u.idusuario where id_emprendimiento=? and u.idusuario=?;',[emprendimiento.id_emprendimiento,req.user.idusuario])
+        reviews=await pool.query('select u.nombre,u.apellido, c.puntuacion,c.comentario from calificaciones c join usuarios u on c.id_usuario=u.idusuario where id_emprendimiento=? and u.idusuario<>?;',[emprendimiento.id_emprendimiento,req.user.idusuario])
+        const calificacionUsuario=await pool.query('select c.idcalificacion,c.puntuacion,c.comentario from calificaciones c join usuarios u on c.id_usuario=u.idusuario where id_emprendimiento=? and u.idusuario=?;',[emprendimiento.id_emprendimiento,req.user.idusuario])
         calificacionU=calificacionUsuario[0]
     }else{
-        reviews=await pool.query('select u.nombre,u.apellido, s.puntuacion,s.comentario from sitio s join usuarios u on s.id_usuario=u.idusuario where id_emprendimiento=?;',[emprendimiento.id_emprendimiento])
+        reviews=await pool.query('select u.nombre,u.apellido, c.puntuacion,c.comentario from calificaciones c join usuarios u on c.id_usuario=u.idusuario where id_emprendimiento=?;',[emprendimiento.id_emprendimiento])
     }
     
     const dueno= await pool.query('select distinct nombre,apellido from usuarios where idusuario in (select id_usuario from emprendedores where idemprendedor in (select id_emprendedor from emprendimientos where idemprendimiento in (select id_emprendimiento from alojamientos where idalojamiento=?)));',[id])
@@ -103,7 +104,7 @@ router.get('/detalles/:id', async (req,res)=>{
     loc=localidad[0].nombrelocalidad.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     urlmap=(solo.ubicacion+`,%20${loc}`).replace(' ','%20')
     if (req.user){
-        res.render('./accommodations/details_accommodations', {solo, infoOtros,emprendimiento,urlmap, imag,loc,duenoindividual,promedioCalificacion,reviews,calificacionU,actividades});
+        res.render('./accommodations/details_accommodations', {solo, infoOtros,emprendimiento,urlmap, imag,loc,duenoindividual,promedioCalificacion,reviews,calificacionU,actividades,guardado});
     }else{
         res.render('./accommodations/details_accommodations', {solo, infoOtros,emprendimiento,urlmap, imag,loc,duenoindividual,promedioCalificacion,reviews,actividades});
     }
@@ -145,7 +146,7 @@ router.post('/resultados',async(req,res)=>{
     const alojamientos=await pool.query('SELECT DISTINCTROW aloj.idalojamiento,aloj.precionoche,aloj.capacidadhabitaciones,aloj.tipoalojamiento,aloj.vista,aloj.hornobarro,aloj.animalesautoctonos,emp.idemprendimiento,emp.nombreemprendimiento, loc.nombrelocalidad FROM alojamientos aloj JOIN emprendimientos emp ON aloj.id_emprendimiento=emp.idemprendimiento JOIN localidades loc ON emp.id_localidad=loc.idlocalidad join actividadesofrecidas actof on actof.id_alojamiento=aloj.idalojamiento and emp.estadosolicitud="A" and actof.id_actividad in (?);',[actarray])
     
     for(let i=0;i<alojamientos.length;i++){
-        let calificacion=await pool.query('SELECT AVG(puntuacion) AS promedioCalificacion FROM sitio WHERE id_emprendimiento=?',[alojamientos[i].idemprendimiento])
+        let calificacion=await pool.query('SELECT AVG(puntuacion) AS promedioCalificacion FROM calificaciones WHERE id_emprendimiento=?',[alojamientos[i].idemprendimiento])
         alojamientos[i].promCalificacion=calificacion[0].promedioCalificacion
     }
     console.log(alojamientos)
@@ -161,14 +162,14 @@ router.post('/calificar',async(req,res)=>{
         puntuacion,
         comentario
     }
-    await pool.query('INSERT INTO sitio set ?',[calificacion])
+    await pool.query('INSERT INTO calificaciones set ?',[calificacion])
     const id=await pool.query('select idalojamiento from alojamientos where id_emprendimiento=?',idemprendimiento)
     res.redirect('/alojamientos/detalles/'+id[0].idalojamiento)
 })
 
 router.get('/eliminarCalificacion/:id/:aloj',async(req,res)=>{
     const {id,aloj}=req.params
-    await pool.query('delete from sitio where idcalificacion=?',[id])
+    await pool.query('delete from calificaciones where idcalificacion=?',[id])
     res.redirect('/alojamientos/detalles/'+aloj)
 })
 
@@ -181,7 +182,23 @@ router.post('/modificarCalificacion/:idcalificacion/:idaloj',async(req,res)=>{
         puntuacion,
         comentario
     }
-    await pool.query('UPDATE sitio set ? WHERE idcalificacion=?',[calificacion,idcalificacion])
+    await pool.query('UPDATE calificaciones set ? WHERE idcalificacion=?',[calificacion,idcalificacion])
     res.redirect('/alojamientos/detalles/'+idaloj)
+})
+
+router.post('/guardar',async(req,res)=>{
+    const {idemprendimiento}=req.body
+    const sitioGuardado={
+        id_emprendimiento:idemprendimiento,
+        id_usuario:req.user.idusuario
+    }
+    await pool.query('INSERT INTO sitiosguardados set ?',[sitioGuardado])
+    res.json({ok:'guardado'})
+})
+
+router.post('/eliminar', async(req,res)=>{
+    const {idemprendimiento}=req.body
+    await pool.query('DELETE FROM sitiosguardados WHERE id_emprendimiento=? and id_usuario=?',[idemprendimiento,req.user.idusuario])
+    res.json({ok:'eliminado'})
 })
 module.exports=router
