@@ -86,11 +86,12 @@ router.get('/detalles/:id', async (req,res)=>{
     //     r[i].fechafin=`${fechafin.getFullYear()}-${fechafin.getMonth()+1}-${fechafin.getDate()}`
     // }
     const actividades=await pool.query('select nombre from actividades where idactividades in (select id_actividad from actividadesofrecidas where id_alojamiento=?);',[id])
-    const guardado=await pool.query('select idguardado from sitiosguardados where id_emprendimiento=? and id_usuario=?',[emprendimiento.id_emprendimiento,req.user.idusuario])
+    
     const calificacion=await pool.query('select avg(puntuacion) as promedio from calificaciones where id_emprendimiento=?;',[emprendimiento.id_emprendimiento])
     const promedioCalificacion=calificacion[0].promedio
-    let reviews,calificacionU
+    let reviews,calificacionU,guardado
     if (req.user){
+        guardado=await pool.query('select idguardado from sitiosguardados where id_emprendimiento=? and id_usuario=?',[emprendimiento.id_emprendimiento,req.user.idusuario])
         reviews=await pool.query('select u.nombre,u.apellido, c.puntuacion,c.comentario from calificaciones c join usuarios u on c.id_usuario=u.idusuario where id_emprendimiento=? and u.idusuario<>?;',[emprendimiento.id_emprendimiento,req.user.idusuario])
         const calificacionUsuario=await pool.query('select c.idcalificacion,c.puntuacion,c.comentario from calificaciones c join usuarios u on c.id_usuario=u.idusuario where id_emprendimiento=? and u.idusuario=?;',[emprendimiento.id_emprendimiento,req.user.idusuario])
         calificacionU=calificacionUsuario[0]
