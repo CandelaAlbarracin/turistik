@@ -82,6 +82,7 @@ app.use('/sobrenosotros',require('./routes/aboutus'))
 app.use('/explorajujuy',require('./routes/explorejujuy'))
 app.use('/denuncias',require('./routes/denuncias'))
 app.use('/actividades',require('./routes/activities'))
+app.use('/missitios',require('./routes/mysities'))
 //app.use('/alojamientos/detalles',require('./routes/detailsAccommodations'))
 
 //Publico
