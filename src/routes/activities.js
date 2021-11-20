@@ -123,7 +123,7 @@ router.post('/editar',async(req,res)=>{
             const newImgSec={
                 link:result2.url,
                 tipo:"S",
-                id_actividad:idact,
+                id_actividad:idactividades,
                 publicid:result2.public_id
             }
             await pool.query('INSERT INTO imagenesactividades set ?',[newImgSec])

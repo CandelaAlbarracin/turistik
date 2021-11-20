@@ -30,9 +30,13 @@ function cargarImg(){
     let modalbody=document.getElementById('modal-body')
     const imagenes=document.getElementsByClassName('imgload')
     modalbody.innerHTML=''
-    for ( i=0;i<imagenes.length/2-1;i++){
-        modalbody.innerHTML+=`<div class="col"><input type="checkbox" class="checks" id="check${imagenes[i].id}"><img src="${imagenes[i].src}" id="${imagenes[i].id}" width="80px"></div>`
+    let array=[]
+    for ( i=0;i<imagenes.length;i++){
+        array.push(`<div class="col"><input type="checkbox" class="checks" id="check${imagenes[i].id}"><img src="${imagenes[i].src}" id="${imagenes[i].id}" width="80px"></div>`)
     }
+    const dataArr = new Set(array);
+    let result = [...dataArr];
+    modalbody.innerHTML=result.join('')
 }
 
 function actualizarVista(){
@@ -51,12 +55,11 @@ function enviarForm(){
     descripcion.value=markupStr
     const archivos=document.getElementById('imagenprincipal').files
     const nuevo=document.getElementById('nuevo')
-    if (nuevo.innerHTML=="Agregar Actividad"){
+    if (nuevo){
         if (!archivos || !archivos.length){
             alert('Debe ingresar una imagen principal')
         }
     }
-    
 }
 
 function imgEliminar(){
