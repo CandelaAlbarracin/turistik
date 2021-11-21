@@ -205,3 +205,10 @@ create table sitiosguardados(
 );
 
 rename table sitio to calificaciones;
+create table toursofrecidos (
+	idtoursofrecidos INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_tour INT,
+    id_actividad INT,
+    CONSTRAINT fk_actividades FOREIGN KEY (id_actividad) REFERENCES actividades(idactividades),
+    CONSTRAINT fk_tours FOREIGN KEY (id_tour) REFERENCES tours(idtour)
+);

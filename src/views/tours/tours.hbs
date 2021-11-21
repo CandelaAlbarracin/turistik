@@ -5,11 +5,14 @@
     <h2 class="text-center fst-italic mt-3">Descubre a nuestros guías</h2>
     <div class="wrapper">
         <div class="container">
-            <div class="mt-3">
+            <div class="d-flex justify-content-between mt-3">
                 <h4>Selecciona los tours que te interesen</h4>
+                <div class="input-group mb-3" style="width: 16rem;">
+                <input type="text" class="form-control" placeholder="¿Qué tipo de tour buscas?" aria-label="¿Qué tipo de tour buscas?" aria-describedby="button-addon2" id="nombreAct" onkeyup="busquedaRapida('T')">
+                <button class="btn btn-primary" type="button" id="button-addon2"><i class="fab fa-searchengin"></i></button>
             </div>
-        <div class="cols">
-            <div class="row-cols-1 row-cols-sm-2 row-cols-md-4"></div>
+            </div>
+        <div class="cols" id="contenedorTarjetas">
                 {{#each actividades}}
                   <div class="col2" ontouchstart="this.classList.toggle('hover');">
                       <div class="container2">
@@ -27,18 +30,22 @@
                           </div>
                       </div>
                       <div class="text-center fst-italic">
-                        <input type="checkbox" name="act{{idactividades}}" id="act{{idactividades}}">
+                        <input type="checkbox" name="act{{idactividades}}" id="act{{idactividades}}" class="check" onclick="cambioInput()">
                          <label class="m-2" for="act{{idactividades}}"> ¡Quiero {{nombre}}!</label>
                    </div>
                   </div>
                 {{/each}}
             </div>
-            <div class="d-grid gap-2 mb-5">
-                <button class="btn btn-primary" type="button"><i class="fas fa-search"></i> Buscar</button>
-            </div>
+            <form action="/alojamientos/resultados" method="post">
+                <input type="text" name="actividades" id="inputactividades" hidden>
+                <div class="d-grid gap-2 mb-5">
+                <button class="btn btn-primary" type="submit" id="botonSubmit" disabled><i class="fas fa-search"></i> Buscar</button>
+                </div>
+            </form>
        </div>
     </div>
+    <script src="/js/busquedasrapidas.js"></script>
     <script>
-        const linkactivo=document.getElementById("Tour")
+        const linkactivo=document.getElementById("Tours")
         linkactivo.classList.add('active')
     </script>

@@ -1,4 +1,4 @@
-function busquedaRapida(){
+function busquedaRapida(categoria){
     ajax({
         method:"POST",
         url:'/actividades/buscar',
@@ -37,7 +37,7 @@ function busquedaRapida(){
         error:(err)=>{console.log(err)},
         data:{
             nombre:document.getElementById('nombreAct').value,
-            categoria:'"A"'
+            categoria:`"${categoria}"`
         }
     })
 }
