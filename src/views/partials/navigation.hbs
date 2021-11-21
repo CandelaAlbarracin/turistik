@@ -21,21 +21,34 @@
         <li class="nav-item">
           <a class="nav-link" id="Tours" href="/tours">Tours</a>
         </li>
+        {{#if user}}
         <li class="nav-item">
-          <a class="nav-link" href="#">Contacto</a>
+          <a class="nav-link" id="Mis-Sitios" href="/missitios">Mis Sitios</a>
         </li>
+        {{else}}
+        <li class="nav-item">
+            <a class="nav-link" href="#">Contacto</a>
+        </li>
+        {{/if}}
         <li class="nav-item">
           <a class="nav-link" id="SobreNosotros" href="/sobrenosotros">Sobre Nosotros</a>
         </li>
         <span class="border-end"></span>
 
         {{#if user}}
-          <li class="nav-item">
-            <a href="/profile" class="nav-link">Perfil</a>
-          </li>
-          <li class="nav-item">
-            <a href="/logout" class="nav-link">Cerrar Sesión</a>
-          </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img
+              src="https://res.cloudinary.com/turistick/image/upload/v1634951634/Global/profile-user-1_noablt.png"
+              alt="icon-user"/> {{user.nombre}} {{user.apellido}}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+            <li><p class="dropdown-item fw-bold text-center">Turista</p></li>
+            <li><a class="dropdown-item text-center" href="/profile">Perfil</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-center" href="/logout">Cerrar Sesión</a></li>
+          </ul>
+        </li>
         {{else}}
           <li class="nav-item">
           <a class="nav-link" href="/signin"><img

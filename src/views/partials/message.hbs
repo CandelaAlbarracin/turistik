@@ -25,3 +25,15 @@
     </div>
 </div>
 {{/if}}
+
+{{#if info}}
+<div class="container p-2">
+    <div class="row">
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <i class="fas fa-info-circle"></i> {{info}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
+    </div>
+</div>
+{{/if}}

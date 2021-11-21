@@ -68,6 +68,7 @@ app.use(passport.session());
 app.use((req,res,next)=>{
     app.locals.success = req.flash("success");
     app.locals.message = req.flash("message");
+    app.locals.info=req.flash("info");
     app.locals.user = req.user;
     next()
 });
@@ -83,6 +84,7 @@ app.use('/explorajujuy',require('./routes/explorejujuy'))
 app.use('/denuncias',require('./routes/denuncias'))
 app.use('/actividades',require('./routes/activities'))
 app.use('/missitios',require('./routes/mysities'))
+app.use('/solicitudespendientes',require('./routes/awaitingrequests'))
 //app.use('/alojamientos/detalles',require('./routes/detailsAccommodations'))
 
 //Publico

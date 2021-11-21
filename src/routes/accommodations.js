@@ -121,7 +121,7 @@ router.post('/denunciar',async (req,res)=>{
     }
     await pool.query('INSERT INTO denuncias set ?',[nuevaDenuncia])
     alojamiento=await pool.query('SELECT idalojamiento FROM alojamientos WHERE id_emprendimiento=?',[id_emprendimiento])
-    //Agregar Mensaje denuncia registrada con exito
+    req.flash("info","Hemos recibido su denuncia. Gracias por contribuir a que Turistik sea un lugar mejor")
     res.redirect(`detalles/${alojamiento[0].idalojamiento}`)
 })
 

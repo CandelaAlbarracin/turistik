@@ -27,14 +27,11 @@
         <span class="border-end"></span>
 
         {{#if user}}
-          {{!-- <li class="nav-item">
-            <a href="/logout" class="nav-link">Cerrar Sesión</a>
-          </li> --}}
           <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <img
               src="https://res.cloudinary.com/turistick/image/upload/v1634951634/Global/profile-user-1_noablt.png"
-              alt="Registrarse o Iniciar Sesión"/> {{user.nombre}} {{user.apellido}}
+              alt="icon-user"/> {{user.nombre}} {{user.apellido}}
           </a>
           <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
             <li><p class="dropdown-item fw-bold text-center">Administrador</p></li>
