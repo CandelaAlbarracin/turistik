@@ -41,16 +41,14 @@ router.post('/buscar',async(req,res)=>{
     if (nombreemprendimiento){
         consulta=`${consulta} and emp.nombreemprendimiento regexp ?`
         parametros.push(nombreemprendimiento)
-        if (ubicacion){
-            consulta=`${consulta} where emp.ubicacion regexp ? or loc.nombrelocalidad regexp ? or loc.departamento regexp ?;`
-            parametros.push(ubicacion)
-        }
-    }else{
-        if (ubicacion){
-            consulta=`${consulta} where emp.ubicacion regexp ? or loc.nombrelocalidad regexp ? or loc.departamento regexp ?;`
-            parametros.push(ubicacion)
-        }
     }
+    if (ubicacion){
+        consulta=`${consulta} where (emp.ubicacion regexp ? or loc.nombrelocalidad regexp ? or loc.departamento regexp ?);`
+        parametros.push(ubicacion)
+        parametros.push(ubicacion)
+        parametros.push(ubicacion)
+    }
+
     const sitios=await pool.query(consulta,parametros)
     let calificaciones,calificacion
     let idencontrado,linkCat

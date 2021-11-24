@@ -212,3 +212,12 @@ create table toursofrecidos (
     CONSTRAINT fk_actividades FOREIGN KEY (id_actividad) REFERENCES actividades(idactividades),
     CONSTRAINT fk_tours FOREIGN KEY (id_tour) REFERENCES tours(idtour)
 );
+
+alter table tours add duracion time;
+alter table tours add recomendaciones TEXT;
+alter table tours add precio float;
+alter table tours drop encargados;
+alter table tours drop fecha;
+
+INSERT INTO `turistik`.`tours` (`idtour`, `id_emprendimiento`, `dificultad`, `duracion`, `recomendaciones`) VALUES ('1', '6', 'Media', '04:00', 'llevar sombrero, abrigo,  zapatos de trekking y protección solar.');
+INSERT INTO `turistik`.`toursofrecidos` (`idtoursofrecidos`, `id_tour`, `id_actividad`) VALUES ('1', '1', '15');

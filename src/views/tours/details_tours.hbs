@@ -1,4 +1,4 @@
-    <link rel="stylesheet" href="/css/stylesDetails.css">
+<link rel="stylesheet" href="/css/stylesDetails.css">
 </head>
 <body> 
     {{>navigation}}   
@@ -22,7 +22,7 @@
                         {{#if promedioCalificacion}}
                             <p class="text-center fw-bold fs-4">{{promedioCalificacion}}⭐</p>
                         {{else}}
-                            <p class="text-center">Este alojamiento aún no ha recibido calificaciones. ¡Sé el primero en dar una!</p>
+                            <p class="text-center">Este tour aún no ha recibido calificaciones. ¡Sé el primero en dar una!</p>
                         {{/if}}
                         <hr>
                         {{#if user}}
@@ -90,7 +90,7 @@
                             <div class="name"><p class="fs-3">{{solo.nombreemprendimiento}}</p> </div> 
                         </div>
                         <div class="about pb-3 pt-3">
-                            <h4 class="font-weight-bold">$ {{solo.precionoche}}</h4>
+                            <h4 class="font-weight-bold">$ {{solo.precio}}</h4>
                         </div>
                         <div class="d-grid gap-2 d-md-block mb-2">
                             {{!-- <a class="btn btn-danger text-uppercase mx-2" id="Denuncias" href="#" role="button">DENUNCIAS</a> --}}
@@ -152,31 +152,30 @@
                             <div class="mt-2"> <span class="fw-bold">Descripcion</span>
                                 <p>{{solo.descripcion}}</p>
                                 <div class="bullets">
-                                    <div class="d-flex align-items-center"> <span class="bullet-text"><i class="fas fa-house"></i> Tipo de Alojamiento: {{solo.tipoalojamiento}}</span> </div>
-                                    <div class="d-flex align-items-center"> <span class="bullet-text"><i class="fas fa-users"></i> Capacidad disponible para {{solo.capacidadhabitaciones}} huéspedes</span> </div>
-                                    {{#if solo.piscina}}
-                                        <div class="d-flex align-items-center"> <span class="dot color-red"></span> <span class="bullet-text">Piscina disponible las 24hs</span> </div>
-                                    {{/if}}
-                                    <div class="d-flex align-items-center"> <span class="bullet-text"><i class="fas fa-car"></i> Capacidad para {{solo.capacidadestacionamientos}} estacionamientos</span> </div>
-                                    <div class="d-flex align-items-center"> <span class="bullet-text"><i class="fas fa-mountain"></i> Vista: {{solo.vista}}</span> </div>
-                                    {{#if solo.hornobarro}}
-                                        <div class="d-flex align-items-center"> <span class="bullet-text"><i class="fas fa-igloo"></i> Posee horno de barro</span> </div>
-                                    {{/if}}
-                                    {{#if solo.animalesautoctonos}}
-                                        <div class="d-flex align-items-center"> <span class="bullet-text"> <img src="https://icon-library.com/images/alpaca-icon/alpaca-icon-19.jpg" height="15px"> Posee animales autóctonos</span> </div>
-                                    {{/if}}
+                                    <div class="d-flex align-items-center"> <span class="bullet-text"><i class="fas fa-hiking"></i> Dificultad: {{solo.dificultad}}</span> </div>
+                                    <div class="d-flex align-items-center"> <span class="bullet-text"><i class="far fa-clock"></i> Duración: {{solo.duracion}}</span> </div>
                                 </div>
-                                <div class="mt-2"> <span class="fw-bold">Actividades que ofrece</span>
+                                <div class="mt-2"> <span class="fw-bold">Recomendaciones</span>
+                                    <p>{{solo.recomendaciones}}</p>
+                                </div>
+                                <div class="mt-2"> <span class="fw-bold">Tours que ofrece</span>
                                     {{#each actividades}}
                                         <p><span style="color: cadetblue;"><i class="fas fa-check-circle"></i></span> {{nombre}}</p>
                                     {{/each}}
                                 </div>
+                                
                                 <div class="mt-2"> <span class="fw-bold">Contactos y redes sociales</span>
                                 <br>
                                 <p class="fs-5 fw-bold"><i class="fas fa-phone"></i> {{duenoindividual.nombre}} {{duenoindividual.apellido}}: {{solo.telefono}}</p>
+                                {{#if solo.facebook}}
                                 <a class="btn btn-primary" style="background-color: #3b5998;" href="{{solo.facebook}}" role="button"><i class="fab fa-facebook-f"></i></a>
+                                {{/if}}
+                                {{#if solo.instagram}}
                                 <a class="btn btn-primary" style="background-color: #ac2bac;" href="{{solo.instagram}}" role="button"><i class="fab fa-instagram"></i></a>
+                                {{/if}}
+                                {{#if solo.youtube}}
                                 <a class="btn btn-primary" style="background-color: #ed302f;" href="{{solo.youtube}}" role="button"><i class="fab fa-youtube"></i></a>
+                                {{/if}}
                                 {{!-- <a class="btn btn-primary" style="background-color: #25d366;" href="{{solo.telefono}}" role="button"><i class="fab fa-whatsapp"></i></a> --}}
                                 <br>
                             </div>
@@ -187,13 +186,13 @@
                         </div>
                     </div>
                     
-                    <div class="card mt-2"> <span class="fw-bold">Otros hospedajes:</span>
+                    <div class="card mt-2"> <span class="fw-bold">Otros tours:</span>
                         <div class="similar-products mt-2 d-flex flex-row">
                             {{#each infoOtros}}
-                                <a class="imagenes" href="/alojamientos/detalles/{{idalojamiento}}">
+                                <a class="imagenes" href="/alojamientos/detalles/{{idtour}}">
                                     <div class="card border p-1" style="width: 9rem;margin-right: 3px;"> <img src="{{link}}" class="card-img-top" alt="...">
                                         <div class="card-body">
-                                            <h6 class="card-title">{{precionoche}}$</h6>
+                                            <h6 class="card-title">{{precio}}$</h6>
                                         </div>
                                     </div>
                                 </a>
@@ -215,7 +214,7 @@
             });
         </script>    
     <script>
-        const linkactivo=document.getElementById("Alojamientos")
+        const linkactivo=document.getElementById("Tours")
         linkactivo.classList.add('active')
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

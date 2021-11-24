@@ -38,7 +38,7 @@ router.get("/profile", (req,res) => {
         res.redirect("/actividades")
     }
     if (req.user.tipo=='E'){
-        res.render("profile")
+        res.redirect("/misemprendimientos")
     //colocar vista a donde redireccionar
     }      
 });

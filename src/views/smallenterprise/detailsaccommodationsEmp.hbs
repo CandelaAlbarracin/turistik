@@ -1,0 +1,105 @@
+<link rel="stylesheet" href="/css/stylesDetails.css">
+</head>
+<body> 
+    {{>navigationEmp}}
+        <link rel='stylesheet' href='https://sachinchoolur.github.io/lightslider/dist/css/lightslider.css'>
+        <div class="container-fluid mt-2 mb-3">
+            <div class="row no-gutters">
+                <div class="col-md-5 pr-2">
+                    <div class="card">
+                        <div class="demo">
+                            <ul id="lightSlider">
+                                {{#each imag}}
+                                    <li data-thumb="{{link}}"> <img class="imgBig" src="{{link}}" /> </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                   
+                    <div class="card mt-2">
+                        <p class="text-center fs-4 fw-bold">Calificación Promedio dada por los Usuarios</p>
+                        {{#if promedioCalificacion}}
+                            <p class="text-center fw-bold fs-4">{{promedioCalificacion}}⭐</p>
+                        {{else}}
+                            <p class="text-center">Este alojamientos aún no ha recibido calificaciones. ¡Sé el primero en dar una!</p>
+                        {{/if}}
+                        <hr>
+                        <ul class="list-group">
+                            {{#each reviews}}
+                            <li class="list-group-item">
+                                <p class="fw-bold"><i class="fas fa-user"></i> {{nombre}} {{apellido}}: {{puntuacion}}⭐</p>
+                                <p>
+                                    <span class="fw-bold"><i class="fas fa-comment-dots"></i> Comentario: </span> 
+                                    <span class="fst-italic text-muted">{{comentario}}</span>
+                                </p>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    
+                </div>
+                <div class="col-md-7">
+                    <div class="card">
+                        <p class="text-muted fst-italic"><span style="color: #ed302f;"><i class="fas fa-map-marker"></i></span> {{solo.ubicacion}}, {{loc}} </p> 
+                        <div class="d-md-flex align-items-md-center">
+                            <div class="name"><p class="fs-3">{{solo.nombreemprendimiento}}</p> </div> 
+                        </div>
+                        <div class="about pb-3 pt-3">
+                            <h4 class="font-weight-bold">$ {{solo.precionoche}}</h4>
+                        </div>
+                        <div class="product-description">
+                            <div class="mt-2"> <span class="fw-bold">Descripcion</span>
+                                <p>{{solo.descripcion}}</p>
+                                <div class="bullets">
+                                    <div class="d-flex align-items-center"> <span class="bullet-text"><i class="fas fa-house"></i> Tipo de Alojamiento: {{solo.tipoalojamiento}}</span> </div>
+                                    <div class="d-flex align-items-center"> <span class="bullet-text"><i class="fas fa-users"></i> Capacidad disponible para {{solo.capacidadhabitaciones}} huéspedes</span> </div>
+                                    {{#if solo.piscina}}
+                                        <div class="d-flex align-items-center"> <span class="dot color-red"></span> <span class="bullet-text">Piscina disponible las 24hs</span> </div>
+                                    {{/if}}
+                                    <div class="d-flex align-items-center"> <span class="bullet-text"><i class="fas fa-car"></i> Capacidad para {{solo.capacidadestacionamientos}} estacionamientos</span> </div>
+                                    <div class="d-flex align-items-center"> <span class="bullet-text"><i class="fas fa-mountain"></i> Vista: {{solo.vista}}</span> </div>
+                                    {{#if solo.hornobarro}}
+                                        <div class="d-flex align-items-center"> <span class="bullet-text"><i class="fas fa-igloo"></i> Posee horno de barro</span> </div>
+                                    {{/if}}
+                                    {{#if solo.animalesautoctonos}}
+                                        <div class="d-flex align-items-center"> <span class="bullet-text"> <img src="https://icon-library.com/images/alpaca-icon/alpaca-icon-19.jpg" height="15px"> Posee animales autóctonos</span> </div>
+                                    {{/if}}
+                                </div>
+                                <div class="mt-2"> <span class="fw-bold">Actividades que ofrece</span>
+                                    {{#each actividades}}
+                                        <p><span style="color: cadetblue;"><i class="fas fa-check-circle"></i></span> {{nombre}}</p>
+                                    {{/each}}
+                                </div>
+                                <div class="mt-2"> <span class="fw-bold">Contactos y redes sociales</span>
+                                <br>
+                                <p class="fs-5 fw-bold"><i class="fas fa-phone"></i> {{duenoindividual.nombre}} {{duenoindividual.apellido}}: {{solo.telefono}}</p>
+                                <a class="btn btn-primary" style="background-color: #3b5998;" href="{{solo.facebook}}" role="button"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-primary" style="background-color: #ac2bac;" href="{{solo.instagram}}" role="button"><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-primary" style="background-color: #ed302f;" href="{{solo.youtube}}" role="button"><i class="fab fa-youtube"></i></a>
+                                <br>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="fw-bold fs-6 mt-2">Ubicación</p>
+                            <div class="text-center" style="width: 100%"><iframe width="95%" height="525" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q={{urlmap}},%20Jujuy+(Emprendimiento)&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="http://www.gps.ie/">gps systems</a></iframe></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="m-3">
+            <a role="button" class="btn btn-secondary" href="/misemprendimientos"><i class="fas fa-chevron-circle-left"></i> Volver</a>
+        </div>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
+        <script src='https://sachinchoolur.github.io/lightslider/dist/js/lightslider.js'></script>
+        <script>
+            $('#lightSlider').lightSlider({
+                gallery: true,
+                item: 1,
+                loop: true,
+                slideMargin: 0,
+                thumbItem: 9
+            });
+        </script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

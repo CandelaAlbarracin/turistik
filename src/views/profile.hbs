@@ -1,2 +1,15 @@
 {{>navigation}}
-<h1>Hola! {{user.nombre}} {{user.apellido}}</h1>
+<div class="container">
+    <div class="card mt-5">
+        <div class="card-body text-center">
+            <h1 class="m-4">¡Hola!, {{user.nombre}} {{user.apellido}}</h1>
+            <p class="m-3 fst-italic fs-2">¿Qué te interesería hacer hoy?</p>
+            <div class="d-flex justify-content-around mt-5 mb-5">
+                <a class="btn btn-warning btn-lg" role="button" href="/alojamientos"><i class="fas fa-house-user"></i> Descubre nuevos alojamientos</a>
+                <a class="btn btn-info btn-lg" role="button" href="/tours"><i class="fas fa-hiking"></i> Descubre nuevos tours</a>
+                <a class="btn btn-success btn-lg" role="button" href="/missitios"><i class="fas fa-bookmark"></i> Visitá tus sitios guardados</a>
+            </div>
+        </div>
+    </div>
+</div>
+
