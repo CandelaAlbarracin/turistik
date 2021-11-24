@@ -35,10 +35,10 @@ function buscarDen(){
                 tabla.innerHTML=''
                 for (let i=0;i<denunciasResultado.length;i++){
                     tabla.innerHTML+=`<tr>
-                    <th scope="row" class="text-center">${denunciasResultado[i].nroDenuncia}</th>
+                        <td scope="row" class="text-center fw-bold">${denunciasResultado[i].nroDenuncia}</td>
                         <td>${denunciasResultado[i].nombreemprendimiento}</td>
-                        <td>${denunciasResultado[i].categoria}</td>
-                        <td>${denunciasResultado[i].motivo}</td>
+                        <td class="text-center">${denunciasResultado[i].categoria}</td>
+                        <td class="text-center">${denunciasResultado[i].motivo}</td>
                         <td>${denunciasResultado[i].descripcion}</td>
                     </tr>`
                 }

@@ -4,11 +4,15 @@ const {google}=require('googleapis')
 const router=express.Router()
 const pool=require('../database')
 
-router.get('/',async(req,res)=>{
-    res.render('./awaitingrequests/awaitingrequests')
+router.get('/aprobadas',async(req,res)=>{
+    res.render('./requests/approvedrequests')
 })
 
-router.post('/', async(req,res)=>{
+router.get('/pendientes/:id',async(req,res)=>{
+    res.render('./requests/awaitingrequests')
+})
+
+router.post('/pendientes/:id', async(req,res)=>{
     const {observaciones,resolucion}=req.body
     let sendhtml
     if (resolucion=="Aceptado"){

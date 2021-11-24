@@ -1,3 +1,8 @@
+<style> 
+    th {
+    cursor: pointer;
+    }
+</style>
 </head>
 <body>
     {{>navigationAdm}}
@@ -9,13 +14,13 @@
             <div class="row g-3">
                 <div class="col-md">
                     <div class="form-floating">
-                    <input type="text" class="form-control" id="emprendimiento" name="nombreemprendimiento">
-                    <label for="emprendimiento">Nombre</label>
+                    <input type="text" class="form-control" id="emprendimiento" name="nombreemprendimiento" onkeyup="buscarDen()">
+                    <label for="emprendimiento">Nombre del Emprendimiento</label>
                     </div>
                 </div>
                 <div class="col-md">
                     <div class="form-floating">
-                    <select class="form-select" id="Motivo" name="motivo" aria-label="Floating label select example">
+                    <select class="form-select" id="Motivo" name="motivo" aria-label="Floating label select example" onchange="buscarDen()">
                         <option value='Todos'selected>Todos</option>
                         <option value='Insalubridad'>Insalubridad</option>
                         <option value='Lugar Inexistente'>Lugar Inexistente</option>
@@ -27,7 +32,7 @@
                 </div>
                 <div class="col-md">
                     <div class="form-floating">
-                    <select class="form-select" id="Categoria" name="categoria" aria-label="Floating label select example">
+                    <select class="form-select" id="Categoria" name="categoria" aria-label="Floating label select example" onchange="buscarDen()">
                         <option value='"A","T"'selected>Todas</option>
                         <option value='"A"'>Alojamientos</option>
                         <option value='"T"'>Tours</option>
@@ -46,23 +51,24 @@
             <p class="fs-5 fst-italic" id="noencontrado"></p>
             <h6 class="fw-ligth text-end" id="cantidadDenuncias">Cantidad de denuncias: {{[1]}}</h6>
         </div>
-        <table class="table">
-            <thead id='cabeceraTabla'>
+        <div class="table-responsive">
+        <table class="table table-hover" id="myTable">
+            <thead id='cabeceraTabla' class="text-center">
                 <tr>
-                <th scope="col">Nro Denuncia</th>
-                <th scope="col">Emprendimiento Denunciado</th>
-                <th scope="col">Categoria</th>
-                <th scope="col">Motivo</th>
+                <th scope="col" onclick="sortTable(0, 'int')" style="width:150px;">Nro Denuncia <i class="fas fa-exchange-alt" style="transform:rotate(90deg);"></i></th>
+                <th scope="col" onclick="sortTable(1, 'str')" style="width:280px;">Emprendimiento Denunciado <i class="fas fa-exchange-alt" style="transform:rotate(90deg);"></i></th>
+                <th scope="col" onclick="sortTable(2, 'str')" style="width:150px;">Categoría <i class="fas fa-exchange-alt" style="transform:rotate(90deg);"></i></th>
+                <th scope="col" onclick="sortTable(3, 'str')">Motivo <i class="fas fa-exchange-alt" style="transform:rotate(90deg);"></i></th>
                 <th scope="col">Descripción</th>
                 </tr>
             </thead>
             <tbody id='cuerpoTabla'>
                 {{#each [0].denuncias}}
                     <tr>
-                    <th scope="row" class="text-center">{{nroDenuncia}}</th>
+                        <td scope="row" class="text-center fw-bold">{{nroDenuncia}}</td>
                         <td>{{nombreemprendimiento}}</td>
-                        <td>{{categoria}}</td>
-                        <td>{{motivo}}</td>
+                        <td class="text-center">{{categoria}}</td>
+                        <td class="text-center">{{motivo}}</td>
                         <td>{{descripcion}}</td>
                     </tr>
                 {{else}}
@@ -70,10 +76,11 @@
                 {{/each}}
             </tbody>
         </table>
+        </div>
     </div>
     <script src="/js/buscarDenuncias.js"></script>
+    <script src="/js/ordenarTabla.js"></script>
     <script>
         const linkactivo=document.getElementById("Denuncias")
-        console.log(linkactivo)
         linkactivo.classList.add('active')
     </script>

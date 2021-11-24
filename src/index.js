@@ -84,7 +84,7 @@ app.use('/explorajujuy',require('./routes/explorejujuy'))
 app.use('/denuncias',require('./routes/denuncias'))
 app.use('/actividades',require('./routes/activities'))
 app.use('/missitios',require('./routes/mysities'))
-app.use('/solicitudespendientes',require('./routes/awaitingrequests'))
+app.use('/solicitudes',require('./routes/requests'))
 app.use('/misemprendimientos',require('./routes/smallenterprises.js'))
 //app.use('/alojamientos/detalles',require('./routes/detailsAccommodations'))
 
