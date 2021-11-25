@@ -34,15 +34,15 @@
                                         <span class="fst-italic text-muted">{{calificacionU.comentario}}</span>
                                     </p>
                                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                        <a class="btn btn-danger me-md-2" role="button" href="/alojamientos/eliminarCalificacion/{{calificacionU.idcalificacion}}/{{solo.idalojamiento}}">Eliminar</a>
-                                        <button class="btn btn-warning" type="button" onclick="modificarCalificacion({{emprendimiento.id_emprendimiento}},{{calificacionU.puntuacion}},'{{calificacionU.comentario}}',{{calificacionU.idcalificacion}},{{solo.idalojamiento}})">Modificar</button>
+                                        <a class="btn btn-danger me-md-2" role="button" href="/tours/eliminarCalificacion/{{calificacionU.idcalificacion}}/{{solo.idtour}}">Eliminar</a>
+                                        <button class="btn btn-warning" type="button" onclick="modificarCalificacion({{emprendimiento.id_emprendimiento}},{{calificacionU.puntuacion}},'{{calificacionU.comentario}}',{{calificacionU.idcalificacion}},{{solo.idtour}},'T')">Modificar</button>
                                     </div>
                                 </div>
                                 <div class="comment-box ml-2" id="modificacion"></div>
                             {{else}}
                                 <div class="comment-box ml-2" id="ventanaCalificacion">
                                     <h4>Califica este sitio</h4>
-                                    <form action="/alojamientos/calificar" method="post" name="calificacionsitio" onsubmit="event.preventDefault()">
+                                    <form action="/tours/calificar" method="post" name="calificacionsitio" onsubmit="event.preventDefault()">
                                     <input type="text" name="idemprendimiento" value="{{emprendimiento.id_emprendimiento}}" hidden>
                                     <div class="rating"> 
                                         <input type="radio" class="estrella" name="puntuacion" value="5" id="5"><label for="5">☆</label>
@@ -118,7 +118,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="/alojamientos/denunciar" method="post">
+                                    <form action="/tours/denunciar" method="post">
                                         <div class="form-floating">
                                             <select class="form-select" id="motivoDenuncia" name="motivo" aria-label="Floating label select example" required>
                                                 <option selected disabled value>Selecciona</option>
@@ -189,7 +189,7 @@
                     <div class="card mt-2"> <span class="fw-bold">Otros tours:</span>
                         <div class="similar-products mt-2 d-flex flex-row">
                             {{#each infoOtros}}
-                                <a class="imagenes" href="/alojamientos/detalles/{{idtour}}">
+                                <a class="imagenes" href="/tours/detalles/{{idtour}}">
                                     <div class="card border p-1" style="width: 9rem;margin-right: 3px;"> <img src="{{link}}" class="card-img-top" alt="...">
                                         <div class="card-body">
                                             <h6 class="card-title">{{precio}}$</h6>

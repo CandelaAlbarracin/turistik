@@ -17,7 +17,6 @@ const ajax=(options)=>{
 }
 function cambiarBoton(idemp){
     const botonGuardar=document.getElementById('botonGuardar')
-    console.log(botonGuardar.textContent)
     if(botonGuardar.textContent.includes('Guardar en mis sitios')){
         guardarSitio(idemp)
         botonGuardar.classList.remove('btn-outline-success')

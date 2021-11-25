@@ -5,7 +5,65 @@ const router=express.Router()
 const pool=require('../database')
 
 router.get('/aprobadas',async(req,res)=>{
-    res.render('./requests/approvedrequests')
+    const aprobadas=await pool.query('SELECT emprendimientos.idemprendimiento,emprendedores.cuil,usuarios.nombre,usuarios.apellido,emprendimientos.nombreemprendimiento,emprendimientos.categoria FROM emprendimientos JOIN emprendedores ON emprendimientos.id_emprendedor=emprendedores.idemprendedor JOIN usuarios ON emprendedores.id_usuario=usuarios.idusuario WHERE emprendimientos.estadosolicitud="A" ORDER BY emprendimientos.idemprendimiento;')
+    for(let i=0;i<aprobadas.length;i++){
+        if(aprobadas[i].categoria=='A'){
+            aprobadas[i].categoria='Alojamiento'
+        }else{
+            aprobadas[i].categoria='Tour'
+        }
+    }
+    res.render('./requests/approvedrequests',{aprobadas})
+})
+
+router.get('/pendientes',async(req,res)=>{
+    const pendientes=await pool.query('SELECT emprendimientos.idemprendimiento,emprendedores.cuil,usuarios.nombre,usuarios.apellido,emprendimientos.nombreemprendimiento,emprendimientos.categoria FROM emprendimientos JOIN emprendedores ON emprendimientos.id_emprendedor=emprendedores.idemprendedor JOIN usuarios ON emprendedores.id_usuario=usuarios.idusuario WHERE emprendimientos.estadosolicitud="A" ORDER BY emprendimientos.idemprendimiento;')
+    for(let i=0;i<pendientes.length;i++){
+        if(pendientes[i].categoria=='A'){
+            pendientes[i].categoria='Alojamiento'
+        }else{
+            pendientes[i].categoria='Tour'
+        }
+    }
+    res.render('./requests/awaitingrequests',{pendientes})
+})
+
+router.post('/buscar',async(req,res)=>{
+    const {estadosolicitud,idemprendimiento,cuil,nombreapellido,nombreemprendimiento,categoria}=req.body
+    let parametros=[estadosolicitud]
+    let consulta="SELECT emprendimientos.idemprendimiento,emprendedores.cuil,usuarios.nombre,usuarios.apellido,emprendimientos.nombreemprendimiento,emprendimientos.categoria FROM emprendimientos JOIN emprendedores ON emprendimientos.id_emprendedor=emprendedores.idemprendedor JOIN usuarios ON emprendedores.id_usuario=usuarios.idusuario WHERE emprendimientos.estadosolicitud=?"
+
+    if (idemprendimiento){
+        consulta+=" AND emprendimientos.idemprendimiento = ?"
+        parametros.push(idemprendimiento)
+    }
+    if(cuil){
+        consulta+=" AND emprendedores.cuil REGEXP ?"
+        parametros.push(cuil)
+    }
+    if (nombreapellido){
+        consulta+=" AND (usuarios.nombre REGEXP ? OR usuarios.apellido REGEXP ?)"
+        parametros.push(nombreapellido)
+        parametros.push(nombreapellido)
+    }
+    if (nombreemprendimiento){
+        consulta+=" AND emprendimientos.nombreemprendimiento REGEXP ?"
+        parametros.push(nombreemprendimiento)
+    }
+    if (categoria!='Todas'){
+        consulta+=" AND emprendimientos.categoria =?"
+        parametros.push(categoria)
+    }
+    consulta+='ORDER BY emprendimientos.idemprendimiento'
+    const emprendimientos=await pool.query(consulta,parametros)
+    for(let i=0;i<emprendimientos.length;i++){
+        if(emprendimientos[i].categoria=='A'){
+            emprendimientos[i].categoria='Alojamiento'
+        }else{
+            emprendimientos[i].categoria='Tour'
+        }
+    }
+    res.json(emprendimientos)
 })
 
 router.get('/pendientes/:id',async(req,res)=>{

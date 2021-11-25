@@ -56,6 +56,67 @@ router.get('/detalles/:id', async (req,res)=>{
     }
 })
 
+router.post('/denunciar',async (req,res)=>{
+     const {motivo,descripcion,id_emprendimiento}=req.body
+     const nuevaDenuncia={
+         motivo,
+         descripcion,
+         id_emprendimiento
+     }
+     await pool.query('INSERT INTO denuncias set ?',[nuevaDenuncia])
+     tour=await pool.query('SELECT idtour FROM tours WHERE id_emprendimiento=?',[id_emprendimiento])
+     req.flash("info","Hemos recibido su denuncia. Gracias por contribuir a que Turistik sea un lugar mejor")
+     res.redirect(`detalles/${tour[0].idtour}`)
+ })
+
+ router.post('/calificar',async(req,res)=>{
+     const {idemprendimiento,puntuacion,comentario}=req.body
+     const calificacion={
+         id_usuario:req.user.idusuario,
+         id_emprendimiento:idemprendimiento,
+         puntuacion,
+         comentario
+     }
+     await pool.query('INSERT INTO calificaciones set ?',[calificacion])
+     const id=await pool.query('select idtour from tours where id_emprendimiento=?',idemprendimiento)
+     res.redirect('/tours/detalles/'+id[0].idtour)
+ })
+ 
+ router.get('/eliminarCalificacion/:id/:tour',async(req,res)=>{
+     const {id,tour}=req.params
+     await pool.query('delete from calificaciones where idcalificacion=?',[id])
+     res.redirect('/tours/detalles/'+tour)
+ })
+ 
+ router.post('/modificarCalificacion/:idcalificacion/:idtour',async(req,res)=>{
+     const {idemprendimiento,puntuacion,comentario}=req.body
+     const {idcalificacion,idtour}=req.params
+     const calificacion={
+         id_usuario:req.user.idusuario,
+         id_emprendimiento:idemprendimiento,
+         puntuacion,
+         comentario
+     }
+     await pool.query('UPDATE calificaciones set ? WHERE idcalificacion=?',[calificacion,idcalificacion])
+     res.redirect('/tours/detalles/'+idtour)
+ })
+ 
+ router.post('/guardar',async(req,res)=>{
+     const {idemprendimiento}=req.body
+     const sitioGuardado={
+         id_emprendimiento:idemprendimiento,
+         id_usuario:req.user.idusuario
+     }
+     await pool.query('INSERT INTO sitiosguardados set ?',[sitioGuardado])
+     res.json({ok:'guardado'})
+ })
+ 
+ router.post('/eliminar', async(req,res)=>{
+     const {idemprendimiento}=req.body
+     await pool.query('DELETE FROM sitiosguardados WHERE id_emprendimiento=? and id_usuario=?',[idemprendimiento,req.user.idusuario])
+     res.json({ok:'eliminado'})
+ })
+
 function formatearHora(hora){
      horaarray=hora.split(':')
      textohora=''

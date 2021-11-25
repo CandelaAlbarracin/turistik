@@ -25,12 +25,18 @@ function enviarCalificacion(idemprendimiento){
     
 }
 
-function modificarCalificacion(idemprendimiento,puntuacion,comentario, idcalificacion,idalojamiento){
+function modificarCalificacion(idemprendimiento,puntuacion,comentario, idcalificacion,idsitio,cat){
     const calificacionUsuario=document.getElementById('calificacionUsuario')
     calificacionUsuario.setAttribute('hidden','')
     const modificacion=document.getElementById('modificacion')
     modificacion.removeAttribute('hidden')
     let radios=''
+    let dirform
+    if (cat=='A'){
+        dirform=`/alojamientos/modificarCalificacion/${idcalificacion}/${idsitio}`
+    }else{
+        dirform=`/tours/modificarCalificacion/${idcalificacion}/${idsitio}`
+    }
     for(let i=5;i>=1;i--){
         if (puntuacion==i){
             radios+=`<input type="radio" class="estrella" name="puntuacion" value="${i}" id="${i}" checked><label for="${i}">☆</label>`
@@ -40,7 +46,7 @@ function modificarCalificacion(idemprendimiento,puntuacion,comentario, idcalific
     }
     modificacion.innerHTML=`
     <h4>Califica este sitio</h4>
-    <form action="/alojamientos/modificarCalificacion/${idcalificacion}/${idalojamiento}" method="post" name="calificacionsitio">
+    <form action="${dirform}" method="post" name="calificacionsitio">
     <input type="text" name="idemprendimiento" value="${idemprendimiento}" hidden>
     <div class="rating"> 
         ${radios}
