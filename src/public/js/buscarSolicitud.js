@@ -31,6 +31,13 @@ function buscarSolicitud(){
             contenedorResultados.innerHTML=''
             if (res.length>0){
                 for(let i=0;i<res.length;i++){
+                    const estado=document.getElementById('estadosolicitud').value
+                    let dirhref
+                    if (estado=='A'){
+                        dirhref=`/solicitudes/aprobadas/${res[i].idemprendimiento}`
+                    }else{
+                        dirhref=`/solicitudes/pendientes/${res[i].idemprendimiento}`
+                    }
                     contenedorResultados.innerHTML+=`<tr>
                         <td scope="row" class="fw-bold">${res[i].idemprendimiento}</td>
                         <td>${res[i].cuil}</td>
@@ -38,7 +45,7 @@ function buscarSolicitud(){
                         <td>${res[i].apellido}</td>
                         <td>${res[i].nombreemprendimiento}</td>
                         <td>${res[i].categoria}</td>
-                        <td><a role="button" class="btn btn-primary" href="#"><i class="fas fa-eye"></i> Ver más</a></td>
+                        <td><a role="button" class="btn btn-primary" href="${dirhref}"><i class="fas fa-eye"></i> Ver más</a></td>
                     </tr>`
                 }
             }else{

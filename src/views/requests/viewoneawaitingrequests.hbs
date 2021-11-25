@@ -1,7 +1,138 @@
 </head>
 <body>
     {{>navigationAdm}}
-    <form action="/solicitudespendientes" method="POST" name="evaluarSolicitud" onsubmit="event.preventDefault()">
+    <div class="container">
+        <div>
+            <p class="fs-4 fw-bold">Solicitud Pendiente de Candela Albaracín</p>
+            <p class="fs-4 fw-bold">Emprendimiento: Pensando en mí</p>
+        </div>
+        <div class="card mb-3">
+            <p class="card-header">Información personal del emprendedor</p>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <p class="card-header">Información General del Emprendedimiento</p>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <p class="card-header">Información Específica del Emprendimiento</p>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         
+        <form action="/solicitudespendientes" method="POST" name="evaluarSolicitud" onsubmit="event.preventDefault()">
         <hr>
         <div class="mb-3">
             <label for="observaciones" class="form-label" >Observaciones</label>
@@ -13,16 +144,18 @@
             <button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Se enviará un e-mail al emprendedor informando que debe realizar modificaciones a su solicitud" onclick="solicitarModificacion()">Solicitar Modificación</button>
             <button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Se enviará un e-mail al emprendedor informando que rechazaste su solicitud" onclick="rechazado()">Rechazar</button>
         </div>
-    </form>
-    <button type="button" class="btn btn-secondary mt-3"><i class="fas fa-chevron-circle-left"></i> Volver</button>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        </form>
+        <a type="button" role="button" class="btn btn-secondary mt-3" href="/solicitudes/pendientes"><i class="fas fa-chevron-circle-left"></i> Volver</a>
+    </div>
+    
+    
     <script>
         document.addEventListener("DOMContentLoaded", function(){
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    var tooltipList = tooltipTriggerList.map(function(element){
-        return new bootstrap.Tooltip(element);
-    });
-});
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function(element){
+                return new bootstrap.Tooltip(element);
+            });
+        });
     </script>
 
     <script>

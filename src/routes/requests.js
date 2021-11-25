@@ -17,7 +17,7 @@ router.get('/aprobadas',async(req,res)=>{
 })
 
 router.get('/pendientes',async(req,res)=>{
-    const pendientes=await pool.query('SELECT emprendimientos.idemprendimiento,emprendedores.cuil,usuarios.nombre,usuarios.apellido,emprendimientos.nombreemprendimiento,emprendimientos.categoria FROM emprendimientos JOIN emprendedores ON emprendimientos.id_emprendedor=emprendedores.idemprendedor JOIN usuarios ON emprendedores.id_usuario=usuarios.idusuario WHERE emprendimientos.estadosolicitud="A" ORDER BY emprendimientos.idemprendimiento;')
+    const pendientes=await pool.query('SELECT emprendimientos.idemprendimiento,emprendedores.cuil,usuarios.nombre,usuarios.apellido,emprendimientos.nombreemprendimiento,emprendimientos.categoria FROM emprendimientos JOIN emprendedores ON emprendimientos.id_emprendedor=emprendedores.idemprendedor JOIN usuarios ON emprendedores.id_usuario=usuarios.idusuario WHERE emprendimientos.estadosolicitud="P" ORDER BY emprendimientos.idemprendimiento;')
     for(let i=0;i<pendientes.length;i++){
         if(pendientes[i].categoria=='A'){
             pendientes[i].categoria='Alojamiento'
@@ -67,7 +67,7 @@ router.post('/buscar',async(req,res)=>{
 })
 
 router.get('/pendientes/:id',async(req,res)=>{
-    res.render('./requests/awaitingrequests')
+    res.render('./requests/viewoneawaitingrequests')
 })
 
 router.post('/pendientes/:id', async(req,res)=>{
