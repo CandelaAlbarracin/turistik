@@ -55,7 +55,7 @@ router.post('/buscar',async (req,res)=>{
     if (tipoalojamiento!='Todos'){
         aloj=tipoalojamiento
     }
-    res.render('./accommodations/search_accommodations', {infoAlojamientos, buscar,fechainicio,fechafinal,localidad,aloj,capacidadhuespedes}) 
+    res.render('./accommodations/view', {infoAlojamientos, buscar,fechainicio,fechafinal,localidad,aloj,capacidadhuespedes}) 
 })
 
 function convertirArray(rowData){
@@ -144,15 +144,17 @@ router.post('/reservas',async(req,res)=>{
 router.post('/resultados',async(req,res)=>{
     const {actividades}=req.body
     const actarray=actividades.split(',')
-    const alojamientos=await pool.query('SELECT DISTINCTROW aloj.idalojamiento,aloj.precionoche,aloj.capacidadhabitaciones,aloj.tipoalojamiento,aloj.vista,aloj.hornobarro,aloj.animalesautoctonos,emp.idemprendimiento,emp.nombreemprendimiento, loc.nombrelocalidad FROM alojamientos aloj JOIN emprendimientos emp ON aloj.id_emprendimiento=emp.idemprendimiento JOIN localidades loc ON emp.id_localidad=loc.idlocalidad join actividadesofrecidas actof on actof.id_alojamiento=aloj.idalojamiento and emp.estadosolicitud="A" and actof.id_actividad in (?);',[actarray])
-    
-    for(let i=0;i<alojamientos.length;i++){
-        let calificacion=await pool.query('SELECT AVG(puntuacion) AS promedioCalificacion FROM calificaciones WHERE id_emprendimiento=?',[alojamientos[i].idemprendimiento])
-        alojamientos[i].promCalificacion=calificacion[0].promedioCalificacion
+    const infoAlojamientos=await pool.query('SELECT DISTINCTROW aloj.idalojamiento,aloj.precionoche,aloj.capacidadhabitaciones,aloj.tipoalojamiento,aloj.vista,aloj.hornobarro,aloj.animalesautoctonos,emp.idemprendimiento,emp.nombreemprendimiento, loc.nombrelocalidad FROM alojamientos aloj JOIN emprendimientos emp ON aloj.id_emprendimiento=emp.idemprendimiento JOIN localidades loc ON emp.id_localidad=loc.idlocalidad join actividadesofrecidas actof on actof.id_alojamiento=aloj.idalojamiento and actof.id_actividad in (?);',[actarray])
+    const actividades2=await pool.query('SELECT img.link,act.idactividades,act.nombre,act.introduccion from actividades act JOIN imagenesactividades img ON act.idactividades=img.id_actividad where img.tipo="P" and act.tipo="A";')
+    for(let i=0;i<infoAlojamientos.length;i++){
+        let calificacion=await pool.query('SELECT AVG(puntuacion) AS promedioCalificacion FROM sitio WHERE id_emprendimiento=?',[infoAlojamientos[i].idemprendimiento])
+        infoAlojamientos[i].promCalificacion=calificacion[0].promedioCalificacion
+        let imagenes=await pool.query('SELECT imagenes.link As img FROM imagenes inner join emprendimientos on imagenes.id_emprendimiento=emprendimientos.idemprendimiento where imagenes.tipo="P" and emprendimientos.idemprendimiento=(?);',[infoAlojamientos[i].idemprendimiento]);
+        infoAlojamientos[i].imagenePrincipal=imagenes[0].img
     }
-    console.log(alojamientos)
+    console.log(infoAlojamientos);
     //res.send('Procesar resultados')
-    res.render('./accommodations/view',{alojamientos})
+    res.render('./accommodations/view',{infoAlojamientos, actividades2})
 })
 
 router.post('/calificar',async(req,res)=>{
