@@ -117,6 +117,28 @@ router.post('/denunciar',async (req,res)=>{
      res.json({ok:'eliminado'})
  })
 
+ router.post('/resultados',async(req,res)=>{
+    const {actividades}=req.body
+    const actarray=actividades.split(',')
+    const infoTours=await pool.query('SELECT DISTINCTROW tours.idtour,tours.precio,tours.dificultad,tours.duracion,emp.idemprendimiento,emp.nombreemprendimiento, loc.nombrelocalidad FROM tours JOIN emprendimientos emp ON tours.id_emprendimiento=emp.idemprendimiento JOIN localidades loc ON emp.id_localidad=loc.idlocalidad join toursofrecidos toursof on toursof.id_tour=tours.idtour and emp.estadosolicitud="A" and toursof.id_actividad in (?);',[actarray])
+    const actividadesElegidas=await pool.query('SELECT nombre from actividades where tipo="T" and idactividades in (?);',[actarray])
+    let localidades=[]
+    for(let i=0;i<infoTours.length;i++){
+        infoTours[i].duracion=formatearHora(infoTours[i].duracion)
+        let calificacion=await pool.query('SELECT AVG(puntuacion) AS promedioCalificacion FROM calificaciones WHERE id_emprendimiento=?',[infoTours[i].idemprendimiento])
+        infoTours[i].promCalificacion=calificacion[0].promedioCalificacion
+        let imagenes=await pool.query('SELECT imagenes.link As img FROM imagenes inner join emprendimientos on imagenes.id_emprendimiento=emprendimientos.idemprendimiento where imagenes.tipo="P" and emprendimientos.idemprendimiento=(?);',[infoTours[i].idemprendimiento]);
+        infoTours[i].imagenPrincipal=imagenes[0].img
+        localidades[i]={nombre:infoTours[i].nombrelocalidad}
+    }
+    console.log(infoTours)
+    let unaloc = {}
+    let unicos = localidades.filter(function (e) { 
+        return unaloc[e.nombre] ? false : (unaloc[e.nombre] = true)
+    })
+    res.render('./tours/view',{infoTours, actividadesElegidas,unicos})
+})
+
 function formatearHora(hora){
      horaarray=hora.split(':')
      textohora=''

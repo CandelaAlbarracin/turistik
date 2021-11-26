@@ -1,0 +1,141 @@
+    <link rel="stylesheet" href="/css/styleSearchActivity.css">
+    <link rel="stylesheet" href="/css/stylesCardsAccommodations.css">
+</head>
+<body>
+    {{>navigation}}
+    <h2 class="text-center fst-italic mt-3">Descubre a nuestros guías</h2>
+    <div class="container my-sm-3 p-0 bg-sec-light">
+        <div id="content">
+            <div class="searchs">
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed fst-italic" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <i class="fas fa-search-plus fs-5" style="color:deepskyblue;"></i>  Encontrá el tour que se adapte a lo que necesitas. Despliega para ver cómo puedes mejorar tu búsqueda.
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <form action="" onsubmit="event.preventEvent()" method="post">
+                                    <div class="row g-2">
+                                        <div class="col-md m-2">
+                                            <div class="form-floating">
+                                                <select class="form-select" name="localidad" id="localidadlista" onchange="refinarBusqueda()">
+                                                    <option value="">Cualquier localidad</option>
+                                                    {{#each unicos}}
+                                                        <option value="{{nombre}}">{{nombre}}</option>
+                                                    {{/each}}
+                                                </select>
+                                                <label for="localidadlista"><i class="fas fa-map-marked-alt"></i> ¿A dónde quieres realizar el tour?</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md m-2">
+                                            <div class="form-floating">
+                                                <select class="form-select" id="dificultad" aria-label="Floating label select example" name="dificultad" onchange="refinarBusqueda()">
+                                                    <option value="" selected>Cualquiera</option>
+                                                    <option value="Baja">Baja</option>
+                                                    <option value="Media">Media</option>
+                                                    <option value="Dificil">Dificil</option>
+                                                </select>
+                                                <label for="dificultad"><i class="fas fa-hiking"></i> Dificultad</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row m-2">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                    <div class="box border-bottom">
+                                                        <div class="box-label text-uppercase d-flex align-items-center">Precio <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#inner-box" aria-expanded="false" aria-controls="inner-box"> <span class="fas fa-plus"></span> </button> </div>
+                                                        <div id="inner-box" class="collapse">
+                                                            <div class="my-1"> <label class="tick">Menos que 1500 <input type="checkbox" name="precio" id="p1" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">1500 - 2500 <input type="checkbox" name="precio" id="p2" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">2500 - 3500 <input type="checkbox" name="precio" id="p3" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">3500 - 4500 <input type="checkbox" name="precio" id="p4" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">4500 - 5500 <input type="checkbox" name="precio" id="p5" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">5500 - 6500 <input type="checkbox" name="precio" id="p6" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">6500 - 8000 <input type="checkbox" name="precio" id="p7" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">Más que 8000<input type="checkbox" name="precio" id="p8" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="box border-bottom">
+                                                        <div class="box-label text-uppercase d-flex align-items-center">Duración <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#duracion" aria-expanded="false" aria-controls="view"> <span class="fas fa-plus"></span> </button> </div>
+                                                        <div id="duracion" class="collapse">
+                                                            <div class="my-1 form-check form-check-inline"> <label class="tick">Menos de 1 hora <input type="checkbox" name="duracion" id="hora1" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1 form-check form-check-inline"> <label class="tick">Entre 1 y 2 horas<input type="checkbox" name="duracion" id="hora2" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1 form-check form-check-inline"> <label class="tick">Entre 2 y 3 horas<input type="checkbox" name="duracion" id="hora3" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1 form-check form-check-inline"> <label class="tick">Entre 3 y 4 horas<input type="checkbox" name="vista" id="hora4" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1 form-check form-check-inline"> <label class="tick">Entre 4 y 5 horas<input type="checkbox" name="vista" id="hora5" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1 form-check form-check-inline"> <label class="tick">Entre 6 y 7 horas<input type="checkbox" name="vista" id="hora6" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1 form-check form-check-inline"> <label class="tick">Entre 7 y 8 horas<input type="checkbox" name="vista" id="hora7" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1 form-check form-check-inline"> <label class="tick">Entre 8 y 9 horas<input type="checkbox" name="vista" id="hora8" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1 form-check form-check-inline"> <label class="tick">Entre 10 y 11 horas<input type="checkbox" name="vista" id="hora9" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div> 
+                                                            <div class="my-1 form-check form-check-inline"> <label class="tick">Entre 11 y 12 horas<input type="checkbox" name="vista" id="hora10" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1 form-check form-check-inline"> <label class="tick">Más de 12 horas<input type="checkbox" name="vista" id="hora11" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-grid gap-2 m-2">
+                                        <button class="btn btn-primary" type="button" onclick="refinarBusqueda()"><i class="fas fa-search"></i> Buscar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+            </div>
+            <p class="fs-5 fw-bold fst-italic mt-2">Resultados para las actividades: 
+                {{#each actividadesElegidas}}
+                      <i class="fas fa-check" style="color:lightgreen;"></i>{{nombre}}
+                {{/each}}
+            </p>
+            <p class="mt-5 text-muted" id="sinResultado" hidden>Lo sentimos... No hemos encontrado resultados que se adapten a lo que buscas.</p>
+            <ul class="list-inline justify-content-center w-100">
+                    {{#each infoTours}}
+                        <li class="booking-card" style="background-image: url({{imagenPrincipal}})" id="tour{{idtour}}">
+                            <div class="book-container">
+                            <div class="content">
+                                <a href="/tours/detalles/{{idtour}}" class="btn" role="button"><i class="far fa-eye"></i> VER</a>
+                            </div>
+                            </div>
+                            <div class="informations-container" style="height: 470px;">
+                            <h2 class="title">{{nombreemprendimiento}}
+                                <br>
+                                <i class="fas fa-map-marker"></i> <span class="localidad fst-italic">{{nombrelocalidad}}</span>
+                            </h2>
+                            <div>
+                                {{#if promCalificacion}}
+                                    <p>Calificación: {{promCalificacion}}<i class="fas fa-star p-1"></i></p>
+                                {{else}}
+                                    <p>No hay calificación</p>
+                                {{/if}}
+                            </div>
+                            
+                            <div class="mb-2"><i class="fas fa-money-bill-wave fa-1x"> </i> Precio: $ <span class="precio">{{precio}}</span></div>
+                            {{!-- <br> --}}
+                            <div class="mb-2"><i class="far fa-clock"></i> Duración: <span class="duracion">{{duracion}}</span></div>
+                            {{!-- <br> --}}
+                            <div><i class="fas fa-hiking"></i> Dificultad: <span class="dificultad">{{dificultad}}</span></div>
+                            <div class="more-information">
+                                <div class="info-and-date-container">
+                                    <div class="box info">
+                                        <i class="fas fa-child fa-3x"></i>
+                                        <p>¡Atrévete a disfrutar de esta hermosa experiencia!</p>
+                                        <p>No te arrepentirás</p>
+                                    </div>   
+                                </div>
+                            </div>
+                        </li>
+                    {{/each}}
+                </ul>
+        </div>
+        <button class="btn btn-secondary" onclick="window.history.back();"><i class="fas fa-chevron-circle-left"></i> Volver</button>
+    </div> 
+    <script src="/js/buscarTours.js"></script>  
+    <script>
+        const linkactivo=document.getElementById("Tours")
+        linkactivo.classList.add('active')
+    </script>
