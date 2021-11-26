@@ -1,14 +1,3 @@
-    <!--{{>navigation}}
-    {{#each alojamientos}}
-    <div>
-        <p>Hola {{nombreemprendimiento}}</p>
-        {{#if promCalificacion}}
-            <p>Tu calificación es: {{promCalificacion}}</p>
-        {{else}}
-            <p>No hay calificación</p>
-        {{/if}}
-    </div>
-    {{/each}}-->
         <link rel="stylesheet" href="/css/styleSearchActivity.css">
         <link rel="stylesheet" href="/css/stylesCardsAccommodations.css">
 </head>
@@ -21,88 +10,90 @@
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Encontra el alojamiento que buscas
+                            <button class="accordion-button collapsed fst-italic" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <i class="fas fa-search-plus" style="color:deepskyblue;"></i>  Encontrá el alojamiento que se adapte a lo que necesitas. Despliega para ver cómo puedes mejorar tu búsqueda.
                             </button>
                         </h2>
                         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <form action="/alojamientos/buscar" method="post">
-                                            <div class="row g-2">
-                                                <div class="col-md m-2">
-                                                    <div class="form-floating">
-                                                        <input class="form-control" list="datalistOptions" id="localidadlista" onchange="colocarLocalidad()"
-                                                        aria-label="Que localidad quieres visitar" />
-                                                        <datalist id="datalistOptions">
-                                                            {{>localidades}}
-                                                        </datalist>
-                                                        <label for="localidadlista"><i class="fas fa-bed"></i>¿A donde quieres hospedarte?</label>
-                                                        <input type="hidden" name="localidad" id="locinput">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md m-2">
-                                                    <div class="form-floating">
-                                                        <select class="form-select" id="tipoalojamiento" aria-label="Floating label select example" name="tipoalojamiento">
-                                                            <option selected>Todos</option>
-                                                            <option>Casa</option>
-                                                            <option>Cabaña</option>
-                                                            <option>Departamento</option>
-                                                            <option>Habitación</option>
-                                                        </select>
-                                                        <label for="tipoalojamiento"><i class="fas fa-home"></i>Tipo de Alojamientos</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md m-2">
-                                                    <div class="form-floating">
-                                                        <input class="form-control form-control-lg" id="huespedes" type="number" min="1" max="99" placeholder="Huéspedes" name="capacidadhuespedes" aria-label="Huéspedes" onKeyUp="if(this.value>99){this.value='99';}else if(this.value<1){this.value='1';}">
-                                                        <label for="huespedes"><i class="fas fa-users"></i> Huéspedes</label>
-                                                    </div>
-                                                </div>
+                                <form action="" onsubmit="event.preventEvent()" method="post">
+                                    <div class="row g-2">
+                                        <div class="col-md m-2">
+                                            <div class="form-floating">
+                                                <select class="form-select" name="localidad" id="localidadlista" onchange="refinarBusqueda()">
+                                                    <option value="">Cualquier localidad</option>
+                                                    {{#each unicos}}
+                                                        <option value="{{nombre}}">{{nombre}}</option>
+                                                    {{/each}}
+                                                </select>
+                                                <label for="localidadlista"><i class="fas fa-bed"></i>¿A dónde quieres hospedarte?</label>
                                             </div>
-                                            <div class="row m-2">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                            <div class="box border-bottom">
-                                                                <div class="box-label text-uppercase d-flex align-items-center">Precio <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#inner-box" aria-expanded="false" aria-controls="inner-box"> <span class="fas fa-plus"></span> </button> </div>
-                                                                <div id="inner-box" class="collapse show">
-                                                                    <div class="my-1"> <label class="tick">Menos que 2000 <input type="checkbox" name="precio" id="p1" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
-                                                                    <div class="my-1"> <label class="tick">2000 - 3000 <input type="checkbox" name="precio" id="p2" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
-                                                                    <div class="my-1"> <label class="tick">3000 - 4500 <input type="checkbox" name="precio" id="p3" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
-                                                                    <div class="my-1"> <label class="tick">4500 - 6000 <input type="checkbox" name="precio" id="p4" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
-                                                                    <div class="my-1"> <label class="tick">6000 - 8000 <input type="checkbox" name="precio" id="p5" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
-                                                                    <div class="my-1"> <label class="tick">8000 -10,000 <input type="checkbox" name="precio" id="p6" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
-                                                                    <div class="my-1"> <label class="tick">Mas que 10,000<input type="checkbox" name="precio" id="p7" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="box border-bottom">
-                                                                <div class="box-label text-uppercase d-flex align-items-center">Horno de Barro <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#property" aria-expanded="false" aria-controls="property"> <span class="fas fa-plus"></span> </button> </div>
-                                                                <div id="property" class="collapse">
-
-                                                                    <div class="my-1"> <label class="tick">Si <input type="radio" name="piscina" id="pSi" onchange="refinarBusqueda()"> <span class="check2"></span> </label> </div>
-                                                                    <div class="my-1"> <label class="tick">No <input type="radio" name="piscina" id="pNo" onchange="refinarBusqueda()"> <span class="check2"></span> </label> </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="box border-bottom">
-                                                                <div class="box-label text-uppercase d-flex align-items-center">Animales Autóctonos <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#amenities" aria-expanded="false" aria-controls="amenities"> <span class="fas fa-plus"></span> </button> </div>
-                                                                <div id="amenities" class="collapse">
-                                                                    <div class="my-1"> <label class="tick">Si <input type="radio" name="estacionamiento" id="eSi" onchange="refinarBusqueda()"> <span class="check2"></span> </label> </div>
-                                                                    <div class="my-1"> <label class="tick">No<input type="radio" name="estacionamiento" id="eNo" onchange="refinarBusqueda()"> <span class="check2"></span> </label> </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="box border-bottom">
-                                                                <div class="box-label text-uppercase d-flex align-items-center">Vista <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#view" aria-expanded="false" aria-controls="view"> <span class="fas fa-plus"></span> </button> </div>
-                                                                <div id="view" class="collapse">
-                                                                    <div class="my-1"> <label class="tick">Cerros <input type="checkbox" name="vista" id="vCerro" onchange="refinarBusqueda()"> <span class="check2"></span> </label> </div>
-                                                                    <div class="my-1"> <label class="tick">Ríos<input type="checkbox" name="vista" id="vRios" onchange="refinarBusqueda()"> <span class="check2"></span> </label> </div>
-                                                                    <div class="my-1"> <label class="tick">Ciudad<input type="checkbox" name="vista" id="vCiudad" onchange="refinarBusqueda()"> <span class="check2"></span> </label> </div>
-                                                                </div>
-                                                            </div>
+                                        </div>
+                                        <div class="col-md m-2">
+                                            <div class="form-floating">
+                                                <select class="form-select" id="tipoalojamiento" aria-label="Floating label select example" name="tipoalojamiento" onchange="refinarBusqueda()">
+                                                    <option value="" selected>Todos</option>
+                                                    <option value="Casa">Casa</option>
+                                                    <option value="Cabaña">Cabaña</option>
+                                                    <option value="Habitacion">Habitación</option>
+                                                </select>
+                                                <label for="tipoalojamiento"><i class="fas fa-home"></i>Tipo de Alojamientos</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md m-2">
+                                            <div class="form-floating">
+                                                <input class="form-control form-control-lg" id="huespedes" type="number" min="1" max="99" placeholder="Huéspedes" name="capacidadhuespedes" aria-label="Huéspedes" onKeyUp="if(this.value!=''){if(this.value>99){this.value='99';}else if(this.value<1){this.value='1';}};refinarBusqueda();" onchange="refinarBusqueda()">
+                                                <label for="huespedes"><i class="fas fa-users"></i> Cantidad de Huéspedes</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row m-2">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                    <div class="box border-bottom">
+                                                        <div class="box-label text-uppercase d-flex align-items-center">Precio <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#inner-box" aria-expanded="false" aria-controls="inner-box"> <span class="fas fa-plus"></span> </button> </div>
+                                                        <div id="inner-box" class="collapse">
+                                                            <div class="my-1"> <label class="tick">Menos que 1500 <input type="checkbox" name="precio" id="p1" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">1500 - 2500 <input type="checkbox" name="precio" id="p2" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">2500 - 3500 <input type="checkbox" name="precio" id="p3" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">3500 - 4500 <input type="checkbox" name="precio" id="p4" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">4500 - 5500 <input type="checkbox" name="precio" id="p5" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">5500 - 6500 <input type="checkbox" name="precio" id="p6" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">6500 - 8000 <input type="checkbox" name="precio" id="p7" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">Más que 8000<input type="checkbox" name="precio" id="p8" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                    <div class="box border-bottom">
+                                                        <div class="box-label text-uppercase d-flex align-items-center">Horno de Barro <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#property" aria-expanded="false" aria-controls="property"> <span class="fas fa-plus"></span> </button> </div>
+                                                        <div id="property" class="collapse">
+                                                            <div class="my-1"> <label class="tick">Si <input type="radio" name="horno" id="hornoSi" onchange="refinarBusqueda()"> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">No <input type="radio" name="horno" id="hornoNo" onchange="refinarBusqueda()"> <span class="check2"></span> </label> </div>
+                                                            <button type="button" class="btn btn-danger btn-sm" onclick="quitarRadioHorno()">Borrar Filtro</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="box border-bottom">
+                                                        <div class="box-label text-uppercase d-flex align-items-center">Animales Autóctonos <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#amenities" aria-expanded="false" aria-controls="amenities"> <span class="fas fa-plus"></span> </button> </div>
+                                                        <div id="amenities" class="collapse">
+                                                            <div class="my-1"> <label class="tick">Si <input type="radio" name="animales" id="animalesSi" onchange="refinarBusqueda()"> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">No<input type="radio" name="animales" id="animalesNo" onchange="refinarBusqueda()"> <span class="check2"></span> </label> </div>
+                                                            <button type="button" class="btn btn-danger btn-sm" onclick="quitarRadioAnimales()">Borrar Filtro</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="box border-bottom">
+                                                        <div class="box-label text-uppercase d-flex align-items-center">Vista <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#view" aria-expanded="false" aria-controls="view"> <span class="fas fa-plus"></span> </button> </div>
+                                                        <div id="view" class="collapse">
+                                                            <div class="my-1"> <label class="tick">Cerros <input type="checkbox" name="vista" id="vCerro" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">Ríos<input type="checkbox" name="vista" id="vRios" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">Ciudad<input type="checkbox" name="vista" id="vCiudad" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                            <div class="my-1"> <label class="tick">Campo<input type="checkbox" name="vista" id="vCampo" onchange="refinarBusqueda()" checked> <span class="check2"></span> </label> </div>
+                                                        </div>
+                                                    </div>
                                             </div>
-                                            <div class="d-grid gap-2 m-2">
-                                                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Buscar</button>
-                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-grid gap-2 m-2">
+                                        <button class="btn btn-primary" type="button" onclick="refinarBusqueda()"><i class="fas fa-search"></i> Buscar</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -111,41 +102,46 @@
 
                 </div>
             </div>
-
+            <p class="fs-5 fw-bold fst-italic mt-2">Resultados para las actividades: 
+                {{#each actividadesElegidas}}
+                      <i class="fas fa-check" style="color:lightgreen;"></i>{{nombre}}
+                {{/each}}
+            </p>
+            <p class="mt-5 text-muted" id="sinResultado" hidden>Lo sentimos... No hemos encontrado resultados que se adapten a lo que buscas.</p>
             <ul class="list-inline justify-content-center w-100">
                     {{#each infoAlojamientos}}
-                        <li class="booking-card" style="background-image: url({{imagenePrincipal}})">
+                        <li class="booking-card" style="background-image: url({{imagenePrincipal}})" id="aloj{{idalojamiento}}">
                             <div class="book-container">
                             <div class="content">
                                 <a href="/alojamientos/detalles/{{idalojamiento}}" class="btn" role="button"><i class="far fa-eye"></i> VER</a>
                             </div>
                             </div>
-                            <div class="informations-container">
+                            <div class="informations-container" style="height: 470px;">
                             <h2 class="title">{{nombreemprendimiento}}
                                 <br>
-                                {{nombrelocalidad}}
+                                <i class="fas fa-map-marker"></i> <span class="localidad fst-italic">{{nombrelocalidad}}</span>
                             </h2>
                             <div>
                                 {{#if promCalificacion}}
-                                    <p>Tu calificación es: {{promCalificacion}} <i class="fas fa-star p-1"></i></p>
+                                    <p>Calificación: {{promCalificacion}}<i class="fas fa-star p-1"></i></p>
                                 {{else}}
                                     <p>No hay calificación</p>
                                 {{/if}}
                             </div>
                             
-                            <div><i class="fas fa-money-bill-wave fa-1x"> </i> Precio: {{precionoche}}</div>
-                            <br>
-                            <div><i class="fas fa-person-booth"> </i> Cantidad de habitaciones: {{capacidadhabitaciones}}</div>
-                            <br>
-                            <div><i class="fas fa-home"> </i> Tipo de alojamiento: {{tipoalojamiento}}</div>
+                            <div class="mb-2"><i class="fas fa-money-bill-wave fa-1x"> </i> Precio: $ <span class="precio">{{precionoche}}</span></div>
+                            {{!-- <br> --}}
+                            <div class="mb-2"><i class="fas fa-person-booth"> </i> Cantidad de húespedes: <span class="huespedes">{{capacidadhabitaciones}}</span></div>
+                            {{!-- <br> --}}
+                            <div><i class="fas fa-home"> </i> Tipo de alojamiento: <span class="tipo">{{tipoalojamiento}}</span></div>
                             <div class="more-information">
                                 <div class="info-and-date-container">
                                 {{#if animalesautoctonos}}
                                     <div class="box info">
                                         <i class="fas fa-horse-head fa-2x"></i>
-                                <path fill="currentColor" d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" />
-                            </svg>
-                                        <p>Conoce los animales autocnotonos de la region como ser: </p>
+                                        <path fill="currentColor" d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" />
+                                        </svg>
+                                        <p>Posee animales autóctonos </p>
                                     </div>
                                 {{/if}}
                                 {{#if hornobarro}}
@@ -153,22 +149,24 @@
                                         <i class="fas fa-igloo fa-2x"></i>
                                 <path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z" />
                             </svg>
-                                        <p>Aprende a cocinar en un horno de barro</p>
+                                        <p>Tiene horno de barro</p>
                                     </div>
                                 {{/if}}
                                 </div>
                                 <br>
                                 <i class="fas fa-mountain fa-3x"></i>
-                                <p class="disclaimer">Queda maravillado con las increibles vistas alrededor de nuestro alojamiento: {{vista}}</p>
+                                <p style="font-size: 0.8rem;">Quedá maravillado con las increibles vistas alrededor de nuestro alojamiento: <span class="vista">{{vista}}</span></p>
+                                <br><br>
                                 </div>
                             </div>
                         </li>
                     {{/each}}
                 </ul>
-
         </div>
+        <button class="btn btn-secondary" onclick="window.history.back();"><i class="fas fa-chevron-circle-left"></i> Volver</button>
     </div>   
     <script src="/js/busquedasrapidas.js"></script>
+    <script src="/js/buscar.js"></script>
     <script>
         const linkactivo=document.getElementById("Alojamientos")
         linkactivo.classList.add('active')

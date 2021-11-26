@@ -79,3 +79,5 @@ function cambioInput(){
     }
     act.value=array
 }
+
+window.load=setTimeout(cambioInput,800)
