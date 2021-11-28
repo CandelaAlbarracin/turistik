@@ -1,0 +1,228 @@
+{{>navigation}}
+{{>message}}
+<div class="container p-4 form">
+    <div class="row">
+        <div class="col-md-7 mx-auto">
+            <div class="card text-center bg-dark" style="border-radius:30px">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <form action="/form1" method="post" class="row" enctype="multipart/form-data"
+                        onsubmit="$('#Subiendo').modal('show')">
+
+                        {{!-- FORMULARIO DATOS BASICOS --}}
+                        <div class="col-sm-6">
+
+                            <h3 class="text-white">Datos Básicos</h3>
+                            <hr class="text-white">
+
+                            <div class="form-group mb-4">
+                                <input type="text" name="nombre" placeholder="Nombre" class="form-control" autofocus
+                                    required>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <input type="text" name="apellido" placeholder="Apellido" class="form-control" required>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <input type="email" name="email" placeholder="Correo" class="form-control" required>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <input type="password" name="contrasena" placeholder="Contraseña" class="form-control"
+                                    required>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <input type="number" name="dni" placeholder="Dni" class="form-control" required>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <input type="number" name="cuil" placeholder="Cuil" class="form-control">
+                            </div>
+                        </div>
+                        {{!-- FIN FORMULARIO DATOS BASICOS --}}
+
+                        {{!-- FORMULARIO EMPRENDIMIENTO --}}
+                        <div class="col-sm-6">
+
+                            <h3 class="text-white">Emprendimiento</h3>
+                            <hr class="text-white">
+
+                            <div class="form-group mb-4">
+                                <input type="text" name="nombreemprendimiento" placeholder="Nombre de tu Emprendimiento"
+                                    class="form-control" autofocus required>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <input type="text" name="ubicacion" placeholder="Ubicación" class="form-control"
+                                    required>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <select name="categoria" class="form-select" aria-label="Default select example"
+                                    required>
+                                    <option selected>Categoria</option>
+                                    <option value="A">Alojamiento</option>
+                                    <option value="T">Tour</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <textarea name="descripcion" cols="35" rows="6" placeholder="Describe tu Emprendimiento"
+                                    style="border-radius: 9px;"></textarea>
+                            </div>
+                        </div>
+                        {{!-- FIN FORMULARIO EMPRENDIMIENTOS --}}
+
+                        {{!-- FORMULARIO DATOS DE CONTACTO --}}
+                        <div class="col-sm-6">
+
+                            <h3 class="text-white">Datos de Contacto</h3>
+                            <hr class="text-white">
+
+                            <div class="form-group mb-4">
+                                <input type="number" name="telefono" placeholder="Teléfono" class="form-control"
+                                    required>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <input type="text" name="facebook" placeholder="Facebook" class="form-control">
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <input type="text" name="instagram" placeholder="Instagram" class="form-control">
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <input type="text" name="youtube" placeholder="Youtube" class="form-control">
+                            </div>
+                        </div>
+                        {{!-- FIN FORMULARIO DATOS DE CONTACTO --}}
+
+                        {{!-- FORMULARIO DE IMAGENES --}}
+                        <div class="col-sm-6">
+
+                            <h3 class="text-white">Imágenes</h3>
+                            <hr class="text-white">
+
+                            <div class="form-group mb-4">
+                                <label for="imagenprincipal" class="text-white">Seleccione la Imagen Principal</label>
+                                <input type="file" class="form-control mt-2" id="imagenprincipal"
+                                    accept=".jpg, .jpeg, .png" name="image" placeholder="Selecciona una imagen"
+                                    required>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label for="imagenSecundaria" class="text-white">Seleccione las Imagenes
+                                    Secundarias</label>
+                                <input type="file" class="form-control mt-2" id="imagenSecundaria"
+                                    accept=".jpg, .jpeg, .png" name="imagensec" placeholder="Selecciona unas imagen"
+                                    multiple>
+                            </div>
+                        </div>
+                        {{!-- FIN FORMULARIO IMAGENES --}}
+
+                        {{!-- FORMULARIO DE TOURS --}}
+                        <div class="col-sm-6">
+
+                            <h3 class="text-white">Formulario para Tours</h3>
+                            <hr class="text-white">
+
+                            <div class="form-group mb-4">
+                                <input type="text" name="duracion" placeholder="Duración" class="form-control" required>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <input type="number" name="precio" placeholder="Precio" class="form-control" required>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <input type="text" name="recomendaciones" placeholder="Recomendaciones"
+                                    class="form-control">
+                            </div>
+
+                            <div class="form-group mb-4 ms-1">
+                                <select name="dificultad" class="white-text form-select" required>
+                                    <option selected>Dificultad</option>
+                                    <option value="F">Fácil</option>
+                                    <option value="M">Medio</option>
+                                    <option value="D">Difícil</option>
+                                </select>
+                            </div>
+                        </div>
+                        {{!-- FIN FORMULARIO TOURS --}}
+
+                        {{!-- FORMULARIO DE ALOJAMIENTOS --}}
+                        <div class="col-sm-6">
+
+                            <h3 class="text-white">Formulario para Alojamiento</h3>
+                            <hr class="text-white">
+
+                            <div class="form-group mb-4">
+                                <input type="number" name="precioxnoche" placeholder="Precio por noche"
+                                    class="form-control">
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <input type="number" name="cpd_habitaciones" placeholder="Capacidad de Habitaciones"
+                                    class="form-control">
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <input type="number" name="cpd_estacionamiento"
+                                    placeholder="Capacidades de Estacionamiento" class="form-control">
+                            </div>
+
+                            <div class="form-group mb-4 ms-1">
+                                <select name="tipo" class="white-text  form-select">
+                                    <option selected>Tipo de Alojamiento</option>
+                                    <option value="1">Casa</option>
+                                    <option value="2">Cabaña</option>
+                                    <option value="3">Habitacion</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-4" align="left">
+                                <label for="piscina" class="text-white">Piscina:</label>
+                                <br>
+                                <select name="piscina" class="white-text form-select-sm">
+                                    <option selected>Elija</option>
+                                    <option value="1">SI</option>
+                                    <option value="0">NO</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-4" align="left">
+                                <label for="horno" class="text-white">Horno de Barro:</label>
+                                <br>
+                                <select name="horno" class="white-text form-select-sm">
+                                    <option selected>Elija</option>
+                                    <option value="1">SI</option>
+                                    <option value="0">NO</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-4" align="left">
+                                <label for="animales" class="text-white">Animales Autoctonos:</label>
+                                <br>
+                                <select name="animales" class="white-text form-select-sm">
+                                    <option selected>Elija</option>
+                                    <option value="1">SI</option>
+                                    <option value="0">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                        {{!-- FIN FORMULARIO ALOJAMIENTOS --}}
+
+                        <div class="form-group mx-auto">
+                            <button class="btn btn-lg btn-success text-white">Enviar</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
