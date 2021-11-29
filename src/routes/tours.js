@@ -13,7 +13,7 @@ router.get('/actividades/:id', async(req,res)=>{
     const detallesactividades=await pool.query('SELECT * FROM actividades WHERE idactividades=?;',[id])
     const imagenPrincipal=await pool.query('SELECT link FROM imagenesactividades WHERE id_actividad=? AND tipo="P";',[id])
     const imagenesSec=await pool.query('SELECT link FROM imagenesactividades WHERE id_actividad=? AND tipo="S";',[id])
-    const tours=await pool.query('select img.link, tours.idtour,emp.nombreemprendimiento, emp.descripcion from emprendimientos emp join imagenes img on emp.idemprendimiento=img.id_emprendimiento and img.tipo="P" join tours on emp.idemprendimiento=tours.id_emprendimiento join toursofrecidos on tours.idtour=toursofrecidos.id_tour and toursofrecidos.id_actividad=?;',[id])
+    const tours=await pool.query('select img.link, tours.idtour,emp.nombreemprendimiento, emp.descripcion from emprendimientos emp join imagenes img on emp.idemprendimiento=img.id_emprendimiento and img.tipo="P" join tours on emp.idemprendimiento=tours.id_emprendimiento join toursofrecidos on tours.idtour=toursofrecidos.id_tour and emp.estadosolicitud="A" and toursofrecidos.id_actividad=?;',[id])
     const detalles=detallesactividades[0]
     const imgPrincipal=imagenPrincipal[0]
     console.log(tours)

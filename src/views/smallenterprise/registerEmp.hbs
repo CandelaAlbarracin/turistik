@@ -1,0 +1,350 @@
+<style>
+    .label-new{
+        border: #212529;
+        background-color: #212529;
+        color:white;
+        width: 105px;
+    }
+</style>
+</head>
+<body>
+{{>navigation}}
+{{>message}}
+<div class="container p-4 form">
+    <div class="row">
+        <div class="col-md-11 mx-auto">
+            <h2 class="fst-italic text-center fs-3">¿Eres Emprendedor? ¿Quieres que tu emprendimiento aparezca en nuestra página?</h2>
+            <p class="fst-italic text-center fs-4">Completá el siguiente formulario</p>
+            <div class="card text-center bg-dark">
+                <div class="card-body">
+                    <form action="/emprendedores" method="post" class="row" enctype="multipart/form-data" id="emprendimiento">
+
+                        {{!-- FORMULARIO DATOS BASICOS --}}
+                        <div class="col-sm-6 text-white" id="datospersonales">
+                            <h3 class="text-white">Datos Personales Básicos</h3>
+                            <hr class="text-white">
+                            <div class="form-group mb-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text label-new">Nombre *</span>
+                                    <input type="text" id="nombre" name="nombre" class="form-control redondear" placeholder="Ingresa tu nombre" aria-label="Ingresa tu nombre" style="border-radius: 0.25rem" aria-describedby="nombre" autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text label-new">Apellido *</span>
+                                    <input type="text" name="apellido" id="apellido" style="border-radius: 0.25rem" placeholder="Ingresa tu apellido" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text label-new">E-mail *</span>
+                                    <input type="email" name="email" id="email" style="border-radius: 0.25rem" placeholder="Ingresa tu correo electrónico o email" class="form-control" required onblur="verificarEmail()" onkeyup="verficarEmail()">
+                                </div>
+                                <p style="color: tomato;" id="mailRegistrado" hidden></p>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text label-new">Contraseña*</span>
+                                    <input type="password" name="contrasena" placeholder="Ingresa la contraseña que deseas tener" class="form-control"
+                                    required minlength="8" style="border-radius: 0.25rem">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text label-new">CUIL *</span>
+                                    <input type="text" name="precuil" style="border-bottom-left-radius: 0.25rem;border-top-left-radius: 0.25rem" placeholder="11" class="form-control" maxlength="2" required>
+                                    <span class="input-group-text">-</span>
+                                    <input type="text" name="cuil" placeholder="11111111" class="form-control" maxlength="8" required>
+                                    <span class="input-group-text">-</span>
+                                    <input type="text" name="poscuil" placeholder="1" class="form-control" maxlength="1" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <p class="text-white">Todos los campos con * son obligatorios.</p>
+                                <p class="text-white">Luego de completar todo el formulario, su solicitud será evaluada por un administrador antes de su publicación en Turistik.</p>
+                            </div>
+                        </div>
+                        {{!-- FIN FORMULARIO DATOS BASICOS --}}
+
+                        {{!-- FORMULARIO EMPRENDIMIENTO --}}
+                        <div class="col-sm-6" id="inicioEmp">
+
+                            <h3 class="text-white">Datos de tu Emprendimiento</h3>
+                            <hr class="text-white">
+
+                            <div class="form-group mb-4">
+                                <label for="nombreemprendimiento" class="text-white">Nombre de tu Emprendimiento*</label>
+                                <input type="text" name="nombreemprendimiento" placeholder="Ingresa el nombre de tu emprendimiento"
+                                    class="form-control" id="nombreemprendimiento" autofocus required>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label for="ubicacion" class="text-white">Ingresa la ubicación de tu emprendimiento*</label>
+                                    <div class="input-group">
+                                        <select id="departamento" class="form-select" onchange="cambiarLoc()" required>
+                                            <option value="" selected disabled>Departamento</option>
+                                            {{#each dep}}
+                                                <option value="{{departamento}}">{{departamento}}</option>
+                                            {{/each}}
+                                        </select>
+                                        <select name="localidad" id="localidad" class="form-select" required>
+                                            <option value="" disabled selected>Localidad</option>
+                                        </select>
+                                        <input type="text" name="calle" aria-label="Calle" placeholder="Calle" class="form-control" required>
+                                        <input type="text" name="numero" aria-label="Nro" class="form-control" placeholder="Nro" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label for="categoria" class="text-white">Selecciona la categoría a la que pertenece su emprendimiento*</label>
+                                <select name="categoria" id="categoria" class="form-select" aria-label="Default select example"
+                                    required>
+                                    <option selected disabled>Selecciona</option>
+                                    <option value="A">Alojamiento</option>
+                                    <option value="T">Tour</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label for="descripcion" class="text-white">Descripción de tu emprendimiento*</label>
+                                <textarea name="descripcion" id="descripcion" class="form-control" rows="6" placeholder="Describe tu Emprendimiento (esta descripción será la que verán las personas que visiten tu emprendimiento luego, trata de hacerla lo más atractiva posible)" required></textarea>
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button class="btn btn-primary" onclick="irpaso2()">Siguiente</button>
+                            </div>
+                            
+                        </div>
+                        {{!-- FIN FORMULARIO EMPRENDIMIENTOS --}}
+
+                        {{!-- FORMULARIO DE TOURS --}}
+                        <div class="col-sm-6" id="formTours" hidden>
+
+                            <h3 class="text-white">Formulario para Tour</h3>
+                            <hr class="text-white">
+
+                            <div class="form-group mb-4">
+                                {{!-- <input type="text" name="duracion" placeholder="Duración" class="form-control" required> --}}
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text label-new">Duración *</span>
+                                    <input type="number" style="border-bottom-left-radius: 0.25rem; border-start-start-radius:0.25rem ;" class="form-control" max="24" min="0" value="00" id="horas" name="duracionHoras">
+                                    <span class="input-group-text">Horas</span>
+                                    <input type="number" class="form-control" max="59" min="0" value="00" id="minutos" name="duracionMinutos">
+                                    <span class="input-group-text">Minutos</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text label-new">Precio *</span>
+                                    <input type="number" name="precio" style="border-radius: 0.25rem" placeholder="Precio" class="form-control" id="preciotours">
+                                </div>
+                               
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label for="recomendaciones" class="text-white">Recomendaciones</label>
+                                <textarea name="recomendaciones" id="recomendaciones" style="border-radius: 0.25rem" placeholder="Indica las recomendaciones que le quieras dar a las personas para realizar este tour. Por ejemplo: Usar zapatillas de trekking, llevar bloqueador solar" class="form-control" rows="4"></textarea>
+                            </div>
+
+                            <div class="form-group mb-4 ms-1">
+                                <label for="dificultad" class="text-white">Indica la dificultad que crees que tiene tu tour *</label>
+                                <select name="dificultad" id="dificultad" class="white-text form-select" id="dificultad">
+                                    <option disabled selected>Selecciona una dificultad</option>
+                                    <option value="Baja">Baja</option>
+                                    <option value="Media">Media</option>
+                                    <option value="Dificil">Difícil</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="volverPaso1()">Atrás</button>
+                        </div>
+                        {{!-- FIN FORMULARIO TOURS --}}
+
+                        {{!-- FORMULARIO DE ALOJAMIENTOS --}}
+                        <div class="col-sm-6" id="formAloj" hidden>
+
+                            <h3 class="text-white">Formulario para Alojamiento</h3>
+                            <hr class="text-white">
+
+                            <div class="form-group mb-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text label-new" style="width: 250px;">Precio por Noche *</span>
+                                    <input type="number" style="border-radius: 0.25rem" name="precioxnoche" placeholder="Cuando desea cobrar por una noche" class="form-control" id="precioAloj" min="0">
+                                </div>
+                                
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text label-new" style="width: 250px;">Capacidad de Huéspedes *</span>
+                                    <input type="number"  name="capacidadhabitaciones" style="border-radius: 0.25rem" placeholder="Cuantas personas desea alojar" class="form-control" id="capacidadHuespedes" min="0" onKeyUp="if(this.value!=''){if(this.value>99){this.value='99';}else if(this.value<1){this.value='1';}};">
+                                </div>
+                                
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text label-new" style="width: 250px;">Capacidad de Estacionamiento *</span>
+                                    <input type="number" name="capacidadestacionamientos" style="border-radius: 0.25rem" placeholder="Cuantos vehículos se puede estacionar" class="form-control" id="capacidadEstacionamiento" min="0" onKeyUp="if(this.value!=''){if(this.value>99){this.value='99';}else if(this.value<1){this.value='1';}};">
+                                </div>
+                                
+                            </div>
+
+                            <div class="form-group mb-4 ms-1">
+                                <label for="tipo" class="text-white">Indica el tipo de alojamiento que ofreces*</label>
+                                <select name="tipo" id="tipo" class="form-select">
+                                    <option value="" disabled selected>Tipo de Alojamiento</option>
+                                    <option value="Casa">Casa</option>
+                                    <option value="Cabaña">Cabaña</option>
+                                    <option value="Habitacion">Habitación</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-4 ms-1">
+                                <label for="tipo" class="text-white">Indica la vista más destacada que tenga tu alojamiento*</label>
+                                <select name="vista" id="vista" class="form-select">
+                                    <option value="" disabled selected>Vista</option>
+                                    <option value="Campo">Campo</option>
+                                    <option value="Cerro">Cerro</option>
+                                    <option value="Río">Río</option>
+                                    <option value="Otra">Otra</option>
+                                </select>
+                            </div>
+                            <p class="text-white">Indica si posees o no alguno de los siguientes apartados</p>
+                            <div class="row g-3 justify-content-evenly">
+                                
+                                <div class="col-auto">
+                                    <label for="piscina" class="text-white">Piscina*:</label>
+                                <br>
+                                <select name="piscina" class="white-text form-select-sm" id="piscina">
+                                    <option value="" disabled selected>Elija</option>
+                                    <option value="1">SI</option>
+                                    <option value="0">NO</option>
+                                </select>
+                                </div>
+                                <div class="col-auto">
+                                    <label for="horno" class="text-white">Horno de Barro*:</label>
+                                <br>
+                                <select name="horno" class="form-select-sm" id="hornoBarro">
+                                    <option value="" disabled selected>Elija</option>
+                                    <option value="1">SI</option>
+                                    <option value="0">NO</option>
+                                </select>
+                                </div>
+                                <div class="col-auto">
+                                    <label for="animales" class="text-white">Animales Autoctonos*:</label>
+                                <br>
+                                <select name="animales" class="form-select-sm" id="animales">
+                                    <option value="" disabled selected>Elija</option>
+                                    <option value="1">SI</option>
+                                    <option value="0">NO</option>
+                                </select>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="volverPaso1()">Atrás</button>
+                        </div>
+                        {{!-- FIN FORMULARIO ALOJAMIENTOS --}}
+                        
+                        <div class="col-sm-6" id="actividades" hidden>
+
+                            <h3 class="text-white">Actividades que Ofrece</h3>
+                            <hr class="text-white">
+                            <p class="text-white">Selecciona aquellas actividades que ofrece en su emprendimiento</p>
+                            <div class="form-group mb-4 text-white" id="contenedorChecks">
+                                
+                            </div>
+                            <input type="text" name="actividades" id="inputactividades" hidden>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button class="btn btn-primary" type="button" onclick="irPaso3()">Siguiente</button>
+                            </div>
+                            
+                        </div>
+
+                        {{!-- FORMULARIO DATOS DE CONTACTO --}}
+                        <div class="col-sm-6" id="contacto" hidden>
+
+                            <h3 class="text-white">Datos de Contacto</h3>
+                            <hr class="text-white">
+                            <p class="text-white">Los datos que proporcione aquí serán mostrados en Turistik para que las personas se puedan contactar con usted</p>
+                            <div class="form-group mb-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text label-new">Teléfono *</span>
+                                    <input type="tel" style="border-radius: 0.25rem" name="telefono" placeholder="Ingresa un teléfono" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text label-new">Facebook</span>
+                                    <input type="url" style="border-radius: 0.25rem" name="facebook" placeholder="Ingresa tu perfil o página de facebook" class="form-control">
+                                </div>
+                                
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text label-new">Instagram</span>
+                                    <input type="url" style="border-radius: 0.25rem" name="instagram" placeholder="Ingresa tu perfil de instagram" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text label-new">Youtube</span>
+                                    <input type="url" style="border-radius: 0.25rem" name="youtube" placeholder="Ingresa tu canal de Youtube" class="form-control">
+                                </div>
+                                
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="volverPaso2()">Atrás</button>
+                        </div>
+                        {{!-- FIN FORMULARIO DATOS DE CONTACTO --}}
+
+                        {{!-- FORMULARIO DE IMAGENES --}}
+                        <div class="col-sm-6" id="imagenes" hidden>
+
+                            <h3 class="text-white">Carga de Imágenes</h3>
+                            <hr class="text-white">
+
+                            <div class="form-group mb-4">
+                                <label for="imagenprincipal" class="text-white">Seleccione la imagen principal de su emprendimiento*</label>
+                                <input type="file" class="form-control mt-2" id="imagenprincipal"
+                                    accept=".jpg, .jpeg, .png" name="image" placeholder="Selecciona una imagen"
+                                    required>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label for="imagenSecundaria" class="text-white">Seleccione otras imágenes de su emprendimiento</label>
+                                <input type="file" class="form-control mt-2" id="imagenSecundaria"
+                                    accept=".jpg, .jpeg, .png" name="imagensec" placeholder="Selecciona unas imagenes"
+                                    multiple>
+                            </div>
+                        </div>
+                        {{!-- FIN FORMULARIO IMAGENES --}}
+
+                        
+
+                        <div class="form-group mx-auto" id="botonSubmit" hidden>
+                            <button class="btn btn-lg btn-success text-white">Enviar</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+    <h3 class="text-center m-3">¿Necesitas ayuda para registrar tu emprendimiento?</h3>
+    <p class="fst-italic">
+        Consulta con alguno de los siguientes contactos que estarán predispuestos en ayudarte:
+</p>
+  <div class="card card-body">
+    <div><img src="https://cdn.icon-icons.com/icons2/1042/PNG/512/Contact_Icon_icon-icons.com_76434.png" alt="" class="rounded float-start" width="25px"> Contacto </div>
+    <div><img src="https://cdn.icon-icons.com/icons2/644/PNG/512/red_phone_icon-icons.com_59526.png" alt="" class="rounded float-start" width="25px"> Telefono:3884143557 </div>
+    <div><img src="https://cdn.icon-icons.com/icons2/91/PNG/512/facebook_16423.png" alt="" class="rounded float-start" width="25px"> Facebook: Melisa Lino </div>
+  </div>
+
+</div>
+<script src="/js/formEmp.js"></script>

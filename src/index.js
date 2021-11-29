@@ -86,7 +86,7 @@ app.use('/actividades',require('./routes/activities'))
 app.use('/missitios',require('./routes/mysities'))
 app.use('/solicitudes',require('./routes/requests'))
 app.use('/misemprendimientos',require('./routes/smallenterprises.js'))
-//app.use('/alojamientos/detalles',require('./routes/detailsAccommodations'))
+app.use('/emprendedores',require('./routes/entrepreneurs'))
 
 //Publico
 app.use(express.static(path.join(__dirname,'public')))

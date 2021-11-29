@@ -71,7 +71,7 @@ router.get('/pendientes/:id',async(req,res)=>{
 })
 
 router.post('/pendientes/:id', async(req,res)=>{
-    const {observaciones,resolucion}=req.body
+    const {observaciones,resolucion,emailEnvio}=req.body
     let sendhtml
     if (resolucion=="Aceptado"){
         sendhtml=`<table style="height: 32px; width: 100%; border-collapse: collapse; margin-left: auto; margin-right: auto;" border="1">
@@ -114,13 +114,17 @@ router.post('/pendientes/:id', async(req,res)=>{
             </tbody>
             </table>
             <h2 style="text-align: center;"><span style="color: #339966;"><em><strong><span style="color: #ff0000;">Lo sentimos...</span>&nbsp;</strong></em></span></h2>
-            <p>Hemos decidido rechazar tu solicitud. Debido a que .&nbsp;&nbsp; ${observaciones}.</p>
+            <p>Hemos decidido rechazar tu solicitud. Debido a que &nbsp;&nbsp; ${observaciones}.</p>
             <p>Puedes comunicarte con nosotros si crees que se trat&oacute; de un error o necesitas m&aacute;s ayuda enviando un correo electr&oacute;nico a turistikjujuy@gmail.com.</p>`
         }
         
     }
+    sendMail(emailEnvio,sendhtml)
+    .then((result)=>res.status(200).redirect("/solicitudes/pendientes"))
+    .catch((error)=>console.log(error.message))
+})
 
-    
+async function sendMail(emailEnvio,sendhtml){
     const CLIENT_ID=process.env.CLIENT_ID
     const CLIENT_SECRET=process.env.CLIENT_SECRET
     const REDIRECT_URI=process.env.REDIRECT_URI
@@ -130,41 +134,35 @@ router.post('/pendientes/:id', async(req,res)=>{
     oAuth2Client.setCredentials({
         refresh_token:REFRESH_TOKEN
     })
-
-    async function sendMail(){
-        try{
-            const accessToken=await oAuth2Client.getAccessToken()
-            const transporter=nodemailer.createTransport({
-                service:"gmail",
-                auth:{
-                    type:"OAuth2",
-                    user:"turistikjujuy@gmail.com",
-                    clientId:CLIENT_ID,
-                    clientSecret:CLIENT_SECRET,
-                    refreshToken:REFRESH_TOKEN,
-                    accessToken
-                },
-                tls: {
-                    rejectUnauthorized: false
-                }
-                
-            })
-            const mailOption={
-                from:"Turistik <turistikjujuy@gmail.com>",
-                to:"candealbarracin.bocajuniors@gmail.com",
-                subject:"Respuesta a su solicitud de ser emprendedor en Turistik",
-                html:sendhtml
+    try{
+        const accessToken=await oAuth2Client.getAccessToken()
+        const transporter=nodemailer.createTransport({
+            service:"gmail",
+            auth:{
+                type:"OAuth2",
+                user:"turistikjujuy@gmail.com",
+                clientId:CLIENT_ID,
+                clientSecret:CLIENT_SECRET,
+                refreshToken:REFRESH_TOKEN,
+                accessToken
+            },
+            tls: {
+                rejectUnauthorized: false
             }
-
-            const result= await transporter.sendMail(mailOption)
-            return result
-        }catch(err){
-            console.log(err)
+            
+        })
+        const mailOption={
+            from:"Turistik <turistikjujuy@gmail.com>",
+            to:emailEnvio,
+            subject:"Respuesta a su solicitud de ser emprendedor en Turistik",
+            html:sendhtml
         }
+
+        const result= await transporter.sendMail(mailOption)
+        return result
+    }catch(err){
+        console.log(err)
     }
-    sendMail()
-    .then((result)=>res.status(200).redirect("/solicitudespendientes"))
-    .catch((error)=>console.log(error.message))
-})
+}
 
 module.exports=router

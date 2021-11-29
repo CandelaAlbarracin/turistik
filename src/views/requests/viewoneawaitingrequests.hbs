@@ -1,28 +1,65 @@
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <style>
+      .swiper {
+        width: 80%;
+        height: 75%;
+      }
+
+      .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      
+    </style>
 </head>
 <body>
     {{>navigationAdm}}
     <div class="container">
         <div>
-            <p class="fs-4 fw-bold">Solicitud Pendiente de Candela Albaracín</p>
-            <p class="fs-4 fw-bold">Emprendimiento: Pensando en mí</p>
+            <p class="fs-4 fw-bold">Solicitud Pendiente de Diego Zambrano</p>
+            <p class="fs-4 fw-bold">Emprendimiento: La casa del 10</p>
         </div>
         <div class="card mb-3">
-            <p class="card-header">Información personal del emprendedor</p>
+            <p class="card-header">Información Personal del Emprendedor</p>
             <div class="card-body">
                 <div class="row g-3">
                     <div class="col">
                         <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <label for="nombre" class="col-sm-2 col-form-label text-center">Nombre</label>
                             <div class="col-sm-9">
-                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                                <input type="text" readonly class="form-control" id="nombre" value="Diego">
                             </div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <label for="apellido" class="col-sm-2 col-form-label text-center">Apellido</label>
                             <div class="col-sm-9">
-                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                                <input type="text" readonly class="form-control" id="apellido" value="Zambrano">
                             </div>
                         </div>
                     </div>
@@ -30,17 +67,17 @@
                 <div class="row g-3">
                     <div class="col">
                         <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <label for="email" class="col-sm-2 col-form-label text-center">Email</label>
                             <div class="col-sm-9">
-                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                                <input type="text" readonly class="form-control" id="email" value="email@example.com">
                             </div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <label for="cuil" class="col-sm-2 col-form-label text-center">CUIL</label>
                             <div class="col-sm-9">
-                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                                <input type="text" readonly class="form-control" id="cuil" value="20-254758263-5">
                             </div>
                         </div>
                     </div>
@@ -54,17 +91,75 @@
                 <div class="row g-3">
                     <div class="col">
                         <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
-                            <div class="col-sm-9">
-                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            <label for="nombreemprendimiento" class="col-sm-3 col-form-label text-center">Nombre del Emprendimiento</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly class="form-control" id="nombreemprendimiento" value="La casa del 10">
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-sm-11">
+                        <div class="mb-3 row">
+                            <div class="input-group">
+                                <span class="input-group-text col-sm-2 col-form-label pl-5" style="background-color:white;padding-left: 4%;border:white">Ubicación</span>
+                                <input type="text" readonly aria-label="Direccion" class="form-control" value="Belgrano 745">
+                                <input type="text" readonly aria-label="Localidad" class="form-control" value="Tilcara">
+                                <input type="text" readonly aria-label="Departamento" class="form-control" value="Tilcara">
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+                <div class="row g-3">
                     <div class="col">
                         <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <p style="margin-left: 3rem;">Imágenes</p>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <div class="swiper mySwiper" >
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img height="400px" src="data:image/jpeg;base64,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"></div>
+        <div class="swiper-slide"><img height="500px" src="data:image/jpeg;base64,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"> </div>
+        <div class="swiper-slide"><img src="https://i0.wp.com/borrowbits.com/wp-content/uploads/2014/01/summernote_013432.jpg?fit=745%2C360&ssl=1"> </div>
+        <div class="swiper-slide">Slide 4</div>
+        <div class="swiper-slide">Slide 5</div>
+        <div class="swiper-slide">Slide 6</div>
+        <div class="swiper-slide">Slide 7</div>
+        <div class="swiper-slide">Slide 8</div>
+        <div class="swiper-slide">Slide 9</div>
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <div class="col-sm-11" style="margin-left: 3rem;">
+                                <label for="descripcion" class="form-label">Descripción</label>
+                                <textarea class="form-control" readonly id="descripcion" rows="5" style="width: 96%;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="categoria" class="col-sm-2 col-form-label text-center">Categoría</label>
                             <div class="col-sm-9">
-                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                                <select class="form-select" id="categoria" disabled>
+                                <option value="Alojamiento" selected>Alojamiento</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -72,17 +167,39 @@
                 <div class="row g-3">
                     <div class="col">
                         <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <label for="telefono" class="col-sm-2 col-form-label text-center">Teléfono</label>
                             <div class="col-sm-9">
-                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                                <input type="text" readonly class="form-control" id="telefono" value="3885759515">
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row g-3">
                     <div class="col">
                         <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
+                            <label for="facebook" class="col-sm-2 col-form-label text-center">Facebook</label>
                             <div class="col-sm-9">
-                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                                <input type="text" readonly class="form-control" id="facebook" value="www.facebook.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="instagram" class="col-sm-2 col-form-label text-center">Instagram</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control" id="instagram" value="www.instagram.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="youtube" class="col-sm-2 col-form-label text-center">Youtube</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control" id="youtube" value="www.youtube.com">
                             </div>
                         </div>
                     </div>
@@ -96,17 +213,17 @@
                 <div class="row g-3">
                     <div class="col">
                         <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
-                            <div class="col-sm-9">
-                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            <label for="precioNoche" class="col-sm-4 col-form-label text-center">Precio por noche</label>
+                            <div class="col-sm-7">
+                                <input type="number" readonly class="form-control" id="precioNoche" value="5620">
                             </div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
-                            <div class="col-sm-9">
-                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            <label for="huespedes" class="col-sm-5 col-form-label text-center">Capacidad Huéspedes</label>
+                            <div class="col-sm-5">
+                                <input type="number" readonly class="form-control" id="huespedes" value="4">
                             </div>
                         </div>
                     </div>
@@ -114,17 +231,53 @@
                 <div class="row g-3">
                     <div class="col">
                         <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
-                            <div class="col-sm-9">
-                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            <label for="tipoAlojamiento" class="col-sm-4 col-form-label text-center">    Tipo de Alojamiento</label>
+                            <div class="col-sm-7">
+                                <input type="text" readonly class="form-control" id="tipoAlojamiento" value="email@example.com">
                             </div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label text-center">Email</label>
-                            <div class="col-sm-9">
-                                <input type="text" readonly class="form-control" id="staticEmail" value="email@example.com">
+                            <label for="estacionamiento" class="col-sm-5 col-form-label text-center">Capacidad Estacionamiento</label>
+                            <div class="col-sm-5">
+                                <input type="text" readonly class="form-control" id="estacionamiento" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="piscina" class="col-sm-4 col-form-label text-center">Piscina</label>
+                            <div class="col-sm-7">
+                                <input type="text" readonly class="form-control" id="piscina" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="vista" class="col-sm-5 col-form-label text-center">Vista</label>
+                            <div class="col-sm-5">
+                                <input type="text" readonly class="form-control" id="vista" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="hornoBarro" class="col-sm-4 col-form-label text-center">Horno de Barro</label>
+                            <div class="col-sm-7">
+                                <input type="text" readonly class="form-control" id="hornoBarro" value="email@example.com">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3 row">
+                            <label for="animalesAutoctonos" class="col-sm-5 col-form-label text-center">Animales autóctonos</label>
+                            <div class="col-sm-5">
+                                <input type="text" readonly class="form-control" id="animalesAutoctonos" value="email@example.com">
                             </div>
                         </div>
                     </div>
@@ -132,13 +285,14 @@
             </div>
         </div>
          
-        <form action="/solicitudespendientes" method="POST" name="evaluarSolicitud" onsubmit="event.preventDefault()">
+        <form action="/solicitudes/pendientes/2" method="POST" name="evaluarSolicitud" onsubmit="event.preventDefault()">
         <hr>
         <div class="mb-3">
             <label for="observaciones" class="form-label" >Observaciones</label>
-            <textarea class="form-control" id="observaciones" name="observaciones" rows="3" placeholder="Escribe la retroalimentación que le quieres enviar al emprendedor cuando reciba el e-mail con la respuesta a su solicitud"></textarea>
+            <textarea class="form-control" id="observaciones" name="observaciones" rows="4" placeholder="Escribe la retroalimentación que le quieres enviar al emprendedor cuando reciba el e-mail con la respuesta a su solicitud"></textarea>
         </div>
         <input type="text" name="resolucion" id="resolucion" hidden>
+        <input type="email" name="emailEnvio" id="emailEnvio" hidden value="candelazalbarracin@gmail.com">
         <div class="d-flex justify-content-evenly">
             <button type="button" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Se enviará un e-mail al emprendedor informando que aprobaste su solicitud" onclick="aceptado()">Aceptar</button>
             <button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Se enviará un e-mail al emprendedor informando que debe realizar modificaciones a su solicitud" onclick="solicitarModificacion()">Solicitar Modificación</button>
@@ -177,4 +331,20 @@
             document.evaluarSolicitud.submit()
         }
 
+    </script>
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+
+        spaceBetween: 30,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+          el: ".swiper-pagination",
+        },
+        mousewheel: true,
+        keyboard: true,
+        autoHeight:true
+      });
     </script>
