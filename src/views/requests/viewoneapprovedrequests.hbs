@@ -38,7 +38,7 @@
     {{>navigationAdm}}
     <div class="container">
         <div>
-            <p class="fs-4 fw-bold">Solicitud Pendiente de {{usuarioInd.nombre}} {{usuarioInd.apellido}}</p>
+            <p class="fs-4 fw-bold">Solicitud Aprobada de {{usuarioInd.nombre}} {{usuarioInd.apellido}}</p>
             <p class="fs-4 fw-bold">Emprendimiento: {{emp.nombreemprendimiento}}</p>
         </div>
         <div class="card mb-3">
@@ -348,56 +348,32 @@
                 {{/if}}
             </div>
         </div>
-         
-        <form action="/solicitudes/pendientes/{{emp.idemprendimiento}}" method="POST" name="evaluarSolicitud" onsubmit="event.preventDefault()">
-        <hr>
-        <div class="mb-3">
-            <label for="observaciones" class="form-label" >Observaciones</label>
-            <textarea class="form-control" id="observaciones" name="observaciones" rows="4" placeholder="Escribe la retroalimentación que le quieres enviar al emprendedor cuando reciba el e-mail con la respuesta a su solicitud"></textarea>
+         <div class="d-flex justify-content-between">
+            <a role="button" class="btn btn-secondary mt-3" href="/solicitudes/aprobadas"><i class="fas fa-chevron-circle-left"></i> Volver</a>
+            <button type="button" class="btn btn-danger align-self-center" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-trash-alt"></i> Eliminar</button>
+         </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmación de eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Está seguro que desea eliminar {{emp.nombreemprendimiento}} de TURISTIK?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a role="button" class="btn btn-danger" href="/solicitudes/aprobadas/eliminar/{{emp.idemprendimiento}}">Eliminar</a>
+                </div>
+                </div>
+            </div>
         </div>
-        <input type="text" name="resolucion" id="resolucion" hidden>
-        <input type="email" name="emailEnvio" id="emailEnvio" hidden value="{{emprendedorInd.email}}">
-        <div class="d-flex justify-content-evenly">
-            <button type="button" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Se enviará un e-mail al emprendedor informando que aprobaste su solicitud" onclick="aceptado()">Aceptar</button>
-            <button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Se enviará un e-mail al emprendedor informando que debe realizar modificaciones a su solicitud" onclick="solicitarModificacion()">Solicitar Modificación</button>
-            <button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Se enviará un e-mail al emprendedor informando que rechazaste su solicitud" onclick="rechazado()">Rechazar</button>
-        </div>
-        </form>
-        <a type="button" role="button" class="btn btn-secondary mt-3" href="/solicitudes/pendientes"><i class="fas fa-chevron-circle-left"></i> Volver</a>
     </div>
     
     <script>
-        const linkactivo=document.getElementById("SolicitudesPendientes")
+        const linkactivo=document.getElementById("SolicitudesAprobadas")
         linkactivo.classList.add('active')
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function(){
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            var tooltipList = tooltipTriggerList.map(function(element){
-                return new bootstrap.Tooltip(element);
-            });
-        });
-    </script>
-
-    <script>
-        function aceptado(){
-            const resolucion=document.getElementById('resolucion')
-            resolucion.value="Aceptado"
-            document.evaluarSolicitud.submit()
-        }
-
-        function rechazado(){
-            const resolucion=document.getElementById('resolucion')
-            resolucion.value="Rechazado"
-            document.evaluarSolicitud.submit()
-        }
-
-        function solicitarModificacion(){
-            const resolucion=document.getElementById('resolucion')
-            resolucion.value="Modificacion"
-            document.evaluarSolicitud.submit()
-        }
-
     </script>
     <script>
       var swiper = new Swiper(".mySwiper", {

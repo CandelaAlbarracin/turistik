@@ -3,6 +3,12 @@ const nodemailer=require("nodemailer")
 const {google}=require('googleapis')
 const router=express.Router()
 const pool=require('../database')
+const cloudinary=require('cloudinary')
+cloudinary.config({
+    cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
+    api_key:process.env.CLOUDINARY_API_KEY,
+    api_secret:process.env.CLOUDINARY_API_SECRET
+})
 
 router.get('/aprobadas',async(req,res)=>{
     const aprobadas=await pool.query('SELECT emprendimientos.idemprendimiento,emprendedores.cuil,usuarios.nombre,usuarios.apellido,emprendimientos.nombreemprendimiento,emprendimientos.categoria FROM emprendimientos JOIN emprendedores ON emprendimientos.id_emprendedor=emprendedores.idemprendedor JOIN usuarios ON emprendedores.id_usuario=usuarios.idusuario WHERE emprendimientos.estadosolicitud="A" ORDER BY emprendimientos.idemprendimiento;')
@@ -66,14 +72,138 @@ router.post('/buscar',async(req,res)=>{
     res.json(emprendimientos)
 })
 
+router.get('/aprobadas/:id',async(req,res)=>{
+    const {id}=req.params
+    const emprendimiento=await pool.query('SELECT * FROM emprendimientos WHERE idemprendimiento=?',[id])
+    let emp=emprendimiento[0]
+    let control=''
+    let datosEspecificos
+    let actividades
+    if (emp.categoria=='A'){
+        emp.categoria='Alojamiento'
+        datosEspecificos=await pool.query('SELECT * FROM alojamientos WHERE id_emprendimiento=?',[emp.idemprendimiento])
+        datosEspecificos=datosEspecificos[0]
+        if(datosEspecificos.piscina=='0'){
+            datosEspecificos.piscina='No'
+        }else{
+            datosEspecificos.piscina='Sí'
+        }
+        if(datosEspecificos.hornobarro=='0'){
+            datosEspecificos.hornobarro='No'
+        }else{
+            datosEspecificos.hornobarro='Sí'
+        }
+        if(datosEspecificos.animalesautoctonos=='0'){
+            datosEspecificos.animalesautoctonos='No'
+        }else{
+            datosEspecificos.animalesautoctonos='Sí'
+        }
+        actividades=await pool.query('SELECT nombre from actividades WHERE idactividades in (select id_actividad from actividadesofrecidas where id_alojamiento=?)',[datosEspecificos.idalojamiento])
+        control='Alojamiento'
+    }else{
+        emp.categoria='Tour'
+        datosEspecificos=await pool.query('SELECT * FROM tours WHERE id_emprendimiento=?',[emp.idemprendimiento])
+        datosEspecificos=datosEspecificos[0]
+        let dur=datosEspecificos.duracion.split(':')
+        datosEspecificos.duracion={horas:dur[0],minutos:dur[1]}
+        actividades=await pool.query('SELECT nombre from actividades WHERE idactividades in (select id_actividad from toursofrecidos where id_tour=?)',[datosEspecificos.idtour])
+    }
+    const emprendedor=await pool.query('SELECT * FROM emprendedores WHERE idemprendedor=?',[emp.id_emprendedor])
+    const emprendedorInd=emprendedor[0]
+    const usuario=await pool.query('SELECT * FROM usuarios WHERE idusuario=?',[emprendedorInd.id_usuario])
+    const usuarioInd=usuario[0]
+    const loc=await pool.query('SELECT * FROM localidades WHERE idlocalidad=?',[emp.id_localidad])
+    const locUnica=loc[0]
+    const imagenes=await pool.query('SELECT link FROM imagenes WHERE id_emprendimiento=?',[emp.idemprendimiento])
+    const contacto=await pool.query('SELECT * FROM contacto WHERE id_emprendimiento=?',[emp.idemprendimiento])
+    const contactoUnico=contacto[0]
+    res.render('./requests/viewoneapprovedrequests',{emp,emprendedorInd,usuarioInd,locUnica,imagenes,contactoUnico,control,datosEspecificos,actividades})
+})
+
+router.get('/aprobadas/eliminar/:id',async(req,res)=>{
+    const {id}=req.params
+    const catEmp=await pool.query('SELECT categoria FROM emprendimientos WHERE idemprendimiento=?',[id])
+    const categoria=catEmp[0].categoria
+    await pool.query('DELETE FROM contacto WHERE id_emprendimiento=?',[id])
+    const imgs=await pool.query('SELECT publicid FROM imagenes WHERE id_emprendimiento=?',[id])
+    for (let i=0;i<imgs.length;i++){
+        await cloudinary.v2.uploader.destroy(imgs[i].publicid)
+    }
+    await pool.query('DELETE FROM imagenes WHERE id_emprendimiento=?',[id])
+    await pool.query('DELETE FROM denuncias WHERE id_emprendimiento=?',[id])
+    await pool.query('DELETE FROM calificaciones WHERE id_emprendimiento=?',[id])
+    await pool.query('DELETE FROM sitiosguardados WHERE id_emprendimiento=?',[id])
+    
+    if(categoria=='A'){
+        const idaloj=await pool.query('select idalojamiento from alojamientos where id_emprendimiento=?',[id])
+        await pool.query('DELETE FROM alojamientos WHERE id_emprendimiento=?',[id])
+        await pool.query('DELETE FROM actividadesofrecidas WHERE id_alojamiento=?',[idaloj[0].idalojamiento])
+    }
+
+    if (categoria=='T'){
+        const idtour=await pool.query('select idtour from tours where id_emprendimiento=?',[id])
+        await pool.query('DELETE FROM tours WHERE id_emprendimiento=?',[id])
+        await pool.query('DELETE FROM toursofrecidos WHERE id_tour=?',[idtour[0].idtour])
+    }
+
+    await pool.query('DELETE FROM emprendimientos WHERE idemprendimiento=?',[id])
+
+})
+
 router.get('/pendientes/:id',async(req,res)=>{
-    res.render('./requests/viewoneawaitingrequests')
+    const {id}=req.params
+    const emprendimiento=await pool.query('SELECT * FROM emprendimientos WHERE idemprendimiento=?',[id])
+    let emp=emprendimiento[0]
+    let control=''
+    let datosEspecificos
+    let actividades
+    if (emp.categoria=='A'){
+        emp.categoria='Alojamiento'
+        datosEspecificos=await pool.query('SELECT * FROM alojamientos WHERE id_emprendimiento=?',[emp.idemprendimiento])
+        datosEspecificos=datosEspecificos[0]
+        if(datosEspecificos.piscina=='0'){
+            datosEspecificos.piscina='No'
+        }else{
+            datosEspecificos.piscina='Sí'
+        }
+        if(datosEspecificos.hornobarro=='0'){
+            datosEspecificos.hornobarro='No'
+        }else{
+            datosEspecificos.hornobarro='Sí'
+        }
+        if(datosEspecificos.animalesautoctonos=='0'){
+            datosEspecificos.animalesautoctonos='No'
+        }else{
+            datosEspecificos.animalesautoctonos='Sí'
+        }
+        actividades=await pool.query('SELECT nombre from actividades WHERE idactividades in (select id_actividad from actividadesofrecidas where id_alojamiento=?)',[datosEspecificos.idalojamiento])
+        control='Alojamiento'
+    }else{
+        emp.categoria='Tour'
+        datosEspecificos=await pool.query('SELECT * FROM tours WHERE id_emprendimiento=?',[emp.idemprendimiento])
+        datosEspecificos=datosEspecificos[0]
+        let dur=datosEspecificos.duracion.split(':')
+        datosEspecificos.duracion={horas:dur[0],minutos:dur[1]}
+        actividades=await pool.query('SELECT nombre from actividades WHERE idactividades in (select id_actividad from toursofrecidos where id_tour=?)',[datosEspecificos.idtour])
+    }
+    const emprendedor=await pool.query('SELECT * FROM emprendedores WHERE idemprendedor=?',[emp.id_emprendedor])
+    const emprendedorInd=emprendedor[0]
+    const usuario=await pool.query('SELECT * FROM usuarios WHERE idusuario=?',[emprendedorInd.id_usuario])
+    const usuarioInd=usuario[0]
+    const loc=await pool.query('SELECT * FROM localidades WHERE idlocalidad=?',[emp.id_localidad])
+    const locUnica=loc[0]
+    const imagenes=await pool.query('SELECT link FROM imagenes WHERE id_emprendimiento=?',[emp.idemprendimiento])
+    const contacto=await pool.query('SELECT * FROM contacto WHERE id_emprendimiento=?',[emp.idemprendimiento])
+    const contactoUnico=contacto[0]
+    res.render('./requests/viewoneawaitingrequests',{emp,emprendedorInd,usuarioInd,locUnica,imagenes,contactoUnico,control,datosEspecificos,actividades})
 })
 
 router.post('/pendientes/:id', async(req,res)=>{
     const {observaciones,resolucion,emailEnvio}=req.body
+    const {id}=req.params
     let sendhtml
     if (resolucion=="Aceptado"){
+        await pool.query('UPDATE emprendimientos SET estadosolicitud="A" WHERE idemprendimiento=?',[id])
         sendhtml=`<table style="height: 32px; width: 100%; border-collapse: collapse; margin-left: auto; margin-right: auto;" border="1">
         <tbody>
         <tr style="height: 18px;">
@@ -104,6 +234,31 @@ router.post('/pendientes/:id', async(req,res)=>{
             <p>Para modificar tu emprendimiento accede a tu cuenta con el correo y contrase&ntilde;a que ingresaste al llenar el formulario. Una vez hayas accedido, en la pesta&ntilde;a llamada 'Mis emprendimientos' encontr&aacute;s la im&aacute;gen y nombre de tu emprendimiento y un bot&oacute;n llamado 'Editar' que te permit&aacute; modificar al mismo.&nbsp;</p>
             <p>Puedes comunicarte con nosotros si necesitas m&aacute;s ayuda enviando un correo electr&oacute;nico a turistikjujuy@gmail.com.</p>`
         }else{
+            const catEmp=await pool.query('SELECT categoria FROM emprendimientos WHERE idemprendimiento=?',[id])
+            const categoria=catEmp[0].categoria
+            await pool.query('DELETE FROM contacto WHERE id_emprendimiento=?',[id])
+            const imgs=await pool.query('SELECT publicid FROM imagenes WHERE id_emprendimiento=?',[id])
+            for (let i=0;i<imgs.length;i++){
+                await cloudinary.v2.uploader.destroy(imgs[i].publicid)
+            }
+            await pool.query('DELETE FROM imagenes WHERE id_emprendimiento=?',[id])
+            await pool.query('DELETE FROM denuncias WHERE id_emprendimiento=?',[id])
+            await pool.query('DELETE FROM calificaciones WHERE id_emprendimiento=?',[id])
+            await pool.query('DELETE FROM sitiosguardados WHERE id_emprendimiento=?',[id])
+            
+            if(categoria=='A'){
+                const idaloj=await pool.query('select idalojamiento from alojamientos where id_emprendimiento=?',[id])
+                await pool.query('DELETE FROM alojamientos WHERE id_emprendimiento=?',[id])
+                await pool.query('DELETE FROM actividadesofrecidas WHERE id_alojamiento=?',[idaloj[0].idalojamiento])
+            }
+        
+            if (categoria=='T'){
+                const idtour=await pool.query('select idtour from tours where id_emprendimiento=?',[id])
+                await pool.query('DELETE FROM tours WHERE id_emprendimiento=?',[id])
+                await pool.query('DELETE FROM toursofrecidos WHERE id_tour=?',[idtour[0].idtour])
+            }
+
+            await pool.query('DELETE FROM emprendimientos WHERE idemprendimiento=?',[id])
             sendhtml=`<table style="height: 32px; width: 100%; border-collapse: collapse; margin-left: auto; margin-right: auto;" border="1">
             <tbody>
             <tr style="height: 18px;">

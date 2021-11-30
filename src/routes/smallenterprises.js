@@ -114,13 +114,15 @@ router.get('/eliminar/:id',async(req,res)=>{
     await pool.query('DELETE FROM sitiosguardados WHERE id_emprendimiento=?',[id])
     
     if(categoria=='A'){
+        const idaloj=await pool.query('select idalojamiento from alojamientos where id_emprendimiento=?',[id])
         await pool.query('DELETE FROM alojamientos WHERE id_emprendimiento=?',[id])
-        await pool.query('DELETE FROM actividadesofrecidas WHERE id_emprendimiento=?',[id])
+        await pool.query('DELETE FROM actividadesofrecidas WHERE id_alojamiento=?',[idaloj[0].idalojamiento])
     }
 
     if (categoria=='T'){
+        const idtour=await pool.query('select idtour from tours where id_emprendimiento=?',[id])
         await pool.query('DELETE FROM tours WHERE id_emprendimiento=?',[id])
-        await pool.query('DELETE FROM toursofrecidos WHERE id_emprendimiento=?',[id])
+        await pool.query('DELETE FROM toursofrecidos WHERE id_tour=?',[idtour[0].idtour])
     }
 
     await pool.query('DELETE FROM emprendimientos WHERE idemprendimiento=?',[id])
@@ -164,4 +166,20 @@ router.post('/buscar',async(req,res)=>{
     }
     res.json(emprendimientos)
 })
+
+router.get('/editar/:id',async(req,res)=>{
+    const {id}=req.params
+    const emprendimiento=await pool.query('SELECT * FROM emprendimientos WHERE idemprendimiento=?',[id])
+    const usuario=await pool.query('SELECT * FROM usuarios WHERE idusuario=?',[req.user.idusuario])
+    const cuil=await pool.query('SELECT cuil FROM emprendedores WHERE id_usuario=?',[req.user.idusuario])
+    const cuilarray=cuil[0].cuil.split('-')
+    const objectCuil={precuil:cuilarray[0],cuil:cuilarray[1],poscuil:cuilarray[2]}
+    const infoUsuario=usuario[0]
+    const emprendimientoUnico=emprendimiento[0]
+    const loc=await pool.query('SELECT idlocalidad,nombrelocalidad,departamento FROM localidades WHERE idlocalidad=?',[emprendimientoUnico.id_localidad])
+    const dep=await pool.query('SELECT DISTINCTROW departamento FROM localidades WHERE departamento<>? ORDER BY nombrelocalidad',[loc[0].departamento])
+    const locunico=loc[0]
+    res.render('smallenterprise/editEmp',{emprendimientoUnico,infoUsuario,objectCuil,locunico,dep})
+})
+
 module.exports=router

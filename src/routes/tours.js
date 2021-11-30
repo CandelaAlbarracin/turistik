@@ -16,7 +16,6 @@ router.get('/actividades/:id', async(req,res)=>{
     const tours=await pool.query('select img.link, tours.idtour,emp.nombreemprendimiento, emp.descripcion from emprendimientos emp join imagenes img on emp.idemprendimiento=img.id_emprendimiento and img.tipo="P" join tours on emp.idemprendimiento=tours.id_emprendimiento join toursofrecidos on tours.idtour=toursofrecidos.id_tour and emp.estadosolicitud="A" and toursofrecidos.id_actividad=?;',[id])
     const detalles=detallesactividades[0]
     const imgPrincipal=imagenPrincipal[0]
-    console.log(tours)
     res.render('./tours/activity',{detalles,imgPrincipal,imagenesSec,tours}) 
 })
 
@@ -26,7 +25,7 @@ router.get('/detalles/:id', async (req,res)=>{
     const solo = infoDetalles[0];
     //solo.duracion=solo.duracion.split(':')
     solo.duracion=formatearHora(solo.duracion)
-    const infoOtros = await pool.query('SELECT tours.idtour, tours.precio, imagenes.link FROM tours INNER JOIN emprendimientos on tours.id_emprendimiento=emprendimientos.idemprendimiento inner join imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento where (tours.idtour<>? and imagenes.tipo="P") order by rand() limit 4', [solo.idtour])
+    const infoOtros = await pool.query('SELECT tours.idtour, tours.precio, imagenes.link FROM tours INNER JOIN emprendimientos on tours.id_emprendimiento=emprendimientos.idemprendimiento inner join imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento where (tours.idtour<>? and imagenes.tipo="P")  and emprendimientos.estadosolicitud="A" order by rand() limit 4', [solo.idtour])
     const imag = await pool.query('SELECT  imagenes.link from emprendimientos inner join tours on emprendimientos.idemprendimiento=tours.id_emprendimiento INNER JOIN imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento where tours.idtour=?', [solo.idtour]);
     const idemp=await pool.query('SELECT id_emprendimiento from tours where idtour=?',[id])
     const emprendimiento=idemp[0]

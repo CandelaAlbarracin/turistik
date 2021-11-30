@@ -18,7 +18,7 @@ function buscarEmprendimientos(){
     
                         <div class="d-grid gap-2">
                             <a role="button" class="btn btn-primary" href="${res[i].linkCat}"><i class="far fa-eye"></i> Ver</a>
-                            <a role="button" class="btn btn-warning" href="#"><i class="fas fa-edit"></i> Editar</a>
+                            <a role="button" class="btn btn-warning" href="/misemprendimientos/editar/${res[i].idemprendimiento}"><i class="fas fa-edit"></i> Editar</a>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#EliminarSitio${res[i].idemprendimiento}"><i class="fas fa-trash-alt"></i> Eliminar</button>
                             
                             <div class="modal fade" id="EliminarSitio${res[i].idemprendimiento}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
