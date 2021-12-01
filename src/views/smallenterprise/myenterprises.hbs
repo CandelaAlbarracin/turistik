@@ -1,6 +1,7 @@
 </head>
 <body>
     {{>navigationEmp}}
+    {{>message}}
     <div class="container">
         <h2 class="text-center mt-2 mb-5 fst-italic">Mis Emprendimientos</h2>
         <form action="" onsubmit="event.preventDefault()" class="mb-3">
@@ -34,7 +35,7 @@
             </div>
         </form>
         <div class="mt-2 mb-3">
-                <a class="btn btn-success" role="button" href="#"><i class="fas fa-plus"></i> Agregar Emprendimiento</a>
+                <a class="btn btn-success" role="button" href="/misemprendimientos/nuevo"><i class="fas fa-plus"></i> Agregar Emprendimiento</a>
             </div>
         <div class="row row-cols-1 row-cols-md-3 g-4" id="contenedorResultados">
             {{#each emprendimientos}}

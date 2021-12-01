@@ -12,10 +12,7 @@ cloudinary.config({
 
 //ruta para renderizar el formulario 1 de emprendedor
 router.get("/",async(req,res) => {
-    const loc=await pool.query('SELECT * FROM localidades')
     const dep=await pool.query('SELECT distinctrow departamento FROM localidades ORDER BY departamento')
-    const actividadesAloj=await pool.query('SELECT nombre FROM actividades WHERE tipo="A"')
-    const actividadesTours=await pool.query('SELECT nombre FROM actividades WHERE tipo="T"')
     res.render("smallenterprise/registerEmp",{dep});
 });
 

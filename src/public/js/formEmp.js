@@ -19,7 +19,26 @@ form.numero.addEventListener('keypress',function(e){
         e.preventDefault()
     }
 })
-
+form.capacidadHuespedes.addEventListener('keypress',function(e){
+    if(!validarNro(event)){
+        e.preventDefault()
+    }
+})
+form.capacidadEstacionamiento.addEventListener('keypress',function(e){
+    if(!validarNro(event)){
+        e.preventDefault()
+    }
+})
+form.horas.addEventListener('keypress',function(e){
+    if(!validarNro(event)){
+        e.preventDefault()
+    }
+})
+form.minutos.addEventListener('keypress',function(e){
+    if(!validarNro(event)){
+        e.preventDefault()
+    }
+})
 function validarNro(valor){
     let key = valor.charCode;
     return key >= 48 && key <= 57;
