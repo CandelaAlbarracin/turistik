@@ -1,8 +1,8 @@
 const express=require('express')
 const router=express.Router()
 const pool=require('../database')
-
-router.get('/',async(req,res)=>{
+const {isLoggedInUsuario,isLoggedInAdm,isLoggedInEmp}=require('../lib/auth')
+router.get('/',isLoggedInAdm,async(req,res)=>{
     const denuncias=await pool.query('SELECT d.nroDenuncia,em.nombreemprendimiento,em.categoria,d.motivo,d.descripcion FROM emprendimientos em join denuncias d ON em.idemprendimiento=d.id_emprendimiento order by d.nroDenuncia;')
     denuncias.map(function(denuncia){
         if (denuncia.categoria=='A'){
@@ -15,7 +15,7 @@ router.get('/',async(req,res)=>{
     res.render('./denuncias/denuncias',[{denuncias},total[0].cantidad,'',''])
 })
 
-router.post('/resultados',async(req,res)=>{
+router.post('/resultados',isLoggedInAdm,async(req,res)=>{
     let {nombreemprendimiento,motivo,categoria}=req.body
     const categoriaarray=JSON.parse('['+categoria+']')
     let denunciasResultado,total

@@ -4,13 +4,14 @@ const {google}=require('googleapis')
 const router=express.Router()
 const pool=require('../database')
 const cloudinary=require('cloudinary')
+const {isLoggedInUsuario,isLoggedInAdm,isLoggedInEmp}=require('../lib/auth')
 cloudinary.config({
     cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
     api_key:process.env.CLOUDINARY_API_KEY,
     api_secret:process.env.CLOUDINARY_API_SECRET
 })
 
-router.get('/aprobadas',async(req,res)=>{
+router.get('/aprobadas',isLoggedInAdm,async(req,res)=>{
     const aprobadas=await pool.query('SELECT emprendimientos.idemprendimiento,emprendedores.cuil,usuarios.nombre,usuarios.apellido,emprendimientos.nombreemprendimiento,emprendimientos.categoria FROM emprendimientos JOIN emprendedores ON emprendimientos.id_emprendedor=emprendedores.idemprendedor JOIN usuarios ON emprendedores.id_usuario=usuarios.idusuario WHERE emprendimientos.estadosolicitud="A" ORDER BY emprendimientos.idemprendimiento;')
     for(let i=0;i<aprobadas.length;i++){
         if(aprobadas[i].categoria=='A'){
@@ -22,7 +23,7 @@ router.get('/aprobadas',async(req,res)=>{
     res.render('./requests/approvedrequests',{aprobadas})
 })
 
-router.get('/pendientes',async(req,res)=>{
+router.get('/pendientes',isLoggedInAdm,async(req,res)=>{
     const pendientes=await pool.query('SELECT emprendimientos.idemprendimiento,emprendedores.cuil,usuarios.nombre,usuarios.apellido,emprendimientos.nombreemprendimiento,emprendimientos.categoria FROM emprendimientos JOIN emprendedores ON emprendimientos.id_emprendedor=emprendedores.idemprendedor JOIN usuarios ON emprendedores.id_usuario=usuarios.idusuario WHERE emprendimientos.estadosolicitud="P" ORDER BY emprendimientos.idemprendimiento;')
     for(let i=0;i<pendientes.length;i++){
         if(pendientes[i].categoria=='A'){
@@ -72,7 +73,7 @@ router.post('/buscar',async(req,res)=>{
     res.json(emprendimientos)
 })
 
-router.get('/aprobadas/:id',async(req,res)=>{
+router.get('/aprobadas/:id',isLoggedInAdm,async(req,res)=>{
     const {id}=req.params
     const emprendimiento=await pool.query('SELECT * FROM emprendimientos WHERE idemprendimiento=?',[id])
     let emp=emprendimiento[0]
@@ -120,7 +121,7 @@ router.get('/aprobadas/:id',async(req,res)=>{
     res.render('./requests/viewoneapprovedrequests',{emp,emprendedorInd,usuarioInd,locUnica,imagenes,contactoUnico,control,datosEspecificos,actividades})
 })
 
-router.get('/aprobadas/eliminar/:id',async(req,res)=>{
+router.get('/aprobadas/eliminar/:id',isLoggedInAdm,async(req,res)=>{
     const {id}=req.params
     const catEmp=await pool.query('SELECT categoria FROM emprendimientos WHERE idemprendimiento=?',[id])
     const categoria=catEmp[0].categoria
@@ -150,7 +151,7 @@ router.get('/aprobadas/eliminar/:id',async(req,res)=>{
 
 })
 
-router.get('/pendientes/:id',async(req,res)=>{
+router.get('/pendientes/:id',isLoggedInAdm,async(req,res)=>{
     const {id}=req.params
     const emprendimiento=await pool.query('SELECT * FROM emprendimientos WHERE idemprendimiento=?',[id])
     let emp=emprendimiento[0]
@@ -198,7 +199,7 @@ router.get('/pendientes/:id',async(req,res)=>{
     res.render('./requests/viewoneawaitingrequests',{emp,emprendedorInd,usuarioInd,locUnica,imagenes,contactoUnico,control,datosEspecificos,actividades})
 })
 
-router.post('/pendientes/:id', async(req,res)=>{
+router.post('/pendientes/:id', isLoggedInAdm,async(req,res)=>{
     const {observaciones,resolucion,emailEnvio}=req.body
     const {id}=req.params
     let sendhtml

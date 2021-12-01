@@ -21,7 +21,7 @@ router.get('/',isLoggedInAdm,async(req,res)=>{
     res.render('./activities/activities',{actividades})
 })
 
-router.get('/detalles/:id',async(req,res)=>{
+router.get('/detalles/:id',isLoggedInAdm,async(req,res)=>{
     const {id}=req.params
     const consultaAct=await pool.query('SELECT * FROM actividades where idactividades=?',[id])
     const imagenPrincipal=await pool.query('SELECT link FROM imagenesactividades WHERE id_actividad=? AND tipo="P";',[id])
@@ -31,7 +31,7 @@ router.get('/detalles/:id',async(req,res)=>{
     res.render('./activities/details',{actividad,imgPrincipal,imagenesSec})
 })
 
-router.get('/editar/:id',async(req,res)=>{
+router.get('/editar/:id',isLoggedInAdm,async(req,res)=>{
     const {id}=req.params
     const detallesactividades=await pool.query('SELECT * FROM actividades WHERE idactividades=?;',[id])
     const imagenPrincipal=await pool.query('SELECT link FROM imagenesactividades WHERE id_actividad=? AND tipo="P";',[id])
@@ -41,11 +41,11 @@ router.get('/editar/:id',async(req,res)=>{
     res.render('./activities/editar',{detalles,imgPrincipal,imagenesSec})
 })
 
-router.get('/agregar',(req,res)=>{
+router.get('/agregar',isLoggedInAdm,(req,res)=>{
     res.render('./activities/agregar')
 })
 
-router.post('/agregar',async(req,res)=>{
+router.post('/agregar',isLoggedInAdm,async(req,res)=>{
     //Inserción de actividad
     const {nombre,introduccion,tipo,descripcion}=req.body
     const newActivity={
@@ -85,7 +85,7 @@ router.post('/agregar',async(req,res)=>{
     res.redirect('/actividades')
 })
 
-router.post('/editar',async(req,res)=>{
+router.post('/editar',isLoggedInAdm,async(req,res)=>{
     const {idactividades,nombre,introduccion,tipo,descripcion,Eliminar}=req.body
     const eliminar=Eliminar.split(',')
     const publicsid=await pool.query('select publicid from imagenesactividades where idactividades in (?)',[eliminar])
@@ -132,7 +132,7 @@ router.post('/editar',async(req,res)=>{
     res.redirect('/actividades')
 })
 
-router.get('/eliminar/:id',async(req,res)=>{
+router.get('/eliminar/:id',isLoggedInAdm,async(req,res)=>{
     const {id}=req.params
     const publicsid=await pool.query('select publicid from imagenesactividades where id_actividad = ?',[id])
     for (let i=0;i<publicsid.length;i++){

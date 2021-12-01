@@ -10,7 +10,7 @@ cloudinary.config({
     api_secret:process.env.CLOUDINARY_API_SECRET
 })
 
-router.get('/',async(req,res)=>{
+router.get('/',isLoggedInEmp,async(req,res)=>{
     let emprendimientos= await pool.query('SELECT DISTINCTROW emp.idemprendimiento,emp.ubicacion,loc.nombrelocalidad,loc.departamento,emp.nombreemprendimiento, emp.categoria,emp.estadosolicitud, img.link from emprendimientos emp join imagenes img on emp.idemprendimiento=img.id_emprendimiento and img.tipo="P" join localidades loc on emp.id_localidad=loc.idlocalidad join emprendedores on emp.id_emprendedor=emprendedores.idemprendedor where emprendedores.id_usuario=?;',[req.user.idusuario])
     let idencontrado,linkCat
     for(let i=0;i<emprendimientos.length;i++){       
@@ -31,7 +31,7 @@ router.get('/',async(req,res)=>{
     res.render('./smallenterprise/myenterprises',{emprendimientos})
 })
 
-router.get('/alojamientos/detalles/:id', async (req,res)=>{
+router.get('/alojamientos/detalles/:id', isLoggedInEmp,async (req,res)=>{
     const { id } = req.params;
     const infoDetalles = await pool.query('SELECT contacto.facebook, contacto.instagram, contacto.telefono, contacto.youtube, emprendimientos.descripcion, alojamientos.idalojamiento ,imagenes.link, emprendimientos.ubicacion, emprendimientos.nombreemprendimiento, alojamientos.precionoche, alojamientos.capacidadhabitaciones, alojamientos.capacidadestacionamientos, alojamientos.tipoalojamiento, alojamientos.piscina,alojamientos.vista,alojamientos.hornobarro,alojamientos.animalesautoctonos, emprendimientos.id_localidad from emprendimientos inner join alojamientos on emprendimientos.idemprendimiento=alojamientos.id_emprendimiento INNER JOIN imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento INNER JOIN contacto ON contacto.id_emprendimiento=emprendimientos.idemprendimiento where alojamientos.idalojamiento=?', [id]);
     const solo = infoDetalles[0];
@@ -55,7 +55,7 @@ router.get('/alojamientos/detalles/:id', async (req,res)=>{
     res.render('./smallenterprise/detailsaccommodationsEmp', {solo, emprendimiento,urlmap, imag,loc,duenoindividual,promedioCalificacion,reviews,actividades});
 })
 
-router.get('/tours/detalles/:id',async(req,res)=>{
+router.get('/tours/detalles/:id',isLoggedInEmp,async(req,res)=>{
     const { id } = req.params;
     const infoDetalles = await pool.query('SELECT contacto.facebook, contacto.instagram, contacto.telefono, contacto.youtube, emprendimientos.descripcion, tours.idtour ,imagenes.link, emprendimientos.ubicacion, emprendimientos.nombreemprendimiento, tours.dificultad,tours.duracion,tours.recomendaciones,tours.precio , emprendimientos.id_localidad from emprendimientos inner join tours on emprendimientos.idemprendimiento=tours.id_emprendimiento INNER JOIN imagenes on emprendimientos.idemprendimiento=imagenes.id_emprendimiento INNER JOIN contacto ON contacto.id_emprendimiento=emprendimientos.idemprendimiento where tours.idtour=?', [id]);
     const solo = infoDetalles[0];
@@ -100,7 +100,7 @@ function formatearHora(hora){
     return textohora
 }
 
-router.get('/eliminar/:id',async(req,res)=>{
+router.get('/eliminar/:id',isLoggedInEmp,async(req,res)=>{
     const {id}=req.params
     const catEmp=await pool.query('SELECT categoria FROM emprendimientos WHERE idemprendimiento=?',[id])
     const categoria=catEmp[0].categoria
@@ -168,7 +168,7 @@ router.post('/buscar',async(req,res)=>{
     res.json(emprendimientos)
 })
 
-router.get('/editar/:id',async(req,res)=>{
+router.get('/editar/:id',isLoggedInEmp,async(req,res)=>{
     const {id}=req.params
     const emprendimiento=await pool.query('SELECT * FROM emprendimientos WHERE idemprendimiento=?',[id])
     const usuario=await pool.query('SELECT * FROM usuarios WHERE idusuario=?',[req.user.idusuario])
@@ -219,7 +219,7 @@ router.get('/editar/:id',async(req,res)=>{
     res.render('smallenterprise/editEmp',{emprendimientoUnico,infoUsuario,objectCuil,locunico,dep,control,datosEspecificos,actividades,otrasActividades,contacto,imgPrincipal,imagenesSec})
 })
 
-router.get('/nuevo',async(req,res)=>{
+router.get('/nuevo',isLoggedInEmp,async(req,res)=>{
     const usuario=await pool.query('SELECT * FROM usuarios WHERE idusuario=?',[req.user.idusuario])
     const cuil=await pool.query('SELECT cuil FROM emprendedores WHERE id_usuario=?',[req.user.idusuario])
     const cuilarray=cuil[0].cuil.split('-')
@@ -323,7 +323,7 @@ router.post('/nuevo',async(req,res)=>{
     res.redirect('/misemprendimientos')
 })
 
-router.post('/editar',async(req,res)=>{
+router.post('/editar',isLoggedInEmp,async(req,res)=>{
     console.log(req.body)
     const {id,nombreemprendimiento,calle,numero,categoria,descripcion}=req.body
     const categoriaInicial=await pool.query('SELECT categoria FROM emprendimientos WHERE idemprendimiento=?',[id])

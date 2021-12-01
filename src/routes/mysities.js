@@ -1,8 +1,8 @@
 const express=require('express')
 const router=express.Router()
 const pool=require('../database')
-
-router.get('/',async(req,res)=>{
+const {isLoggedInUsuario,isLoggedInAdm,isLoggedInEmp}=require('../lib/auth')
+router.get('/',isLoggedInUsuario ,async(req,res)=>{
     let sitios= await pool.query('SELECT DISTINCTROW emp.idemprendimiento,emp.ubicacion,loc.nombrelocalidad,loc.departamento,emp.nombreemprendimiento, emp.categoria, img.link from emprendimientos emp join imagenes img on emp.idemprendimiento=img.id_emprendimiento and img.tipo="P" join localidades loc on emp.id_localidad=loc.idlocalidad join sitiosguardados sg on sg.id_emprendimiento=emp.idemprendimiento and sg.id_usuario=?;',[req.user.idusuario])
     let calificaciones,calificacion
     let idencontrado,linkCat
@@ -28,7 +28,7 @@ router.get('/',async(req,res)=>{
     res.render('./sities/mysities',{sitios})
 })
 
-router.get('/eliminar/:id',async(req,res)=>{
+router.get('/eliminar/:id',isLoggedInUsuario,async(req,res)=>{
     const {id}=req.params
     await pool.query('DELETE FROM sitiosguardados WHERE id_emprendimiento=? AND id_usuario=?',[id,req.user.idusuario])
     res.redirect('/missitios')
