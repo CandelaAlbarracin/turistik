@@ -400,10 +400,23 @@
                         </div>
                         {{!-- FIN FORMULARIO IMAGENES --}}
                         <div class="form-group mx-auto" id="botonSubmit" hidden>
-                            <button class="btn btn-lg btn-success text-white">Enviar</button>
+                            <button class="btn btn-lg btn-success text-white" data-bs-toggle="modal" data-bs-target="#Subiendo">Enviar</button>
                         </div>
 
                     </form>
+                    <div class="modal fade" id="Subiendo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="staticBackdropLabel">Enviando Solicitud...</h5>
+                            </div>
+                            <div class="modal-body text-center">
+                                <span class="spinner-border text-success" role="status"></span>
+                                <span>Estamos trabajando para recibir su propuesta, aguarde unos instantes... </span> 
+                            </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

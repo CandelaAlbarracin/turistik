@@ -324,7 +324,6 @@ router.post('/nuevo',async(req,res)=>{
 })
 
 router.post('/editar',isLoggedInEmp,async(req,res)=>{
-    console.log(req.body)
     const {id,nombreemprendimiento,calle,numero,categoria,descripcion}=req.body
     const categoriaInicial=await pool.query('SELECT categoria FROM emprendimientos WHERE idemprendimiento=?',[id])
     const catInicial=categoriaInicial[0].categoria
@@ -416,17 +415,16 @@ router.post('/editar',isLoggedInEmp,async(req,res)=>{
         const newImgPrimary={
             link:result.url,
             tipo:"P",
-            id_actividad:idactividades,
+            id_emprendimiento:id,
             publicid:result.public_id
         }
         await fs.unlink(pathimagenPrimaria)
         const idImgP=await pool.query('select idimagen from imagenes where tipo="P" and id_emprendimiento=?',[id])
         const idimg=idImgP[0].idimagen
-        await pool.query('UPDATE imagen set ? WHERE idimagen=?',[newImgPrimary,idimg])
+        await pool.query('UPDATE imagenes set ? WHERE idimagen=?',[newImgPrimary,idimg])
     }
     const {Eliminar}=req.body
     const eliminar=Eliminar.split(',')
-    console.log(eliminar)
     const publicsid=await pool.query('select publicid from imagenes where idimagen in (?)',[eliminar])
     await pool.query('Delete from imagenes where idimagen in (?)',[eliminar])
     for (let i=0;i<publicsid.length;i++){

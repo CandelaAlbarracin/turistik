@@ -356,7 +356,8 @@
             <textarea class="form-control" id="observaciones" name="observaciones" rows="4" placeholder="Escribe la retroalimentación que le quieres enviar al emprendedor cuando reciba el e-mail con la respuesta a su solicitud"></textarea>
         </div>
         <input type="text" name="resolucion" id="resolucion" hidden>
-        <input type="email" name="emailEnvio" id="emailEnvio" hidden value="{{emprendedorInd.email}}">
+        <input type="email" name="emailEnvio" id="emailEnvio" value="{{usuarioInd.email}}" hidden>
+        {{!-- <input type="email" name="emailEnvio" id="emailEnvio" value="candelazalbarracin@gmail.com" hidden> --}}
         <div class="d-flex justify-content-evenly">
             <button type="button" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Se enviará un e-mail al emprendedor informando que aprobaste su solicitud" onclick="aceptado()">Aceptar</button>
             <button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Se enviará un e-mail al emprendedor informando que debe realizar modificaciones a su solicitud" onclick="solicitarModificacion()">Solicitar Modificación</button>
