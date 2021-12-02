@@ -370,7 +370,7 @@ router.post('/editar',isLoggedInEmp,async(req,res)=>{
         if(categoria=='A'){
             await pool.query('UPDATE alojamientos SET ? WHERE id_emprendimiento=?',[aloj,id])
         }else{
-            await pool.query('UPDATE tours SET ? WHERE id_emprendimiento=?',[tours,id])
+            await pool.query('UPDATE tours SET ? WHERE id_emprendimiento=?',[tour,id])
         }
     }
     const {actividades}=req.body
@@ -390,7 +390,7 @@ router.post('/editar',isLoggedInEmp,async(req,res)=>{
         }
     }else{
         const idActualTour=await pool.query('SELECT idtour FROM tours WHERE id_emprendimiento=?',[id])
-        await pool.query('DELETE FROM tourssofrecidas WHERE id_tour=?',[idActualTour[0].idtour])
+        await pool.query('DELETE FROM toursofrecidos WHERE id_tour=?',[idActualTour[0].idtour])
         for (let i=0;i<actArray.length;i++){
             let actOfrecida={
                 id_tour:idActualTour[0].idtour,
