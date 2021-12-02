@@ -148,7 +148,7 @@ router.get('/aprobadas/eliminar/:id',isLoggedInAdm,async(req,res)=>{
     }
 
     await pool.query('DELETE FROM emprendimientos WHERE idemprendimiento=?',[id])
-
+    res.redirect('/solicitudes/aprobadas')
 })
 
 router.get('/pendientes/:id',isLoggedInAdm,async(req,res)=>{
