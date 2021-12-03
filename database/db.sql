@@ -18,14 +18,6 @@ CREATE TABLE administradores(
     CONSTRAINT fk_usuarios FOREIGN KEY (id_usuario) REFERENCES usuarios(idusuario)
 );
 
-CREATE TABLE denuncias(
-    nroDenuncia INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    motivo VARCHAR(50),
-    descripcion TEXT,
-    id_emprendimiento INT,
-    CONSTRAINT fk_emprendimientos FOREIGN KEY (id_emprendimiento) REFERENCES emprendimientos(idemprendedimiento)
-);
-
 CREATE TABLE emprendedores(
     idemprendedor INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     dni INT(10),
@@ -41,14 +33,6 @@ CREATE TABLE localidades(
     departamento VARCHAR(50)
 );
 
-CREATE TABLE imagenes(
-    idimagen INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    link VARCHAR(255),
-    tipo VARCHAR(1),
-    id_emprendimiento INT,
-    CONSTRAINT fk_emprendimientos FOREIGN KEY (id_emprendimiento) REFERENCES emprendimientos(idemprendedimiento)
-);
-
 CREATE TABLE emprendimientos(
     idemprendimiento  INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     ubicacion VARCHAR(100),
@@ -62,36 +46,67 @@ CREATE TABLE emprendimientos(
     CONSTRAINT fk_localidades FOREIGN KEY (id_localidad) REFERENCES localidades(idlocalidad)
 );
 
-CREATE TABLE sitio(
-    idcalificacion INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT,
+CREATE TABLE denuncias(
+    nroDenuncia INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    motivo VARCHAR(50),
+    descripcion TEXT,
     id_emprendimiento INT,
-    puntuacion INT(1),
-    comentario TEXT,
-    CONSTRAINT fk_usuarios FOREIGN KEY (id_usuario) REFERENCES usuarios(idusuario),
+    CONSTRAINT
+    fk_emprendimientos
+    FOREIGN KEY (id_emprendimiento) REFERENCES emprendimientos(idemprendimiento)
+);
+--probar con fk_emprendimientos1 si no deja crearla 
+
+CREATE TABLE imagenes(
+    idimagen INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    link VARCHAR(255),
+    tipo VARCHAR(1),
+    id_emprendimiento INT,
     CONSTRAINT fk_emprendimientos FOREIGN KEY (id_emprendimiento) REFERENCES emprendimientos(idemprendimiento)
 );
 
-CREATE TABLE contacto(
-    idcontacto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    telefono VARCHAR(20),
-    facebook VARCHAR(254),
-    instagram VARCHAR(254),
-    youtube VARCHAR(254),
-    id_emprendimiento INT,
-    CONSTRAINT fk_emprendimientos FOREIGN KEY (id_emprendimiento) REFERENCES emprendimientos(idemprendedimiento)
-);
 
-CREATE TABLE alojamientos(
-    idalojamiento  INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_emprendimiento INT,
-    precionoche FLOAT,
-    capacidadhabitaciones INT(3),
-    capacidadestacionamientos INT(3),
-    tipoalojamiento VARCHAR(50),
-    piscina BOOLEAN,
-    CONSTRAINT fk_emprendimientos FOREIGN KEY (id_emprendimiento) REFERENCES emprendimientos(id_emprendimiento)
+
+CREATE TABLE `calificaciones` (
+  `idcalificacion` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int DEFAULT NULL,
+  `id_emprendimiento` int DEFAULT NULL,
+  `puntuacion` int DEFAULT NULL,
+  `comentario` text,
+  PRIMARY KEY (`idcalificacion`),
+  KEY `fk_usuarios` (`id_usuario`),
+  KEY `fk_emprendimientos` (`id_emprendimiento`)
 );
+ --probar fk_usuarios1
+ --probar con fk_emprendimientos3
+
+CREATE TABLE `contacto` (
+  `idcontacto` int NOT NULL AUTO_INCREMENT,
+  `telefono` varchar(20) DEFAULT NULL,
+  `facebook` varchar(254) DEFAULT NULL,
+  `instagram` varchar(254) DEFAULT NULL,
+  `youtube` varchar(254) DEFAULT NULL,
+  `id_emprendimiento` int DEFAULT NULL,
+  PRIMARY KEY (`idcontacto`),
+  KEY `fk_emprendimientos` (`id_emprendimiento`)
+);
+--probar con fk_emprendimitos5
+
+CREATE TABLE `alojamientos` (
+  `idalojamiento` int NOT NULL AUTO_INCREMENT,
+  `id_emprendimiento` int DEFAULT NULL,
+  `precionoche` float DEFAULT NULL,
+  `capacidadhabitaciones` int DEFAULT NULL,
+  `capacidadestacionamientos` int DEFAULT NULL,
+  `tipoalojamiento` varchar(50) DEFAULT NULL,
+  `piscina` tinyint(1) DEFAULT NULL,
+  `vista` varchar(20) DEFAULT NULL,
+  `hornobarro` tinyint(1) DEFAULT NULL,
+  `animalesautoctonos` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`idalojamiento`),
+  KEY `fk_emprendimientos` (`id_emprendimiento`)
+)
+--probar con fk_emprendimientos6
 
 CREATE TABLE reservas(
     idreservas INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -104,6 +119,7 @@ CREATE TABLE reservas(
     CONSTRAINT fk_alojamientos FOREIGN KEY (id_alojamiento) REFERENCES alojamientos(idalojamiento),
     CONSTRAINT fk_usuarios FOREIGN KEY (id_usuario) REFERENCES usuarios(idusuario)
 );
+--probar con fk_usuarios2
 
 CREATE TABLE tours(
     idtour INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -111,16 +127,20 @@ CREATE TABLE tours(
     encargados VARCHAR(512),
     dificultad  VARCHAR(50),
     fecha DATE,
-    CONSTRAINT fk_emprendimientos FOREIGN KEY (id_emprendimiento) REFERENCES emprendimientos(idemprendimiento)
+    CONSTRAINT 
+    fk_emprendimientos FOREIGN KEY (id_emprendimiento) REFERENCES emprendimientos(idemprendimiento)
 );
+--probar con fk_emprendimientos10 
 
 CREATE TABLE restaurantes(
     idrestaurante INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_emprendimiento INT,
     cantidadmesas INT(3),
     horarios VARCHAR(512),
-    CONSTRAINT fk_emprendimientos FOREIGN KEY (id_emprendimiento) REFERENCES emprendimientos(idemprendedimiento)
+    CONSTRAINT 
+    fk_emprendimientos FOREIGN KEY (id_emprendimiento) REFERENCES emprendimientos(idemprendimiento)
 );
+  --probar con fk_emprendimientos8
 
 CREATE TABLE platos(
     idplatos  INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -134,8 +154,10 @@ CREATE TABLE gastronomia(
     idgastronomia INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     tipogastronomia VARCHAR(60),
     id_restaurante INT,
-    CONSTRAINT fk_restaurantes FOREIGN KEY (id_restaurante) REFERENCES restaurantes(idrestaurante)
+    CONSTRAINT 
+    fk_restaurantes FOREIGN KEY (id_restaurante) REFERENCES restaurantes(idrestaurante)
 );
+    --probar con fk_restaurantes1
 
 CREATE TABLE actividades (
   idactividades INT NOT NULL AUTO_INCREMENT,
@@ -160,8 +182,12 @@ create table actividadesofrecidas(
 	idactividadesofrecidas INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_alojamiento INT,
     id_actividad INT,
-    CONSTRAINT fk_actividades FOREIGN KEY (id_actividad) REFERENCES actividades(idactividades),
-    CONSTRAINT fk_alojamientos FOREIGN KEY (id_alojamiento) REFERENCES alojamientos(idalojamientos)
+    CONSTRAINT
+    --probar fk_actividades3
+    fk_actividades FOREIGN KEY (id_actividad) REFERENCES actividades(idactividades),
+    CONSTRAINT 
+    --probar fk_alojamientos2
+    fk_alojamientos FOREIGN KEY (id_alojamiento) REFERENCES alojamientos(idalojamiento)
 );
 
 INSERT INTO `turistik`.`actividades` (`idactividades`, `nombre`, `introduccion`, `descripcion`) VALUES ('1', 'Trabajar con cuero', 'Aprende a hacer increíbles billeteras, carteras y mucho más con cuero', 'La artesania o trabajo en cuero es una manualidad con una parte artesanal y otra artistica y creativa que consiste en realizar objetos con cuero curtido o utilizar el cuero como elemento artístico o decorativo. Requiere la aplicación de diferentes pasos como son:  el diseño de la pieza, el corte, el moldeado, la pintura, el cosido y algunos más. A través de ellos se manejan técnicas concretas (algunas de ellas agrupadas bajo el nombre de MARROQUINERIA) como:  labrado, calado, modelado, moldeado, teñido y repujado.  El cuero admite otras manualidades como la combinación con joyeria o el bordado en cuero.LA AFICION DE TRABAJAR EL CUERO ESTA INDICADA  EN PERSONAS AMANTES DE LA ARTESANIA Y MANUALIDADES CON ESPIRITU CREATIVO.');
@@ -200,16 +226,26 @@ create table sitiosguardados(
 	idguardado INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_emprendimiento INT,
     id_usuario INT,
-    CONSTRAINT fk_emprendimiento FOREIGN KEY (id_emprendimiento) REFERENCES emprendimientos(idemprendimiento),
-    CONSTRAINT fk_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios(idusuario)
+    CONSTRAINT 
+    
+    fk_emprendimiento
+    FOREIGN KEY (id_emprendimiento) REFERENCES emprendimientos(idemprendimiento),
+    CONSTRAINT 
+    
+    fk_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios(idusuario)
 );
+--fk_emprendimiento12
+--fk_usuario6
 
 rename table sitio to calificaciones;
+
+--fk_actividades9
 create table toursofrecidos (
 	idtoursofrecidos INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_tour INT,
     id_actividad INT,
-    CONSTRAINT fk_actividades FOREIGN KEY (id_actividad) REFERENCES actividades(idactividades),
+    CONSTRAINT 
+    fk_actividades9 FOREIGN KEY (id_actividad) REFERENCES actividades(idactividades),
     CONSTRAINT fk_tours FOREIGN KEY (id_tour) REFERENCES tours(idtour)
 );
 
@@ -220,4 +256,5 @@ alter table tours drop encargados;
 alter table tours drop fecha;
 
 INSERT INTO `turistik`.`tours` (`idtour`, `id_emprendimiento`, `dificultad`, `duracion`, `recomendaciones`) VALUES ('1', '6', 'Media', '04:00', 'llevar sombrero, abrigo,  zapatos de trekking y protección solar.');
+
 INSERT INTO `turistik`.`toursofrecidos` (`idtoursofrecidos`, `id_tour`, `id_actividad`) VALUES ('1', '1', '15');

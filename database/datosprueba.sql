@@ -31,8 +31,8 @@ INSERT INTO localidades(nombrelocalidad,departamento) VALUES ("Abdón Castro Tol
 
 INSERT INTO emprendimientos(ubicacion,estadosolicitud,nombreemprendimiento,descripcion,categoria,id_emprendedor,id_localidad) VALUES ("Belgrano 730","A","Dormilon","Una pequeña casita hogareña","A",1,130),("Almirante Brown 1120","A","Departamento Centrico","Excelente departamento con vista a toda la ciudad, amplio","A",2,120);
 
-INSERT INTO denuncias (motivo,descripcion,id_emprendimiento) VALUES ('Insalubridad',"dshjsdhhsdsbdbdhsdjjanandbcbajkajjksjkdhjfhhfd",2),('Lugar Inexistente',"vgbshcjidc abahgdghagd caxhdgaghds chsdjhsahcbnsnbbv,gshjsjsghjbs",1),
-('Incumplimiento de la reserva',"dfghjk dshadsjhaj uywqiuewe iqeobedbdb  cjqebhqhqeddq dqjdhqjdhkqddbbf",2),('Otro',"vbsdnns dsbwubd wubfbw f wfuhfnbwf wf hwfbw e d  dnabdwhedbewd ehfefbebf",1);
+INSERT INTO denuncias (motivo,descripcion,id_emprendimiento) VALUES ('Insalubridad',"Habia ratones!!",2),
+('Incumplimiento de la reserva',"Perdimos nuestro tiempo. Impresentables!",2),('Otro',"Esta muy lejos del centro",1);
 
 
 INSERT INTO alojamientos(id_emprendimiento,precionoche,capacidadhabitaciones,capacidadestacionamientos,tipoalojamiento,piscina) VALUES (1,2500,2,1,'Casa',0),(2,3200,3,1,'Departamento',1);
